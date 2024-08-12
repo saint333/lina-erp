@@ -24,6 +24,7 @@ function NavbarToggleButton(props) {
 	const dispatch = useAppDispatch();
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const settings = useAppSelector(selectFuseCurrentSettings);
+	console.log("🚀 ~ NavbarToggleButton ~ settings:", settings)
 	const { config } = settings.layout;
 	return (
 		<IconButton
