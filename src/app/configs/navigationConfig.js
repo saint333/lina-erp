@@ -11,41 +11,80 @@ i18next.addResourceBundle('ar', 'navigation', ar);
  */
 const navigationConfig = [
 	{
-		id: 'dashboards',
-		title: 'Dashboards',
-		subtitle: 'Unique dashboard designs',
+		id: 'dashboard',
+		title: 'Dashboard',
+		subtitle: '',
 		type: 'group',
 		icon: 'heroicons-outline:home',
 		translate: 'DASHBOARDS',
 		children: [
 			{
-				id: 'dashboards.project',
-				title: 'Project',
+				id: 'dashboard.index',
+				title: 'Dashboard',
 				type: 'item',
-				icon: 'heroicons-outline:clipboard-check',
-				url: '/dashboards/project'
+				icon: 'heroicons-outline:home',
+				url: '/dashboard'
+			},
+		]
+	},
+	{
+		id: 'maintenance',
+		title: 'Mantenimiento',
+		subtitle: '',
+		type: 'group',
+		icon: 'heroicons-outline:home',
+		translate: 'MAINTENANCE',
+		children: [
+			{
+				id: 'maintenance.suppliers',
+				title: 'Proveedores',
+				type: 'item',
+				icon: 'heroicons-outline:home',
+				url: '/maintenance/suppliers'
 			},
 			{
-				id: 'dashboards.analytics',
-				title: 'Analytics',
-				type: 'item',
-				icon: 'heroicons-outline:chart-pie',
-				url: '/dashboards/analytics'
+				id: 'maintenance.clients',
+				title: 'Clientes',
+				type: 'collapse',
+				icon: 'heroicons-outline:home',
+				children: [
+					{
+						id: 'maintenance.list',
+						title: 'Clientes',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/maintenance/client/list'
+					},
+					{
+						id: 'maintenance.card',
+						title: 'Clientes',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/maintenance/client/card'
+					},
+					{
+						id: 'maintenance.license',
+						title: 'Clientes',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/maintenance/client/license'
+					},
+					{
+						id: 'maintenance.resolution',
+						title: 'Clientes',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/maintenance/client/resolution'
+					},
+				]
 			},
 			{
-				id: 'dashboards.finance',
-				title: 'Finance',
+				id: 'maintenance.products',
+				title: 'Productos',
 				type: 'item',
-				icon: 'heroicons-outline:cash',
-				url: '/dashboards/finance'
+				icon: 'heroicons-outline:home',
+				url: '/maintenance/products'
 			},
-			{
-				id: 'dashboards.crypto',
-				title: 'Crypto',
-				type: 'item',
-				icon: 'heroicons-outline:currency-dollar',
-				url: '/dashboards/crypto'
-			}
 		]
 	},
 ];

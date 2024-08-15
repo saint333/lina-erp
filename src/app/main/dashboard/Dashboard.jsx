@@ -1,5 +1,7 @@
 export default function Dashboard() {
+  console.log(import.meta.env.VITE_PUBLIC_API_URL);
+  
   return (
-    <div>Dashboard</div>
+    <div>dasborad{import.meta.env.VITE_PUBLIC_API_URL}</div>
   )
 }

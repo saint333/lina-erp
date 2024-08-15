@@ -7,12 +7,14 @@ import SignUpConfig from '../main/sign-up/SignUpConfig';
 import SignOutConfig from '../main/sign-out/SignOutConfig';
 import Error404Page from '../main/404/Error404Page';
 import DashboardConfig from '../main/dashboard/config';
+import MaintenanceConfig from '../main/maintenance/config';
 
 const routeConfigs = [
 	SignOutConfig,
 	SignInConfig,
 	SignUpConfig,
-	DashboardConfig
+	DashboardConfig,
+	MaintenanceConfig
 ];
 /**
  * The routes of the application.

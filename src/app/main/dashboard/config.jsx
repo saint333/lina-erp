@@ -1,4 +1,3 @@
-import { authRoles } from "src/app/auth";
 import Dashboard from "./Dashboard";
 
 const DashboardConfig = {
