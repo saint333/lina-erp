@@ -35,7 +35,7 @@ const useJwtAuth = (props) => {
   const setSession = useCallback((accessToken) => {
     if (accessToken) {
       localStorage.setItem(authConfig.tokenStorageKey, accessToken);
-      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      axios.defaults.headers.common.Authorization = `JWT ${accessToken}`;
     }
   }, []);
   const resetSession = useCallback(() => {
@@ -118,7 +118,7 @@ const useJwtAuth = (props) => {
         try {
           setIsLoading(true);
           // const response = await axios.get(authConfig.getUserUrl, {
-          // 	headers: { Authorization: `Bearer ${accessToken}` }
+          // 	headers: { Authorization: `JWT ${accessToken}` }
           // });
           const userData = {
             data: {

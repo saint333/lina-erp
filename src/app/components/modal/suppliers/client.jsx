@@ -22,6 +22,7 @@ import { SupplierServices } from "src/app/services/maintenance/suppliers";
 import { commonServices } from "src/app/services";
 import { CancelButton, SaveButton } from "../../button/button";
 import CustomTabPanel, { a11yProps } from "../../tabs/tabs";
+import { ubigeo } from "src/app/util/ubigeo";
 
 export default function ModalSuppliers({ open, setOpen, title, setData , client }) {
   const [value, setValue] = useState(0);
