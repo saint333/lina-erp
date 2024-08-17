@@ -13,6 +13,8 @@ import FullScreenToggle from '../../shared-components/FullScreenToggle';
 import LanguageSwitcher from '../../shared-components/LanguageSwitcher';
 import NavigationShortcuts from '../../shared-components/navigation/NavigationShortcuts';
 import UserMenu from '../../shared-components/UserMenu';
+import DomainComponent from 'app/theme-layouts/shared-components/domain';
+import SucursalComponent from 'app/theme-layouts/shared-components/sucursal';
 
 /**
  * The toolbar layout 1.
@@ -37,7 +39,7 @@ function ToolbarLayout1(props) {
 				position="static"
 				elevation={0}
 			>
-				<Toolbar className="min-h-48 p-0 md:min-h-64">
+				<Toolbar className="min-h-48 p-0 pt-6 md:min-h-64">
 					<div className="flex flex-1 px-16">
 						{config.navbar.display && config.navbar.position === 'left' && (
 							<>
@@ -62,8 +64,11 @@ function ToolbarLayout1(props) {
 						</Hidden>
 					</div>
 
-					<div className="flex h-full items-center overflow-x-auto px-8">
-						{/* <LanguageSwitcher /> */}
+					<div className="flex h-full items-center overflow-x-auto px-8 gap-3" style={{scrollbarWidth: "none"}}>
+						<div className='flex gap-3 w-full'>
+						<DomainComponent />
+						<SucursalComponent />
+						</div>
 						<AdjustFontSize />
 						<FullScreenToggle />
 						<UserMenu />

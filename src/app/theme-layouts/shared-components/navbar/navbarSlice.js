@@ -6,7 +6,7 @@ import { rootReducer } from 'app/store/lazyLoadedSlices';
 const initialState = {
 	open: true,
 	mobileOpen: false,
-	foldedOpen: false
+	foldedOpen: true
 };
 /**
  * The navbar slice.

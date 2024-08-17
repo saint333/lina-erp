@@ -11,7 +11,7 @@ export const commonServices = async ({ letterAccion }) => {
 export const DataHeader = async (session) => {
   const response = axios.get(`${baseApi}/auth/domain`)
   const lists = (await response).data;
-  return { p_iniddominio_default: session.user.p_iniddominio_default, lists };
+  return { p_iniddominio_default: 1, lists };
 };
 
 export const SucursalData = async (session) => {
