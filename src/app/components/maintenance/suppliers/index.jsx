@@ -2,7 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { DetailSupplierServices, SupplierList } from "src/app/services/maintenance/suppliers";
+import {
+  DetailSupplierServices,
+  SupplierList,
+} from "src/app/services/maintenance/suppliers";
 import Table from "../../table";
 import { AgregarButton } from "../../button/button";
 import ModalSuppliers from "../../modal/suppliers/client";
@@ -121,7 +124,7 @@ export default function Supplier() {
         acciones={
           <AgregarButton
             text='Nueva Tarjeta'
-            className='w-fit'
+            className='w-fit text-sm md:text-base'
             onClick={() => setOpenModal(true)}
           />
         }

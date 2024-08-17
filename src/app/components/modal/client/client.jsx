@@ -31,9 +31,9 @@ export default function ModalClient({ open, setOpen, title, client }) {
   const [inputValue, setInputValue] = useState();
   const [tipo, setTipo] = useState([]);
   const defaultValues = {
-    chruc: null,
-    chnombrecomercial: null,
-    chrazonsocial: null,
+    chruc: "",
+    chnombrecomercial: "",
+    chrazonsocial: "",
     chcorreo: "",
     chtelefono: "",
     chnombres: "",
@@ -52,7 +52,7 @@ export default function ModalClient({ open, setOpen, title, client }) {
     p_inidpersona: 0,
     p_inidempresa: null,
     proceso: value === 0 ? "PERSONA" : "EMPRESA",
-  }
+  };
 
   const {
     register,
@@ -60,7 +60,7 @@ export default function ModalClient({ open, setOpen, title, client }) {
     formState: { errors },
     control,
     reset,
-    setValue: setFormValue
+    setValue: setFormValue,
   } = useForm({
     defaultValues,
   });
@@ -78,7 +78,7 @@ export default function ModalClient({ open, setOpen, title, client }) {
       data,
       letterAccion,
     });
-    handleClose()
+    handleClose();
   };
 
   const CustomInput = ({ label, textKey }) => (
@@ -212,17 +212,20 @@ export default function ModalClient({ open, setOpen, title, client }) {
             <legend>
               <DescriptionIcon color='primary' /> Datos Adicionales
             </legend>
-            <div className='flex gap-3 flex-col md:flex-row'>
+            <div className='flex gap-10 flex-col md:flex-row'>
               <CustomInput label='Telefono' textKey='chtelefono' />
               <CustomInput label='Correo' textKey='chcorreo' />
             </div>
-            <div className='flex mt-3 gap-3 flex-col md:flex-row'>
+            <div className='flex mt-10 gap-10 flex-col md:flex-row'>
               <CustomSelect label='Tipo Cliente' textKey='p_inidtipocliente'>
-                {
-                  tipo.map(item => (
-                    <MenuItem key={item.p_inidmaestrodetalle} value={item.p_inidmaestrodetalle}>{item.chmaestrodetalle}</MenuItem>
-                  ))
-                }
+                {tipo.map((item) => (
+                  <MenuItem
+                    key={item.p_inidmaestrodetalle}
+                    value={item.p_inidmaestrodetalle}
+                  >
+                    {item.chmaestrodetalle}
+                  </MenuItem>
+                ))}
               </CustomSelect>
               <div className='w-full hidden md:block'></div>
             </div>
@@ -249,11 +252,17 @@ export default function ModalClient({ open, setOpen, title, client }) {
               value={inputValue}
               onChange={(event, newValue) => {
                 setInputValue(newValue);
-                setFormValue('p_inidubigeo', newValue.p_inidubigeo);
+                setFormValue("p_inidubigeo", newValue.p_inidubigeo);
               }}
               options={ubigeo}
-              getOptionLabel={(option) => option.chdepartamento + ' - ' + option.chprovincia + ' - ' + option.chdistrito}
-              size="small"
+              getOptionLabel={(option) =>
+                option.chdepartamento +
+                " - " +
+                option.chprovincia +
+                " - " +
+                option.chdistrito
+              }
+              size='small'
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -263,7 +272,7 @@ export default function ModalClient({ open, setOpen, title, client }) {
                     type: "search",
                   }}
                   error={errors.p_inidubigeo}
-                  InputLabelProps={{error: errors.p_inidubigeo}}
+                  InputLabelProps={{ error: errors.p_inidubigeo }}
                 />
               )}
             />

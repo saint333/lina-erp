@@ -92,7 +92,7 @@ export default function ProductsList() {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          PopoverClasses={{ paper: '!shadow-lg' }}
+          PopoverClasses={{ paper: "!shadow-lg" }}
         >
           <MenuItem onClick={handleClose}>
             <Edit />
@@ -112,9 +112,21 @@ export default function ProductsList() {
         data={data}
         renderRowActions={renderRowActions}
         loading={data.length === 0}
-        acciones={<AgregarButton text='Nuevo Producto' className='w-fit' onClick={() => setOpenModal(true)}/>}
+        acciones={
+          <AgregarButton
+            text='Nuevo Producto'
+            className='w-fit text-sm md:text-base'
+            onClick={() => setOpenModal(true)}
+          />
+        }
       />
-      <ModalProduct open={openModal} setOpen={setOpenModal} title='Nuevo Producto' />
+      {openModal && (
+        <ModalProduct
+          open={openModal}
+          setOpen={setOpenModal}
+          title='Nuevo Producto'
+        />
+      )}
     </div>
   );
 }

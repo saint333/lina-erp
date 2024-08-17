@@ -22,7 +22,7 @@ function Table({ columns = [], data = [], acciones, loading, ...rest }) {
         "& + div": {
           minHeight: "4.5rem",
         },
-      }
+      },
     },
     enableStickyHeader: true,
     paginationDisplayMode: "pages",
@@ -112,7 +112,7 @@ function Table({ columns = [], data = [], acciones, loading, ...rest }) {
     columns,
     data,
     enableColumnActions: false,
-    localization: {...MRT_Localization_ES, actions: "..."},
+    localization: { ...MRT_Localization_ES, actions: "..." },
     initialState: {
       density: "comfortable",
       showGlobalFilter: true,
@@ -125,21 +125,17 @@ function Table({ columns = [], data = [], acciones, loading, ...rest }) {
       },
     },
     renderTopToolbarCustomActions: (_props) => {
-      return acciones
+      return acciones;
     },
     ...states,
-    state:{
+    state: {
       isLoading: loading,
-      showLoadingOverlay: false
+      showLoadingOverlay: false,
     },
     ...rest,
   });
 
-  return (
-    <MaterialReactTable
-      table={table}
-    />
-  );
+  return <MaterialReactTable table={table} />;
 }
 
 export default Table;

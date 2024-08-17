@@ -81,7 +81,7 @@ export default function ResolutionCard() {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          PopoverClasses={{ paper: '!shadow-lg' }}
+          PopoverClasses={{ paper: "!shadow-lg" }}
         >
           <MenuItem onClick={handleClose}>
             <Edit />
@@ -100,10 +100,22 @@ export default function ResolutionCard() {
         columns={columns}
         data={data}
         renderRowActions={renderRowActions}
-        acciones={<AgregarButton text='Nueva Resolución' className='w-fit' onClick={() => setOpenModal(true)} />}
+        acciones={
+          <AgregarButton
+            text='Nueva Resolución'
+            className='w-fit text-sm md:text-base'
+            onClick={() => setOpenModal(true)}
+          />
+        }
         loading={data.length === 0}
       />
-      <ModalResolution open={openModal} setOpen={setOpenModal} title="Mantenimiento de Resolución" />
+      {openModal && (
+        <ModalResolution
+          open={openModal}
+          setOpen={setOpenModal}
+          title='Mantenimiento de Resolución'
+        />
+      )}
     </div>
   );
 }

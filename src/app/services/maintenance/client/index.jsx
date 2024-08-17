@@ -5,7 +5,7 @@ export const ClientServices = async ({ data, letterAccion }) => {
   const response = axios.post(`${baseApi}/maintenance/client`, {
     p_iniddominio: 1,
     accion: letterAccion,
-    ...data
+    ...data,
   });
   return (await response).data;
 };
@@ -34,10 +34,12 @@ export const ResolucionServices = async ({ data, letterAccion }) => {
   return (await response).data;
 };
 
-export const DetailClientServices = async ({client, legal}) => {
-  const response = axios.get(`${baseApi}/maintenance/client/detail?p_inidcliente=${client}&p_inidjurinat=${legal}`);
+export const DetailClientServices = async ({ client, legal }) => {
+  const response = axios.get(
+    `${baseApi}/maintenance/client/detail?p_inidcliente=${client}&p_inidjurinat=${legal}`
+  );
   return (await response).data;
-}
+};
 
 export const CardList = async () => {
   const response = axios.get(`${baseApi}/maintenance/client/card`);

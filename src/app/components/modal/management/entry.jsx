@@ -93,8 +93,8 @@ export default function EntryModal({ open, setOpen, title }) {
         </div>
       }
     >
-      <div className="flex flex-col lg:flex-row gap-3">
-        <div className="flex-1">
+      <div className='flex flex-col lg:flex-row gap-3'>
+        <div className='flex-1'>
           <Card>
             <CardContent>
               <Autocomplete
@@ -105,19 +105,23 @@ export default function EntryModal({ open, setOpen, title }) {
                 onChange={(event, newValue) => {
                   setValueSelect(newValue);
                 }}
-                size="small"
+                size='small'
                 renderInput={(params) => (
-                  <TextField {...params} label='controlled' variant='outlined' />
+                  <TextField
+                    {...params}
+                    label='controlled'
+                    variant='outlined'
+                  />
                 )}
               />
-              <Table enableRowActions={false}/>
+              <Table enableRowActions={false} />
             </CardContent>
           </Card>
         </div>
-        <div className="flex-1">
-        <Card>
-        <CardContent></CardContent>
-        </Card>
+        <div className='flex-1'>
+          <Card>
+            <CardContent></CardContent>
+          </Card>
         </div>
       </div>
     </ModalBasic>

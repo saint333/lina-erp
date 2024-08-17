@@ -2,7 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { DetailClientServices, List } from "src/app/services/maintenance/client";
+import {
+  DetailClientServices,
+  List,
+} from "src/app/services/maintenance/client";
 import Table from "../../table";
 import { AgregarButton } from "../../button/button";
 import ModalClient from "../../modal/client/client";
@@ -55,13 +58,13 @@ export default function ClientList() {
       {
         accessorKey: "chdireccion",
         header: "DIRECCIÓN",
-        size: 150,
+        size: 250,
       },
       {
         accessorKey: "chtelefono",
         header: "TELEFONO",
         size: 150,
-      }
+      },
     ],
     []
   );
@@ -87,7 +90,7 @@ export default function ClientList() {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          PopoverClasses={{ paper: '!shadow-lg' }}
+          PopoverClasses={{ paper: "!shadow-lg" }}
         >
           <MenuItem onClick={() => handleEdit(row)}>
             <Edit />
@@ -100,8 +103,11 @@ export default function ClientList() {
     );
   };
 
-  const handleEdit = async(row) => {
-    const response = await DetailClientServices({ client: row.row.original.p_inidcliente, legal: row.row.original.p_inidjurinat });
+  const handleEdit = async (row) => {
+    const response = await DetailClientServices({
+      client: row.row.original.p_inidcliente,
+      legal: row.row.original.p_inidjurinat,
+    });
     setClient(response[0]);
     setOpenModal(true);
     handleClose();
@@ -113,10 +119,23 @@ export default function ClientList() {
         columns={columns}
         data={data}
         renderRowActions={renderRowActions}
-        acciones={<AgregarButton text='Agregar' className='w-fit' onClick={() => setOpenModal(true)} />}
+        acciones={
+          <AgregarButton
+            text='Agregar'
+            className='w-fit'
+            onClick={() => setOpenModal(true)}
+          />
+        }
         loading={data.length === 0}
       />
-      <ModalClient open={openModal} setOpen={setOpenModal} title="Mantenimiento de Cliente" client={client} />
+      {openModal && (
+        <ModalClient
+          open={openModal}
+          setOpen={setOpenModal}
+          title='Mantenimiento de Cliente'
+          client={client}
+        />
+      )}
     </div>
   );
 }

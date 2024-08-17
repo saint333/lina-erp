@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import { Add, Delete, ExpandMore } from "@mui/icons-material";
 import { NewFamily } from "src/app/services/maintenance/product";
-import { CancelButton } from "src/app/components/button/button";
+import { CancelButton, SaveButton } from "src/app/components/button/button";
 
 const AddNewValue = ({
   setValue,
@@ -63,7 +63,7 @@ const AddNewValue = ({
   );
 };
 
-function ButtonAler({item}) {
+function ButtonAler({ item }) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -83,7 +83,7 @@ function ButtonAler({item}) {
     };
     const response = await NewFamily(data, "D");
     setOpen(false);
-  }
+  };
 
   return (
     <>
@@ -102,10 +102,7 @@ function ButtonAler({item}) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <CancelButton
-            text='Cancelar'
-            onClick={handleClose}
-          />
+          <CancelButton text='Cancelar' onClick={handleClose} />
           <SaveButton text='Aceptar' onClick={handleDelete(item)} />
         </DialogActions>
       </Dialog>
@@ -194,8 +191,8 @@ export default function Family({
   };
 
   return (
-    <div className='flex flex-col gap-3 md:flex-row'>
-      <div className='flex flex-col gap-3 flex-1'>
+    <div className='flex flex-col gap-10 md:flex-row'>
+      <div className='flex flex-col gap-10 flex-1'>
         <CustomSelect
           label='Categoria'
           textKey='category'
@@ -231,7 +228,7 @@ export default function Family({
                       <Radio value={item.p_inidfamiliadetalle} />
                       <Typography>{item.chfamiliadetalle}</Typography>
                     </div>
-                    <ButtonAler item={item}/>
+                    <ButtonAler item={item} />
                   </FormControl>
                 ))}
               </CustomGruopRadio>
@@ -239,7 +236,7 @@ export default function Family({
           </Card>
         </div>
       </div>
-      <div className='flex flex-col gap-3 flex-1'>
+      <div className='flex flex-col gap-10 flex-1'>
         <Typography variant='subtitle1'>FAMILIA</Typography>
         <div>
           <Accordion
@@ -270,7 +267,7 @@ export default function Family({
                       <Radio value={item.p_inidfamiliadetalle} />
                       <Typography>{item.chfamiliadetalle}</Typography>
                     </div>
-                    <ButtonAler item={item}/>
+                    <ButtonAler item={item} />
                   </FormControl>
                 ))}
               </CustomGruopRadio>
@@ -306,7 +303,7 @@ export default function Family({
                       <Radio value={item.p_inidfamiliadetalle} />
                       <Typography>{item.chfamiliadetalle}</Typography>
                     </div>
-                    <ButtonAler item={item}/>
+                    <ButtonAler item={item} />
                   </FormControl>
                 ))}
               </CustomGruopRadio>
@@ -339,7 +336,7 @@ export default function Family({
                             <Radio value={item.p_inidfamiliadetalle} />
                             <Typography>{item.chfamiliadetalle}</Typography>
                           </div>
-                          <ButtonAler item={item}/>
+                          <ButtonAler item={item} />
                         </FormControl>
                       ))}
                     </CustomGruopRadio>
@@ -373,7 +370,7 @@ export default function Family({
                             <Radio value={item.p_inidfamiliadetalle} />
                             <Typography>{item.chfamiliadetalle}</Typography>
                           </div>
-                          <ButtonAler item={item}/>
+                          <ButtonAler item={item} />
                         </FormControl>
                       ))}
                     </CustomGruopRadio>
@@ -410,7 +407,7 @@ export default function Family({
                       <Radio value={item.p_inidfamiliadetalle} />
                       <Typography>{item.chfamiliadetalle}</Typography>
                     </div>
-                    <ButtonAler item={item}/>
+                    <ButtonAler item={item} />
                   </FormControl>
                 ))}
               </CustomGruopRadio>

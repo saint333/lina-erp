@@ -20,12 +20,12 @@ export default function CardLicense() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       const product = await CardList();
       setData(product);
-    }
+    };
     fetchData();
   }, []);
 
@@ -106,7 +106,7 @@ export default function CardLicense() {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          PopoverClasses={{ paper: '!shadow-lg' }}
+          PopoverClasses={{ paper: "!shadow-lg" }}
         >
           <MenuItem onClick={handleClose}>
             <Edit />
@@ -125,10 +125,22 @@ export default function CardLicense() {
         columns={columns}
         data={data}
         renderRowActions={renderRowActions}
-        acciones={<AgregarButton text='Nueva Tarjeta' className='w-fit' onClick={() => setOpenModal(true)} />}
+        acciones={
+          <AgregarButton
+            text='Nueva Tarjeta'
+            className='w-fit text-sm md:text-base'
+            onClick={() => setOpenModal(true)}
+          />
+        }
         loading={data.length === 0}
       />
-      <ModalCard open={openModal} setOpen={setOpenModal} title='Mantenimiento de Tarjeta' />
+      {openModal && (
+        <ModalCard
+          open={openModal}
+          setOpen={setOpenModal}
+          title='Mantenimiento de Tarjeta'
+        />
+      )}
     </div>
   );
 }

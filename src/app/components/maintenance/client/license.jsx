@@ -25,7 +25,7 @@ export default function License() {
     const fetchData = async () => {
       const product = await LicenseList();
       setData(product);
-    }
+    };
     fetchData();
   }, []);
 
@@ -125,10 +125,22 @@ export default function License() {
         columns={columns}
         data={data}
         renderRowActions={renderRowActions}
-        acciones={<AgregarButton text='Nueva Licencia' className='w-fit' onClick={() => setOpenModal(true)}/>}
+        acciones={
+          <AgregarButton
+            text='Nueva Licencia'
+            className='w-fit text-sm md:text-base'
+            onClick={() => setOpenModal(true)}
+          />
+        }
         loading={data.length === 0}
       />
-      <ModalLicense open={openModal} setOpen={setOpenModal} title='Mantenimiento de Licencia' />
+      {openModal && (
+        <ModalLicense
+          open={openModal}
+          setOpen={setOpenModal}
+          title='Mantenimiento de Licencia'
+        />
+      )}
     </div>
   );
 }

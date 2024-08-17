@@ -14,7 +14,9 @@ export const SupplierServices = async ({ data, letterAccion }) => {
   return (await response).data;
 };
 
-export const DetailSupplierServices = async ({client, legal}) => {
-  const response = axios.get(`${baseApi}/maintenance/provider/detail?p_inidproveedor=${client}&p_inidjurinat=${legal}`);
+export const DetailSupplierServices = async ({ client, legal }) => {
+  const response = axios.get(
+    `${baseApi}/maintenance/provider/detail?p_inidproveedor=${client}&p_inidjurinat=${legal}`
+  );
   return (await response).data;
-}
+};

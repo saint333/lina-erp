@@ -4,7 +4,7 @@ import ViewPrincipal from "src/app/components/views";
 
 export default function CardTarjeta() {
   return (
-    <ViewPrincipal 
+    <ViewPrincipal
       header={{
         // title: "Productos",
         breadcrumbs: [
@@ -30,5 +30,5 @@ export default function CardTarjeta() {
         </Card>
       }
     />
-  )
+  );
 }

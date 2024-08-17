@@ -105,9 +105,9 @@ export default function ModalLicense({ open, setOpen, title }) {
         sx={{ width: "100%" }}
         component={"form"}
         onSubmit={handleSubmit(onSubmit)}
-        className='flex flex-col gap-3 mb-3'
+        className='flex flex-col gap-10 mb-3'
       >
-        <div className='flex flex-col gap-3 md:flex-row'>
+        <div className='flex flex-col gap-10 md:flex-row'>
           <TextField
             label='N° Licencia'
             variant='outlined'

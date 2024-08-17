@@ -4,7 +4,7 @@ import ViewPrincipal from "src/app/components/views";
 
 export default function Product() {
   return (
-    <ViewPrincipal 
+    <ViewPrincipal
       header={{
         // title: "Productos",
         breadcrumbs: [

@@ -20,6 +20,7 @@ export default function Service({
   setFormValue,
   caliber,
 }) {
+  // console.log("🚀 ~ category:", category)
   const [valueSelect, setValueSelect] = useState({
     ...arrayData,
     caliber,
@@ -57,8 +58,8 @@ export default function Service({
   };
 
   return (
-    <div className='flex gap-3 flex-col'>
-      <div className='flex flex-col gap-3 md:flex-row'>
+    <div className='flex gap-10 flex-col'>
+      <div className='flex flex-col gap-10 md:flex-row'>
         <CustomSelect
           label='Categoria'
           textKey='category'
@@ -87,7 +88,7 @@ export default function Service({
           )}
         />
       </div>
-      <div className='flex flex-col gap-3 md:flex-row'>
+      <div className='flex flex-col gap-10 md:flex-row'>
         <CustomSelect
           label='Tipo'
           textKey='type'
@@ -109,7 +110,7 @@ export default function Service({
           ))}
         </CustomSelect>
       </div>
-      <div className='flex flex-col gap-3 md:flex-row'>
+      <div className='flex flex-col gap-10 md:flex-row'>
         <CustomSelect
           label='Modelo'
           textKey='model'
@@ -135,7 +136,7 @@ export default function Service({
           ))}
         </CustomSelect>
       </div>
-      <div className='flex flex-col gap-3 md:flex-row'>
+      <div className='flex flex-col gap-10 md:flex-row'>
         <CustomSelect
           label='Acabado'
           textKey='finish'
@@ -173,7 +174,7 @@ export default function Service({
           />
         )}
       />
-      <div className='flex flex-col gap-3 md:flex-row'>
+      <div className='flex flex-col gap-10 md:flex-row'>
         <CustomSelect label='Medida' textKey='measure'>
           {valueSelect.measure?.map((item, index) => (
             <MenuItem key={index} value={item.p_inidfamiliadetalle}>

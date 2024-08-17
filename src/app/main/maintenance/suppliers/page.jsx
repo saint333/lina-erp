@@ -10,15 +10,15 @@ export default function Suppliers() {
         breadcrumbs: [
           {
             title: "Inicio",
-            href: "/",
+            link: "/dashboard",
           },
           {
             title: "Mantenimiento",
-            href: "/",
+            // link: "/",
           },
           {
             title: "Proveedores",
-            href: "/",
+            // link: "/",
           },
         ],
       }}

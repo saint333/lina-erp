@@ -6,7 +6,10 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useForm } from "react-hook-form";
 import Service from "./tabs/services";
 import Family from "./tabs/family";
-import { fetchDataProduct, ProductServices } from "src/app/services/maintenance/product";
+import {
+  fetchDataProduct,
+  ProductServices,
+} from "src/app/services/maintenance/product";
 import { CancelButton, SaveButton } from "../../button/button";
 import CustomTabPanel, { a11yProps } from "../../tabs/tabs";
 
@@ -21,7 +24,7 @@ export default function ModalProduct({ open, setOpen, title }) {
     control,
     reset,
     setValue: setFormValue,
-    getValues
+    getValues,
   } = useForm({
     defaultValues: {
       category: "",
@@ -56,9 +59,13 @@ export default function ModalProduct({ open, setOpen, title }) {
 
   useEffect(() => {
     const fecthData = async () => {
-      const response = await fetchDataProduct(1, 0);
+      const [response, responseCaliber] = await Promise.all([
+        fetchDataProduct(1, 0),
+        fetchDataProduct(5, 0),
+      ]);
+
+      // console.log("🚀 ~ fecthData ~ response:", response)
       setCategory(response);
-      const responseCaliber = await fetchDataProduct(5, 0);
       setCaliber(responseCaliber);
     };
     fecthData();
@@ -123,7 +130,7 @@ export default function ModalProduct({ open, setOpen, title }) {
           />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <Family 
+          <Family
             errors={errors}
             register={register}
             category={category}

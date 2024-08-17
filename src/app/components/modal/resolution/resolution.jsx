@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import ModalBasic from "..";
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { ResolucionServices } from 'src/app/services/maintenance/client';
-import { commonServices } from 'src/app/services';
-import { CancelButton, SaveButton } from '../../button/button';
+import { ResolucionServices } from "src/app/services/maintenance/client";
+import { commonServices } from "src/app/services";
+import { CancelButton, SaveButton } from "../../button/button";
 
 export default function ModalResolution({ open, setOpen, title }) {
   const [cliente, setCliente] = useState([]);
@@ -13,7 +19,7 @@ export default function ModalResolution({ open, setOpen, title }) {
     handleSubmit,
     formState: { errors },
     control,
-    reset
+    reset,
   } = useForm({
     defaultValues: {
       chresolucion: "",
@@ -84,51 +90,59 @@ export default function ModalResolution({ open, setOpen, title }) {
           <SaveButton text='Guardar' onClick={handleSubmit(onSubmit)} />
         </div>
       }
-    > 
-      <div className="flex flex-col gap-3">
-      <fieldset
-        style={{ border: "1px solid rgba(0, 0, 0, 0.23)", padding: "10px" }}
-      >
-        <legend>Datos de la Resolución</legend>
-        <div className='flex gap-3 flex-col md:flex-row'>
-          <TextField
-            label='N° Resolución'
-            variant='outlined'
-            size='small'
-            fullWidth
-            error={errors.chresolucion}
-            helperText={errors.chresolucion ? "Este campo es requerido" : null}
-            {...register("chresolucion", { required: true })}
-          />
-          <TextField
-            label='F. Vencimiento'
-            variant='outlined'
-            size='small'
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            error={errors.chfechavencimiento}
-            type='date'
-            helperText={errors.chfechavencimiento ? "Este campo es requerido" : null}
-            {...register("chfechavencimiento", { required: true })}
-          />
-        </div>
-      </fieldset>
-      <fieldset
-        style={{ border: "1px solid rgba(0, 0, 0, 0.23)", padding: "10px" }}
-      >
-        <legend>Datos del Cliente</legend>
-          <CustomSelect label='Cliente' textKey='p_inidcliente' handleChange={() => null}>
-          {cliente.map((item) => (
-            <MenuItem
-              key={item.p_inidmaestrodetalle}
-              value={item.p_inidmaestrodetalle}
-            >
-              {item.chmaestrodetalle}
-            </MenuItem>
-          ))}
+    >
+      <div className='flex flex-col gap-10'>
+        <fieldset
+          style={{ border: "1px solid rgba(0, 0, 0, 0.23)", padding: "10px" }}
+        >
+          <legend>Datos de la Resolución</legend>
+          <div className='flex gap-10 flex-col md:flex-row'>
+            <TextField
+              label='N° Resolución'
+              variant='outlined'
+              size='small'
+              fullWidth
+              error={errors.chresolucion}
+              helperText={
+                errors.chresolucion ? "Este campo es requerido" : null
+              }
+              {...register("chresolucion", { required: true })}
+            />
+            <TextField
+              label='F. Vencimiento'
+              variant='outlined'
+              size='small'
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              error={errors.chfechavencimiento}
+              type='date'
+              helperText={
+                errors.chfechavencimiento ? "Este campo es requerido" : null
+              }
+              {...register("chfechavencimiento", { required: true })}
+            />
+          </div>
+        </fieldset>
+        <fieldset
+          style={{ border: "1px solid rgba(0, 0, 0, 0.23)", padding: "10px" }}
+        >
+          <legend>Datos del Cliente</legend>
+          <CustomSelect
+            label='Cliente'
+            textKey='p_inidcliente'
+            handleChange={() => null}
+          >
+            {cliente.map((item) => (
+              <MenuItem
+                key={item.p_inidmaestrodetalle}
+                value={item.p_inidmaestrodetalle}
+              >
+                {item.chmaestrodetalle}
+              </MenuItem>
+            ))}
           </CustomSelect>
-      </fieldset>
+        </fieldset>
       </div>
     </ModalBasic>
-  )
+  );
 }

@@ -20,8 +20,12 @@ export default function ConsultModal({ open, setOpen, title }) {
       }
     >
       <div className='p-2'>
-        <iframe src='https://www.recope.go.cr/wp-content/uploads/2017/03/INFORME-ANUAL-DE-VENTAS-2016.pdf' width='100%' height='500px' />
+        <iframe
+          src='https://www.recope.go.cr/wp-content/uploads/2017/03/INFORME-ANUAL-DE-VENTAS-2016.pdf'
+          width='100%'
+          height='500px'
+        />
       </div>
     </ModalBasic>
-  )
+  );
 }

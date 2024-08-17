@@ -22,7 +22,6 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
  */
 function ViewPrincipal({ header, content }) {
   const { title, breadcrumbs } = header || {};
-  function handleClick() {}
 
   return (
     <Root
@@ -45,7 +44,6 @@ function ViewPrincipal({ header, content }) {
                       key={index}
                       color='inherit'
                       to={breadcrumb.link}
-                      onClick={handleClick}
                     >
                       {breadcrumb.title}
                     </Link>

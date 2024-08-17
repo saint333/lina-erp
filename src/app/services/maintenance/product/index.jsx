@@ -43,7 +43,8 @@ export const NewFamily = async (data, letterAccion) => {
   const response = axios.post(`${baseApi}/maintenance/family`, {
     p_inidfamiliadetalle: letterAccion == "I" ? 0 : data.p_inidfamiliadetalle,
     p_inidfamiliacabecera: letterAccion == "D" ? 0 : data.p_inidfamiliacabecera,
-    p_inidfamiliacabecera2: letterAccion == "D" ? 0 : data.p_inidfamiliacabecera2,
+    p_inidfamiliacabecera2:
+      letterAccion == "D" ? 0 : data.p_inidfamiliacabecera2,
     chfamiliadetalle: data.chfamiliadetalle,
     p_iniddominio: 1,
     accion: letterAccion,
