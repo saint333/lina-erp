@@ -19,11 +19,11 @@ function NavigationShortcuts(props) {
 	const isUserGuest = useAppSelector(selectIsUserGuest);
 	const prevUserShortcuts = usePrevious(userShortcuts);
 	const { updateUser: updateUserService } = useAuth();
-	useEffect(() => {
-		if (!isUserGuest && prevUserShortcuts && !_.isEqual(userShortcuts, prevUserShortcuts)) {
-			updateUserService({ data: { shortcuts: userShortcuts } });
-		}
-	}, [isUserGuest, userShortcuts]);
+	// useEffect(() => {
+	// 	if (!isUserGuest && prevUserShortcuts && !_.isEqual(userShortcuts, prevUserShortcuts)) {
+	// 		updateUserService({ data: { shortcuts: userShortcuts } });
+	// 	}
+	// }, [isUserGuest, userShortcuts]);
 
 	function handleShortcutsChange(newShortcuts) {
 		dispatch(setUserShortcuts(newShortcuts));

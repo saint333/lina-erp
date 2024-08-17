@@ -18,6 +18,11 @@ function Table({ columns = [], data = [], acciones, loading, ...rest }) {
     },
     muiTableContainerProps: {
       className: "flex-auto",
+      sx: {
+        "& + div": {
+          minHeight: "4.5rem",
+        },
+      }
     },
     enableStickyHeader: true,
     paginationDisplayMode: "pages",

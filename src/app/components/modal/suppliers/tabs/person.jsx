@@ -8,8 +8,8 @@ export default function Person({
   cliente
 }) {
   return (
-    <div className='flex gap-3 flex-col p-[10px]'>
-      <div className='flex gap-3 flex-col md:flex-row'>
+    <div className='flex gap-10 flex-col p-[10px]'>
+      <div className='flex gap-10 flex-col md:flex-row'>
         <CustomSelect label='Documento' textKey='p_inidtipodocumento'>
           {
             cliente.map((item) => (
@@ -21,12 +21,12 @@ export default function Person({
         </CustomSelect>
         <CustomInput label='N° Documento' textKey='chnrodocumento' />
       </div>
-      <div className='flex gap-3 flex-col md:flex-row'>
+      <div className='flex gap-10 flex-col md:flex-row'>
         <CustomInput label='Ap. Paterno' textKey='chapellidopaterno' />
         <CustomInput label='Ap. Materno' textKey='chapellidomaterno' />
       </div>
       <CustomInput label='Nombres' textKey='chnombres' />
-      <div className='flex gap-3 flex-col md:flex-row'>
+      <div className='flex gap-10 flex-col md:flex-row'>
         <TextField
           size='small'
           label='F. Nacimiento'

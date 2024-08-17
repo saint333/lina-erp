@@ -207,7 +207,7 @@ export default function ModalSuppliers({ open, setOpen, title, setData , client 
             <legend>
               <DescriptionIcon color='primary' /> Datos Adicionales
             </legend>
-            <div className='flex gap-3 flex-col md:flex-row'>
+            <div className='flex gap-10 flex-col md:flex-row'>
               <CustomInput label='Telefono' textKey='chtelefono' />
               <CustomInput label='Correo' textKey='chcorreo' />
             </div>
