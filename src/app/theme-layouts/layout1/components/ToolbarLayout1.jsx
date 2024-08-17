@@ -13,8 +13,8 @@ import FullScreenToggle from '../../shared-components/FullScreenToggle';
 import LanguageSwitcher from '../../shared-components/LanguageSwitcher';
 import NavigationShortcuts from '../../shared-components/navigation/NavigationShortcuts';
 import UserMenu from '../../shared-components/UserMenu';
-import DomainComponent from 'app/theme-layouts/shared-components/domain';
-import SucursalComponent from 'app/theme-layouts/shared-components/sucursal';
+import DomainComponent from 'app/theme-layouts/shared-components/Domain';
+import SucursalComponent from 'app/theme-layouts/shared-components/Sucursal';
 
 /**
  * The toolbar layout 1.
