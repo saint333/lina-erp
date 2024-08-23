@@ -1,5 +1,5 @@
 import { Delete, Edit, MoreHoriz } from "@mui/icons-material";
-import { Divider, IconButton, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { AgregarButton } from "../../button/button";
 import Table from "../../table";
@@ -89,18 +89,17 @@ export default function EntryTable({ product }) {
   };
   return (
     <div className='grid gap-4 items-start'>
-      <AgregarButton
-        text='Nuevo Ingreso'
-        className='w-fit'
-        onClick={() => setOpenModal(true)}
-      />
-      <Divider />
       <Table
         columns={columns}
         data={data}
         renderRowActions={renderRowActions}
+        acciones={<AgregarButton
+          text='Nuevo Ingreso'
+          className='w-fit'
+          onClick={() => setOpenModal(true)}
+        />}
       />
-      <EntryModal open={openModal} setOpen={setOpenModal} title="Ingreso de Productos" />
+      {openModal && <EntryModal open={openModal} setOpen={setOpenModal} title="Ingreso de Productos" />}
     </div>
   );
 }

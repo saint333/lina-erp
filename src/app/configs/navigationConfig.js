@@ -87,5 +87,60 @@ const navigationConfig = [
 			},
 		]
 	},
+	{
+		id: 'management',
+		title: 'Gestión',
+		subtitle: '',
+		type: 'group',
+		icon: 'heroicons-outline:home',
+		translate: 'MANAGEMENT',
+		children: [
+			{
+				id: 'management.products',
+				title: 'Productos',
+				type: 'item',
+				icon: 'heroicons-outline:home',
+				url: '/management/products'
+			},
+			{
+				id: 'management.exhibition',
+				title: 'Exhibición',
+				type: 'item',
+				icon: 'heroicons-outline:home',
+				url: '/management/exhibition'
+			},
+			{
+				id: 'management.entry',
+				title: 'Entrada',
+				type: 'item',
+				icon: 'heroicons-outline:home',
+				url: '/management/entry'
+			},
+		]
+	},
+	{
+		id: 'sales',
+		title: 'Ventas',
+		subtitle: '',
+		type: 'group',
+		icon: 'heroicons-outline:home',
+		translate: 'SALES',
+		children:[
+			{
+				id: 'sales.consult',
+				title: 'Ordenes',
+				type: 'item',
+				icon: 'heroicons-outline:home',
+				url: '/sales/consult'
+			},
+			{
+				id: 'sales.guide',
+				title: 'Facturas',
+				type: 'item',
+				icon: 'heroicons-outline:home',
+				url: '/sales/guide'
+			},
+		]
+	}
 ];
 export default navigationConfig;

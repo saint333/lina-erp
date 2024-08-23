@@ -83,6 +83,9 @@ export default function KardexTable({ product }) {
     );
   };
   return (
-    <Table columns={columns} data={data} renderRowActions={renderRowActions} />
+    <div className='grid gap-4 items-start'>
+      <Table columns={columns} data={data} renderRowActions={renderRowActions} />
+
+    </div>
   );
 }

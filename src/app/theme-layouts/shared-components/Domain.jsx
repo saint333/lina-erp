@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { DataHeader } from "src/app/services";
 
-const DomainComponent = ({session}) => {
+const DomainComponent = () => {
   const [domain, setDomain] = useState(null);
   const {
     formState: { errors },
@@ -47,12 +47,12 @@ const DomainComponent = ({session}) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await DataHeader(session);
+      const data = await DataHeader();
       setDomain(data);
       setValue("domain", data.p_iniddominio_default);
     };
     fetchData();
-  }, [session, setValue]);
+  }, [setValue]);
 
   if (!domain) {
     return <Skeleton width={200} height={65}/>

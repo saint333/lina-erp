@@ -1,15 +1,6 @@
 import Dashboard from "./Dashboard";
 
 const DashboardConfig = {
-	settings: {
-		layout: {
-			config: {
-				footer: {
-					display: false
-				},
-			}
-		}
-	},
 	routes: [
 		{
 			path: 'dashboard',

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { SucursalData } from "src/app/services";
 
-const SucursalComponent = ({session}) => {
+const SucursalComponent = () => {
   const [domain, setDomain] = useState(null);
   const {
     formState: { errors },
@@ -47,12 +47,12 @@ const SucursalComponent = ({session}) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await SucursalData(session);
+      const data = await SucursalData();
       setDomain(data);
       setValue("sucursal", data.p_iniddominio_default);
     };
     fetchData();
-  }, [session, setValue]);
+  }, [setValue]);
 
   if (!domain) {
     return <Skeleton width={200} height={65}/>

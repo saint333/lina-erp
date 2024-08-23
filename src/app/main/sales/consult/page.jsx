@@ -1,27 +1,31 @@
 import { Card, CardContent } from "@mui/material";
 import ConsultTable from "src/app/components/sales/consult";
-
-// const Data = async () => {
-//   const session = await auth();
-//   const responde = await fetch(process.env.URL_API + "/maintenance/client/card",
-//     {
-//       method: "GET",
-//       cache: "no-store",
-//       headers: {
-//         Authorization: `JWT ${session.user.token_acceso}`,
-//       },
-//     }
-//   );
-//   const lists = await responde.json();
-//   return lists
-// };
+import ViewPrincipal from "src/app/components/views";
 
 export default function Consult() {
   return (
-    <Card>
-      <CardContent>
-        <ConsultTable product={[]}/>
-      </CardContent>
-    </Card>
-  )
+    <ViewPrincipal
+      header={{
+        breadcrumbs: [
+          {
+            title: "Inicio",
+            link: "/dashboard",
+          },
+          {
+            title: "Ventas",
+          },
+          {
+            title: "Consultas",
+          },
+        ],
+      }}
+      content={
+        <Card>
+          <CardContent>
+            <ConsultTable product={[]} />
+          </CardContent>
+        </Card>
+      }
+    />
+  );
 }

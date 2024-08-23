@@ -125,13 +125,13 @@ export default function ConsultTable({product}) {
   };
 
   return (
-    <>
+    <div className='grid gap-4 items-start'>
     <Table
       columns={columns}
       data={data}
       renderRowActions={renderRowActions}
     />
-    <ConsultModal open={openModal} setOpen={setOpenModal} title='Facturación Electronica - Salva la Amazonia con tus facturas' />
-    </>
+    {openModal && <ConsultModal open={openModal} setOpen={setOpenModal} title='Facturación Electronica - Salva la Amazonia con tus facturas' />}
+    </div>
   );
 }
