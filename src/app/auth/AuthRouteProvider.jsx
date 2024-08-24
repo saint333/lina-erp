@@ -25,7 +25,7 @@ function AuthRouteProvider(props) {
 	const jwtService = useJwtAuth({
 		config: {
 			tokenStorageKey: 'jwt_access_token',
-			signInUrl: 'https://b1rf2oxmn2.execute-api.us-east-2.amazonaws.com/auth/',
+			signInUrl: 'https://api-erp.linaerp.com/auth/',
 			signUpUrl: 'mock-api/auth/sign-up',
 			tokenRefreshUrl: 'mock-api/auth/refresh',
 			getUserUrl: 'mock-api/auth/user',
