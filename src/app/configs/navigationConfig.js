@@ -28,119 +28,129 @@ const navigationConfig = [
 		]
 	},
 	{
-		id: 'maintenance',
-		title: 'Mantenimiento',
+		id: 'sistema',
+		title: 'Sistema Integral',
 		subtitle: '',
 		type: 'group',
 		icon: 'heroicons-outline:home',
-		translate: 'MAINTENANCE',
+		translate: 'SISTEMA',
 		children: [
 			{
-				id: 'maintenance.suppliers',
-				title: 'Proveedores',
-				type: 'item',
-				icon: 'heroicons-outline:home',
-				url: '/maintenance/suppliers'
-			},
-			{
-				id: 'maintenance.clients',
-				title: 'Clientes',
+				id: 'maintenance',
+				title: 'Mantenimiento',
+				subtitle: '',
 				type: 'collapse',
 				icon: 'heroicons-outline:home',
+				translate: 'MAINTENANCE',
 				children: [
 					{
-						id: 'maintenance.list',
-						title: 'Clientes',
+						id: 'maintenance.suppliers',
+						title: 'Proveedores',
 						type: 'item',
 						icon: 'heroicons-outline:home',
-						url: '/maintenance/client/list'
+						url: '/maintenance/suppliers'
 					},
 					{
-						id: 'maintenance.card',
+						id: 'maintenance.clients',
 						title: 'Clientes',
-						type: 'item',
+						type: 'collapse',
 						icon: 'heroicons-outline:home',
-						url: '/maintenance/client/card'
+						children: [
+							{
+								id: 'maintenance.list',
+								title: 'Clientes',
+								type: 'item',
+								icon: 'heroicons-outline:home',
+								url: '/maintenance/client/list'
+							},
+							{
+								id: 'maintenance.card',
+								title: 'Clientes',
+								type: 'item',
+								icon: 'heroicons-outline:home',
+								url: '/maintenance/client/card'
+							},
+							{
+								id: 'maintenance.license',
+								title: 'Clientes',
+								type: 'item',
+								icon: 'heroicons-outline:home',
+								url: '/maintenance/client/license'
+							},
+							{
+								id: 'maintenance.resolution',
+								title: 'Clientes',
+								type: 'item',
+								icon: 'heroicons-outline:home',
+								url: '/maintenance/client/resolution'
+							},
+						]
 					},
 					{
-						id: 'maintenance.license',
-						title: 'Clientes',
+						id: 'maintenance.products',
+						title: 'Productos',
 						type: 'item',
 						icon: 'heroicons-outline:home',
-						url: '/maintenance/client/license'
-					},
-					{
-						id: 'maintenance.resolution',
-						title: 'Clientes',
-						type: 'item',
-						icon: 'heroicons-outline:home',
-						url: '/maintenance/client/resolution'
+						url: '/maintenance/products'
 					},
 				]
 			},
 			{
-				id: 'maintenance.products',
-				title: 'Productos',
-				type: 'item',
+				id: 'management',
+				title: 'Gestión',
+				subtitle: '',
+				type: 'collapse',
 				icon: 'heroicons-outline:home',
-				url: '/maintenance/products'
+				translate: 'MANAGEMENT',
+				children: [
+					{
+						id: 'management.products',
+						title: 'Productos',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/management/products'
+					},
+					{
+						id: 'management.exhibition',
+						title: 'Exhibición',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/management/exhibition'
+					},
+					{
+						id: 'management.entry',
+						title: 'Entrada',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/management/entry'
+					},
+				]
 			},
+			{
+				id: 'sales',
+				title: 'Ventas',
+				subtitle: '',
+				type: 'collapse',
+				icon: 'heroicons-outline:home',
+				translate: 'SALES',
+				children:[
+					{
+						id: 'sales.consult',
+						title: 'Ordenes',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/sales/consult'
+					},
+					{
+						id: 'sales.guide',
+						title: 'Facturas',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/sales/guide'
+					},
+				]
+			}
 		]
 	},
-	{
-		id: 'management',
-		title: 'Gestión',
-		subtitle: '',
-		type: 'group',
-		icon: 'heroicons-outline:home',
-		translate: 'MANAGEMENT',
-		children: [
-			{
-				id: 'management.products',
-				title: 'Productos',
-				type: 'item',
-				icon: 'heroicons-outline:home',
-				url: '/management/products'
-			},
-			{
-				id: 'management.exhibition',
-				title: 'Exhibición',
-				type: 'item',
-				icon: 'heroicons-outline:home',
-				url: '/management/exhibition'
-			},
-			{
-				id: 'management.entry',
-				title: 'Entrada',
-				type: 'item',
-				icon: 'heroicons-outline:home',
-				url: '/management/entry'
-			},
-		]
-	},
-	{
-		id: 'sales',
-		title: 'Ventas',
-		subtitle: '',
-		type: 'group',
-		icon: 'heroicons-outline:home',
-		translate: 'SALES',
-		children:[
-			{
-				id: 'sales.consult',
-				title: 'Ordenes',
-				type: 'item',
-				icon: 'heroicons-outline:home',
-				url: '/sales/consult'
-			},
-			{
-				id: 'sales.guide',
-				title: 'Facturas',
-				type: 'item',
-				icon: 'heroicons-outline:home',
-				url: '/sales/guide'
-			},
-		]
-	}
 ];
 export default navigationConfig;

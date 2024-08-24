@@ -48,6 +48,7 @@ function jwtSignInTab() {
         <Controller
           name='usuario'
           control={control}
+          rules={{ required: "Email es requerido" }}
           render={({ field }) => (
             <TextField
               {...field}
@@ -56,8 +57,8 @@ function jwtSignInTab() {
               autoFocus
               type='email'
               error={!!errors.usuario}
+              helperText={errors.usuario?.message}
               variant='outlined'
-              required
               fullWidth
             />
           )}
@@ -66,6 +67,7 @@ function jwtSignInTab() {
         <Controller
           name='password'
           control={control}
+          rules={{required: 'Contraseña es requerido'}}
           render={({ field }) => (
             <TextField
               {...field}
@@ -73,8 +75,8 @@ function jwtSignInTab() {
               label='Password'
               type='password'
               error={!!errors.password}
+              helperText={errors.password?.message}
               variant='outlined'
-              required
               fullWidth
             />
           )}
@@ -85,7 +87,6 @@ function jwtSignInTab() {
           color='secondary'
           className='mt-16 w-full'
           aria-label='Sign in'
-          disabled={_.isEmpty(dirtyFields) || !isValid}
           type='submit'
           size='large'
         >
