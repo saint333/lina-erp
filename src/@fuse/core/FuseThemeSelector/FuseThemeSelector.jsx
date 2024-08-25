@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import ThemePreview from '@fuse/core/FuseThemeSelector/ThemePreview';
+import { useTheme } from '@emotion/react';
 
 /**
  * The FuseThemeSchemes component is responsible for rendering a list of theme schemes with preview images.
@@ -8,17 +9,25 @@ import ThemePreview from '@fuse/core/FuseThemeSelector/ThemePreview';
  */
 function FuseThemeSelector(props) {
 	const { onSelect, options } = props;
+	const {palette: {mode}} = useTheme();
 	return (
 		<div>
 			<div className="flex flex-col w-full">
-				{options.map((item) => (
-					<ThemePreview
-						key={item.id}
-						className="mb-24"
-						theme={item}
-						onSelect={onSelect}
-					/>
-				))}
+				{
+					mode === 'dark' ? (
+						<ThemePreview
+							className="mx-2"
+							theme={options[0]}
+							onSelect={onSelect}
+						/>
+					) : (
+						<ThemePreview
+							className="mx-2"
+							theme={options[1]}
+							onSelect={onSelect}
+						/>
+					)
+				}
 			</div>
 		</div>
 	);

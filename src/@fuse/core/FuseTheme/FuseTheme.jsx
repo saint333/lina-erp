@@ -80,6 +80,7 @@ function FuseTheme(props) {
 		document.body.dir = direction;
 	}, [direction]);
 	useEffect(() => {
+		localStorage.setItem('theme', mode);
 		document.body.classList.add(mode === 'light' ? 'light' : 'dark');
 		document.body.classList.remove(mode === 'light' ? 'dark' : 'light');
 	}, [mode]);

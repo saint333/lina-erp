@@ -158,7 +158,7 @@ const useJwtAuth = (props) => {
    * Sign in
    */
   const signIn = async (credentials) => {
-    setIsLoading(true);
+    // setIsLoading(true);
     const response = axios.post(authConfig.signInUrl, credentials);
     response.then(
       (res) => {

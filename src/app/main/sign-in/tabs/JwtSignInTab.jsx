@@ -3,6 +3,9 @@ import Button from "@mui/material/Button";
 import { Controller, useForm } from "react-hook-form";
 import _ from "@lodash";
 import { useAuth } from "src/app/auth/AuthRouteProvider";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useRef, useState } from "react";
+import { useSnackbar } from "notistack";
 /**
  * Form Validation Schema
  */
@@ -18,21 +21,27 @@ function jwtSignInTab() {
     defaultValues,
   });
   const { isValid, dirtyFields, errors } = formState;
+  const [token, setToken] = useState(null);
+  const { enqueueSnackbar} = useSnackbar();
 
   function onSubmit(formData) {
     const { usuario, password } = formData;
+    if (!token) {
+      return enqueueSnackbar("Por favor, verifica que no eres un robot", {
+        variant: "error",
+        style:{ fontSize: "1.3rem" }
+      });
+    }
     jwtService
       .signIn({
         usuario,
         password,
       })
       .catch((error) => {
-        const errorData = error.response.data;
-        errorData.forEach((err) => {
-          setError(err.type, {
-            type: "manual",
-            message: err.message,
-          });
+        console.log("🚀 ~ onSubmit ~ error:", error)
+        enqueueSnackbar(error.response.data.message, {
+          variant: "error",
+          style:{ fontSize: "1.3rem" }
         });
       });
   }
@@ -42,7 +51,7 @@ function jwtSignInTab() {
       <form
         name='loginForm'
         noValidate
-        className='mt-32 flex w-full flex-col justify-center'
+        className='mt-32 flex w-[304px] flex-col justify-center'
         onSubmit={handleSubmit(onSubmit)}
       >
         <Controller
@@ -67,7 +76,7 @@ function jwtSignInTab() {
         <Controller
           name='password'
           control={control}
-          rules={{required: 'Contraseña es requerido'}}
+          rules={{ required: "Contraseña es requerido" }}
           render={({ field }) => (
             <TextField
               {...field}
@@ -80,6 +89,13 @@ function jwtSignInTab() {
               fullWidth
             />
           )}
+        />
+
+        <ReCAPTCHA
+          // sitekey='6LdyZb0nAAAAAE6so_vgQ2JbuZPymOO1x7HvnF6I'
+          sitekey='6Lfw98opAAAAAEKfWCcjORbDgJye7htjeS_GUY20'
+          onChange={(e) => setToken(e)}
+          className="w-full"
         />
 
         <Button

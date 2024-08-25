@@ -35,7 +35,7 @@ function App() {
 				>
 					<AuthRouteProvider>
 						<SnackbarProvider
-							maxSnack={5}
+							maxSnack={4}
 							anchorOrigin={{
 								vertical: 'bottom',
 								horizontal: 'right'
