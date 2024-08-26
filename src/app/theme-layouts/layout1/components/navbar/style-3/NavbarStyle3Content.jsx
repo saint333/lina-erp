@@ -1,14 +1,14 @@
-import FuseScrollbars from '@fuse/core/FuseScrollbars';
+import LinaScrollbars from '@lina/core/LinaScrollbars';
 import { styled, ThemeProvider, useTheme } from '@mui/material/styles';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
-import FuseNavigation from '@fuse/core/FuseNavigation';
-import { selectContrastMainTheme } from '@fuse/core/FuseSettings/fuseSettingsSlice';
+import LinaNavigation from '@lina/core/LinaNavigation';
+import { selectContrastMainTheme } from '@lina/core/LinaSettings/linaSettingsSlice';
 import { useLocation } from 'react-router-dom';
-import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
-import isUrlInChildren from '@fuse/core/FuseNavigation/isUrlInChildren';
+import useThemeMediaQuery from '@lina/hooks/useThemeMediaQuery';
+import isUrlInChildren from '@lina/core/LinaNavigation/isUrlInChildren';
 import { selectNavigation } from 'app/theme-layouts/shared-components/navigation/store/navigationSlice';
 import { navbarCloseMobile } from 'app/theme-layouts/shared-components/navbar/navbarSlice';
 
@@ -16,7 +16,7 @@ const Root = styled('div')(({ theme }) => ({
 	backgroundColor: theme.palette.background.default,
 	color: theme.palette.text.primary
 }));
-const StyledPanel = styled(FuseScrollbars)(({ theme, opened }) => ({
+const StyledPanel = styled(LinaScrollbars)(({ theme, opened }) => ({
 	backgroundColor: theme.palette.background.default,
 	color: theme.palette.text.primary,
 	transition: theme.transitions.create(['opacity'], {
@@ -95,7 +95,7 @@ function NavbarStyle3Content(props) {
 			<Root className={clsx('flex h-full flex-auto', className)}>
 				<ThemeProvider theme={contrastTheme}>
 					<div
-						id="fuse-navbar-side-panel"
+						id="lina-navbar-side-panel"
 						className="flex shrink-0 flex-col items-center"
 					>
 						<img
@@ -104,11 +104,11 @@ function NavbarStyle3Content(props) {
 							alt="logo"
 						/>
 
-						<FuseScrollbars
+						<LinaScrollbars
 							className="flex min-h-0 w-full flex-1 justify-center overflow-y-auto overflow-x-hidden"
 							option={{ suppressScrollX: true, wheelPropagation: false }}
 						>
-							<FuseNavigation
+							<LinaNavigation
 								className={clsx('navigation')}
 								navigation={navigation}
 								layout="vertical-2"
@@ -117,18 +117,18 @@ function NavbarStyle3Content(props) {
 								selectedId={selectedNavigation[0]?.id}
 								dense={Boolean(dense)}
 							/>
-						</FuseScrollbars>
+						</LinaScrollbars>
 					</div>
 				</ThemeProvider>
 
 				{selectedNavigation.length > 0 && (
 					<StyledPanel
-						id="fuse-navbar-panel"
+						id="lina-navbar-panel"
 						opened={panelOpen}
 						className={clsx('overflow-y-auto overflow-x-hidden shadow')}
 						option={{ suppressScrollX: true, wheelPropagation: false }}
 					>
-						<FuseNavigation
+						<LinaNavigation
 							className={clsx('navigation')}
 							navigation={selectedNavigation}
 							layout="vertical"

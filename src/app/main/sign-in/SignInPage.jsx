@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 import CardContent from '@mui/material/CardContent';
 import _ from '@lodash';
 import Button from '@mui/material/Button';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import LinaSvgIcon from '@lina/core/LinaSvgIcon';
 import JwtLoginTab from './tabs/JwtSignInTab';
 
 
@@ -115,7 +115,7 @@ function SignInPage() {
 						<div>our community</div>
 					</div>
 					<div className="mt-24 text-lg leading-6 tracking-tight text-gray-400">
-						Fuse helps developers to build organized and well coded dashboards full of beautiful and rich
+						Lina helps developers to build organized and well coded dashboards full of beautiful and rich
 						modules. Join us and start building your application today.
 					</div>
 					<div className="mt-32 flex items-center">

@@ -44,7 +44,7 @@ export const navbarSlice = createSlice({
 		}
 	},
 	selectors: {
-		selectFuseNavbar: (navbar) => navbar
+		selectLinaNavbar: (navbar) => navbar
 	}
 });
 /**
@@ -63,5 +63,5 @@ export const {
 	navbarCloseMobile,
 	navbarToggleMobile
 } = navbarSlice.actions;
-export const { selectFuseNavbar } = injectedSlice.selectors;
+export const { selectLinaNavbar } = injectedSlice.selectors;
 export default navbarSlice.reducer;

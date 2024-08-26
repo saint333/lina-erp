@@ -1,12 +1,12 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import i18n from 'src/i18n';
-import { setDefaultSettings } from '@fuse/core/FuseSettings/fuseSettingsSlice';
+import { setDefaultSettings } from '@lina/core/LinaSettings/linaSettingsSlice';
 /**
  * Changes the language of the application and updates the settings if necessary.
  */
 export const changeLanguage = (languageId) => async (dispatch, getState) => {
 	const AppState = getState();
-	const { direction } = AppState.fuseSettings.defaults;
+	const { direction } = AppState.linaSettings.defaults;
 	const newLangDirection = i18n.dir(languageId);
 
 	/*

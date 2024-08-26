@@ -1,8 +1,8 @@
-import FuseNavigation from '@fuse/core/FuseNavigation';
+import LinaNavigation from '@lina/core/LinaNavigation';
 import clsx from 'clsx';
 import { useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
-import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
+import useThemeMediaQuery from '@lina/hooks/useThemeMediaQuery';
 import withSlices from 'app/store/withSlices';
 import { navigationSlice, selectNavigation } from './store/navigationSlice';
 import { navbarCloseMobile } from '../navbar/navbarSlice';
@@ -20,7 +20,7 @@ function Navigation(props) {
 		}
 
 		return (
-			<FuseNavigation
+			<LinaNavigation
 				className={clsx('navigation flex-1', className)}
 				navigation={navigation}
 				layout={layout}

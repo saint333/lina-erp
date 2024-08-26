@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import clsx from 'clsx';
 import Button from '@mui/material/Button';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import LinaSvgIcon from '@lina/core/LinaSvgIcon';
 import Dialog from '@mui/material/Dialog';
-import { selectFuseCurrentSettings } from '@fuse/core/FuseSettings/fuseSettingsSlice';
-import FuseHighlight from '@fuse/core/FuseHighlight';
+import { selectLinaCurrentSettings } from '@lina/core/LinaSettings/linaSettingsSlice';
+import LinaHighlight from '@lina/core/LinaHighlight';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -15,10 +15,10 @@ import { useAppSelector } from 'app/store/hooks';
 /**
  * The settings viewer dialog.
  */
-function FuseSettingsViewerDialog(props) {
+function LinaSettingsViewerDialog(props) {
 	const { className = '' } = props;
 	const [openDialog, setOpenDialog] = useState(false);
-	const settings = useAppSelector(selectFuseCurrentSettings);
+	const settings = useAppSelector(selectLinaCurrentSettings);
 	const jsonStringifiedSettings = JSON.stringify(settings);
 	const queryString = qs.stringify({
 		defaultSettings: jsonStringifiedSettings,
@@ -40,7 +40,7 @@ function FuseSettingsViewerDialog(props) {
 				color="secondary"
 				className="w-full"
 				onClick={handleOpenDialog}
-				startIcon={<FuseSvgIcon>heroicons-solid:code</FuseSvgIcon>}
+				startIcon={<LinaSvgIcon>heroicons-solid:code</LinaSvgIcon>}
 			>
 				View settings as json/query params
 			</Button>
@@ -50,16 +50,16 @@ function FuseSettingsViewerDialog(props) {
 				onClose={handleCloseDialog}
 				aria-labelledby="form-dialog-title"
 			>
-				<DialogTitle>Fuse Settings Viewer</DialogTitle>
+				<DialogTitle>Lina Settings Viewer</DialogTitle>
 				<DialogContent>
 					<Typography className="mb-16 mt-24 text-16 font-bold">JSON</Typography>
 
-					<FuseHighlight
+					<LinaHighlight
 						component="pre"
 						className="language-json"
 					>
 						{JSON.stringify(settings, null, 2)}
-					</FuseHighlight>
+					</LinaHighlight>
 
 					<Typography className="mb-16 mt-24 text-16 font-bold">Query Params</Typography>
 
@@ -79,4 +79,4 @@ function FuseSettingsViewerDialog(props) {
 	);
 }
 
-export default FuseSettingsViewerDialog;
+export default LinaSettingsViewerDialog;

@@ -1,16 +1,16 @@
 import { styled } from "@mui/material/styles";
-import FuseMessage from "@fuse/core/FuseMessage";
+import LinaMessage from "@lina/core/LinaMessage";
 import AppContext from "app/AppContext";
 import { lazy, memo, Suspense, useContext } from "react";
 import { useRoutes } from "react-router-dom";
-import { selectFuseCurrentLayoutConfig } from "@fuse/core/FuseSettings/fuseSettingsSlice";
-import FuseSuspense from "@fuse/core/FuseSuspense";
+import { selectLinaCurrentLayoutConfig } from "@lina/core/LinaSettings/linaSettingsSlice";
+import LinaSuspense from "@lina/core/LinaSuspense";
 import { useAppSelector } from "app/store/hooks";
 import LeftSideLayout1 from "./components/LeftSideLayout1";
 import NavbarWrapperLayout1 from "./components/NavbarWrapperLayout1";
 import ToolbarLayout1 from "./components/ToolbarLayout1";
 
-const FuseDialog = lazy(() => import("@fuse/core/FuseDialog/FuseDialog"));
+const LinaDialog = lazy(() => import("@lina/core/LinaDialog/LinaDialog"));
 const Root = styled("div")(({ config }) => ({
   ...(config.mode === "boxed" && {
     clipPath: "inset(0)",
@@ -33,11 +33,11 @@ const Root = styled("div")(({ config }) => ({
  */
 function Layout1(props) {
   const { children } = props;
-  const config = useAppSelector(selectFuseCurrentLayoutConfig);
+  const config = useAppSelector(selectLinaCurrentLayoutConfig);
   const appContext = useContext(AppContext);
   const { routes } = appContext;
   return (
-    <Root id='fuse-layout' config={config} className='flex w-full'>
+    <Root id='lina-layout' config={config} className='flex w-full'>
       {config.leftSidePanel.display && <LeftSideLayout1 />}
 
       <div className='flex min-w-0 flex-auto'>
@@ -46,7 +46,7 @@ function Layout1(props) {
         )}
 
         <main
-          id='fuse-main'
+          id='lina-main'
           className='relative z-10 flex min-h-full min-w-0 flex-auto flex-col'
         >
           {config.toolbar.display && (
@@ -56,10 +56,10 @@ function Layout1(props) {
           )}
 
           <div className='relative z-10 flex min-h-0 flex-auto flex-col'>
-            <FuseSuspense>{useRoutes(routes)}</FuseSuspense>
+            <LinaSuspense>{useRoutes(routes)}</LinaSuspense>
 
             <Suspense>
-              <FuseDialog />
+              <LinaDialog />
             </Suspense>
             {children}
           </div>
@@ -70,7 +70,7 @@ function Layout1(props) {
         )}
       </div>
 
-      <FuseMessage />
+      <LinaMessage />
     </Root>
   );
 }

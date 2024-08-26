@@ -1,9 +1,9 @@
 import IconButton from '@mui/material/IconButton';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
-import { selectFuseCurrentSettings, setDefaultSettings } from '@fuse/core/FuseSettings/fuseSettingsSlice';
+import { selectLinaCurrentSettings, setDefaultSettings } from '@lina/core/LinaSettings/linaSettingsSlice';
 import _ from '@lodash';
-import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import useThemeMediaQuery from '@lina/hooks/useThemeMediaQuery';
+import LinaSvgIcon from '@lina/core/LinaSvgIcon';
 import { navbarToggle, navbarToggleMobile } from './navbarSlice';
 
 /**
@@ -13,17 +13,17 @@ function NavbarToggleButton(props) {
 	const {
 		className = '',
 		children = (
-			<FuseSvgIcon
+			<LinaSvgIcon
 				size={20}
 				color="action"
 			>
 				heroicons-outline:view-list
-			</FuseSvgIcon>
+			</LinaSvgIcon>
 		)
 	} = props;
 	const dispatch = useAppDispatch();
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
-	const settings = useAppSelector(selectFuseCurrentSettings);
+	const settings = useAppSelector(selectLinaCurrentSettings);
 	const { config } = settings.layout;
 	return (
 		<IconButton

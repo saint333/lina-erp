@@ -1,4 +1,4 @@
-import FuseScrollbars from '@fuse/core/FuseScrollbars';
+import LinaScrollbars from '@lina/core/LinaScrollbars';
 import { styled } from '@mui/material/styles';
 import clsx from 'clsx';
 import { memo } from 'react';
@@ -17,7 +17,7 @@ const Root = styled('div')(({ theme }) => ({
 		boxShadow: `inset 0 0 0 20px ${theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.37)' : 'rgba(255, 255, 255, 0.37)'}`
 	}
 }));
-const StyledContent = styled(FuseScrollbars)(() => ({
+const StyledContent = styled(LinaScrollbars)(() => ({
 	overscrollBehavior: 'contain',
 	overflowX: 'hidden',
 	overflowY: 'auto',

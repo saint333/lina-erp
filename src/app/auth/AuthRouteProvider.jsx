@@ -1,9 +1,9 @@
 import { createContext, useCallback, useContext, useMemo } from 'react';
-import FuseAuthorization from '@fuse/core/FuseAuthorization';
+import LinaAuthorization from '@lina/core/LinaAuthorization';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
-import FuseSplashScreen from '@fuse/core/FuseSplashScreen/FuseSplashScreen';
+import LinaSplashScreen from '@lina/core/LinaSplashScreen/LinaSplashScreen';
 import { resetUser, selectUser, selectUserRole, setUser, updateUser } from 'src/app/auth/user/store/userSlice';
-import BrowserRouter from '@fuse/core/BrowserRouter';
+import BrowserRouter from '@lina/core/BrowserRouter';
 import _ from '@lodash';
 import useJwtAuth from './services/jwt/useJwtAuth';
 
@@ -119,13 +119,13 @@ function AuthRouteProvider(props) {
 	 * Render loading screen while loading user data
 	 */
 	if (isLoading) {
-		return <FuseSplashScreen />;
+		return <LinaSplashScreen />;
 	}
 
 	return (
 		<AuthContext.Provider value={combinedAuth}>
 			<BrowserRouter>
-				<FuseAuthorization userRole={userRole}>{children}</FuseAuthorization>
+				<LinaAuthorization userRole={userRole}>{children}</LinaAuthorization>
 			</BrowserRouter>
 		</AuthContext.Provider>
 	);

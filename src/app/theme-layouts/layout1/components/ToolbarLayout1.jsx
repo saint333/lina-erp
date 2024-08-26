@@ -5,12 +5,12 @@ import Toolbar from "@mui/material/Toolbar";
 import clsx from "clsx";
 import { memo } from "react";
 import {
-  changeFuseTheme,
-  selectFuseCurrentLayoutConfig,
+  changeLinaTheme,
+  selectLinaCurrentLayoutConfig,
   selectToolbarTheme,
-} from "@fuse/core/FuseSettings/fuseSettingsSlice";
+} from "@lina/core/LinaSettings/linaSettingsSlice";
 import NavbarToggleButton from "app/theme-layouts/shared-components/navbar/NavbarToggleButton";
-import { selectFuseNavbar } from "app/theme-layouts/shared-components/navbar/navbarSlice";
+import { selectLinaNavbar } from "app/theme-layouts/shared-components/navbar/navbarSlice";
 import { useAppDispatch, useAppSelector } from "app/store/hooks";
 import AdjustFontSize from "../../shared-components/AdjustFontSize";
 import FullScreenToggle from "../../shared-components/FullScreenToggle";
@@ -19,22 +19,22 @@ import NavigationShortcuts from "../../shared-components/navigation/NavigationSh
 import UserMenu from "../../shared-components/UserMenu";
 import DomainComponent from "app/theme-layouts/shared-components/Domain";
 import SucursalComponent from "app/theme-layouts/shared-components/Sucursal";
-import FuseThemeSelector from "@fuse/core/FuseThemeSelector";
+import LinaThemeSelector from "@lina/core/LinaThemeSelector";
 import themeOptions from "app/configs/themeOptions";
-import { showMessage } from "@fuse/core/FuseMessage/fuseMessageSlice";
+import { showMessage } from "@lina/core/LinaMessage/linaMessageSlice";
 
 /**
  * The toolbar layout 1.
  */
 function ToolbarLayout1(props) {
   const { className } = props;
-  const config = useAppSelector(selectFuseCurrentLayoutConfig);
-  const navbar = useAppSelector(selectFuseNavbar);
+  const config = useAppSelector(selectLinaCurrentLayoutConfig);
+  const navbar = useAppSelector(selectLinaNavbar);
   const toolbarTheme = useAppSelector(selectToolbarTheme);
   const dispatch = useAppDispatch();
 
   function handleThemeSelect(_theme) {
-    dispatch(changeFuseTheme(_theme?.section)).then(() => {
+    dispatch(changeLinaTheme(_theme?.section)).then(() => {
       dispatch(
         showMessage({ message: "Cambio de tema aplicado" })
       );
@@ -45,7 +45,7 @@ function ToolbarLayout1(props) {
   return (
     <ThemeProvider theme={toolbarTheme}>
       <AppBar
-        id='fuse-toolbar'
+        id='lina-toolbar'
         className={clsx("relative z-20 flex shadow", className)}
         color='default'
         sx={{
@@ -91,7 +91,7 @@ function ToolbarLayout1(props) {
               <DomainComponent />
               <SucursalComponent />
             </div>
-            <FuseThemeSelector
+            <LinaThemeSelector
               options={themeOptions}
               onSelect={handleThemeSelect}
             />

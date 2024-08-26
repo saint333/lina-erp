@@ -2,9 +2,9 @@ import Hidden from '@mui/material/Hidden';
 import { styled } from '@mui/material/styles';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
-import { navbarCloseMobile, selectFuseNavbar } from 'app/theme-layouts/shared-components/navbar/navbarSlice';
+import { navbarCloseMobile, selectLinaNavbar } from 'app/theme-layouts/shared-components/navbar/navbarSlice';
 import GlobalStyles from '@mui/material/GlobalStyles';
-import { selectFuseCurrentLayoutConfig } from '@fuse/core/FuseSettings/fuseSettingsSlice';
+import { selectLinaCurrentLayoutConfig } from '@lina/core/LinaSettings/linaSettingsSlice';
 import clsx from 'clsx';
 import NavbarStyle3Content from './NavbarStyle3Content';
 
@@ -32,7 +32,7 @@ const StyledNavBar = styled('div')(({ theme, dense, open, folded, position }) =>
 		minWidth: dense ? navbarWidthDense + panelWidth : navbarWidth + panelWidth,
 		width: dense ? navbarWidthDense + panelWidth : navbarWidth + panelWidth,
 		maxWidth: dense ? navbarWidthDense + panelWidth : navbarWidth + panelWidth,
-		'& #fuse-navbar-panel': {
+		'& #lina-navbar-panel': {
 			opacity: '1!important',
 			pointerEvents: 'initial!important'
 		},
@@ -66,11 +66,11 @@ const StyledNavBar = styled('div')(({ theme, dense, open, folded, position }) =>
 }));
 const StyledNavBarMobile = styled(SwipeableDrawer)(() => ({
 	'& .MuiDrawer-paper': {
-		'& #fuse-navbar-side-panel': {
+		'& #lina-navbar-side-panel': {
 			minWidth: 'auto',
 			wdith: 'auto'
 		},
-		'& #fuse-navbar-panel': {
+		'& #lina-navbar-panel': {
 			opacity: '1!important',
 			pointerEvents: 'initial!important'
 		}
@@ -83,19 +83,19 @@ const StyledNavBarMobile = styled(SwipeableDrawer)(() => ({
 function NavbarStyle3(props) {
 	const { className = '', dense = false } = props;
 	const dispatch = useAppDispatch();
-	const config = useAppSelector(selectFuseCurrentLayoutConfig);
-	const navbar = useAppSelector(selectFuseNavbar);
+	const config = useAppSelector(selectLinaCurrentLayoutConfig);
+	const navbar = useAppSelector(selectLinaNavbar);
 	const { folded } = config.navbar;
 	return (
 		<>
 			<GlobalStyles
 				styles={(theme) => ({
-					'& #fuse-navbar-side-panel': {
+					'& #lina-navbar-side-panel': {
 						width: dense ? navbarWidthDense : navbarWidth,
 						minWidth: dense ? navbarWidthDense : navbarWidth,
 						maxWidth: dense ? navbarWidthDense : navbarWidth
 					},
-					'& #fuse-navbar-panel': {
+					'& #lina-navbar-panel': {
 						maxWidth: '100%',
 						width: panelWidth,
 						[theme.breakpoints.up('lg')]: {

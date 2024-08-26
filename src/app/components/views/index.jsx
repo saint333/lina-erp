@@ -1,20 +1,20 @@
 import { styled } from "@mui/material/styles";
-import FusePageSimple from "@fuse/core/FusePageSimple";
+import LinaPageSimple from "@lina/core/LinaPageSimple";
 import { Breadcrumbs, Typography } from "@mui/material";
-import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import LinaSvgIcon from "@lina/core/LinaSvgIcon";
 import { Link } from "react-router-dom";
 
-const Root = styled(FusePageSimple)(({ theme }) => ({
-  "& .FusePageSimple-header": {
+const Root = styled(LinaPageSimple)(({ theme }) => ({
+  "& .LinaPageSimple-header": {
     backgroundColor: theme.palette.background.paper,
     borderBottomWidth: 1,
     borderStyle: "solid",
     borderColor: theme.palette.divider,
   },
-  "& .FusePageSimple-toolbar": {},
-  "& .FusePageSimple-content": {},
-  "& .FusePageSimple-sidebarHeader": {},
-  "& .FusePageSimple-sidebarContent": {},
+  "& .LinaPageSimple-toolbar": {},
+  "& .LinaPageSimple-content": {},
+  "& .LinaPageSimple-sidebarHeader": {},
+  "& .LinaPageSimple-sidebarContent": {},
 }));
 
 /**
@@ -32,9 +32,9 @@ function ViewPrincipal({ header, content }) {
               <div>
                 <Breadcrumbs
                   separator={
-                    <FuseSvgIcon size={20}>
+                    <LinaSvgIcon size={20}>
                       heroicons-solid:chevron-right
-                    </FuseSvgIcon>
+                    </LinaSvgIcon>
                   }
                   aria-label='breadcrumb'
                 >

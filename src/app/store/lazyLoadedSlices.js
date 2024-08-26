@@ -1,5 +1,5 @@
 import { combineSlices } from '@reduxjs/toolkit';
-import { fuseSettingsSlice } from '@fuse/core/FuseSettings/fuseSettingsSlice';
+import { linaSettingsSlice } from '@lina/core/LinaSettings/linaSettingsSlice';
 import { i18nSlice } from 'app/store/i18nSlice';
 import apiService from './apiService';
 import { userSlice } from '../auth/user/store/userSlice';
@@ -10,7 +10,7 @@ export const rootReducer = combineSlices(
 	 * Static slices
 	 */
 	userSlice,
-	fuseSettingsSlice,
+	linaSettingsSlice,
 	i18nSlice,
 	/**
 	 * Dynamic slices

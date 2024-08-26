@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
-import FuseShortcuts from '@fuse/core/FuseShortcuts';
+import LinaShortcuts from '@lina/core/LinaShortcuts';
 import { selectIsUserGuest, selectUserShortcuts, setUserShortcuts } from 'src/app/auth/user/store/userSlice';
-import { usePrevious } from '@fuse/hooks';
+import { usePrevious } from '@lina/hooks';
 import { useEffect } from 'react';
 import _ from '@lodash';
 import { useAuth } from 'src/app/auth/AuthRouteProvider';
@@ -30,7 +30,7 @@ function NavigationShortcuts(props) {
 	}
 
 	return (
-		<FuseShortcuts
+		<LinaShortcuts
 			className={className}
 			variant={variant}
 			navigation={navigation}

@@ -1,9 +1,9 @@
-import FuseLayout from '@fuse/core/FuseLayout';
-import FuseTheme from '@fuse/core/FuseTheme';
+import LinaLayout from '@lina/core/LinaLayout';
+import LinaTheme from '@lina/core/LinaTheme';
 import { SnackbarProvider } from 'notistack';
 import { selectCurrentLanguageDirection } from 'app/store/i18nSlice';
 import themeLayouts from 'app/theme-layouts/themeLayouts';
-import { selectMainTheme } from '@fuse/core/FuseSettings/fuseSettingsSlice';
+import { selectMainTheme } from '@lina/core/LinaSettings/linaSettingsSlice';
 import { useAppSelector } from 'app/store/hooks';
 import { useSelector } from 'react-redux';
 import withAppProviders from './withAppProviders';
@@ -29,7 +29,7 @@ function App() {
 	 */
 	const mainTheme = useSelector(selectMainTheme);
 	return (
-				<FuseTheme
+				<LinaTheme
 					theme={mainTheme}
 					direction={langDirection}
 				>
@@ -44,10 +44,10 @@ function App() {
 								containerRoot: 'bottom-0 right-0 mb-52 md:mb-68 mr-8 lg:mr-80 z-99'
 							}}
 						>
-							<FuseLayout layouts={themeLayouts} />
+							<LinaLayout layouts={themeLayouts} />
 						</SnackbarProvider>
 					</AuthRouteProvider>
-				</FuseTheme>
+				</LinaTheme>
 	);
 }
 

@@ -2,7 +2,7 @@ import Fab from '@mui/material/Fab';
 import { styled } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import clsx from 'clsx';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import LinaSvgIcon from '@lina/core/LinaSvgIcon';
 
 const Root = styled(Tooltip)(({ theme, position }) => ({
 	'& > .button': {
@@ -64,12 +64,12 @@ function NavbarToggleFab(props) {
 				onClick={onClick}
 				disableRipple
 			>
-				<FuseSvgIcon
+				<LinaSvgIcon
 					color="action"
 					className="button-icon"
 				>
 					heroicons-outline:view-list
-				</FuseSvgIcon>
+				</LinaSvgIcon>
 			</Fab>
 		</Root>
 	);

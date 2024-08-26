@@ -1,5 +1,5 @@
-import FuseUtils from '@fuse/utils';
-import FuseLoading from '@fuse/core/FuseLoading';
+import LinaUtils from '@lina/utils';
+import LinaLoading from '@lina/core/LinaLoading';
 import { Navigate } from 'react-router-dom';
 import settingsConfig from 'app/configs/settingsConfig';
 import SignInConfig from '../main/sign-in/SignInConfig';
@@ -24,7 +24,7 @@ const routeConfigs = [
  * The routes of the application.
  */
 const routes = [
-	...FuseUtils.generateRoutesFromConfigs(routeConfigs, settingsConfig.defaultAuth),
+	...LinaUtils.generateRoutesFromConfigs(routeConfigs, settingsConfig.defaultAuth),
 	{
 		path: '/',
 		element: <Navigate to="/dashboard" />,
@@ -32,7 +32,7 @@ const routes = [
 	},
 	{
 		path: 'loading',
-		element: <FuseLoading />
+		element: <LinaLoading />
 	},
 	{
 		path: '404',

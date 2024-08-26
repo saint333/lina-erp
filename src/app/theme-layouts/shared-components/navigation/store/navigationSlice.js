@@ -1,9 +1,9 @@
 import { createEntityAdapter, createSelector, createSlice } from '@reduxjs/toolkit';
 import { selectUserRole } from 'src/app/auth/user/store/userSlice';
-import FuseNavigationHelper from '@fuse/utils/FuseNavigationHelper';
+import LinaNavigationHelper from '@lina/utils/LinaNavigationHelper';
 import i18next from 'i18next';
-import FuseNavItemModel from '@fuse/core/FuseNavigation/models/FuseNavItemModel';
-import FuseUtils from '@fuse/utils';
+import LinaNavItemModel from '@lina/core/LinaNavigation/models/LinaNavItemModel';
+import LinaUtils from '@lina/utils';
 import navigationConfig from 'app/configs/navigationConfig';
 import { selectCurrentLanguageId } from 'app/store/i18nSlice';
 import { rootReducer } from 'app/store/lazyLoadedSlices';
@@ -12,7 +12,7 @@ const navigationAdapter = createEntityAdapter();
 const emptyInitialState = navigationAdapter.getInitialState([]);
 const initialState = navigationAdapter.upsertMany(
 	emptyInitialState,
-	FuseNavigationHelper.flattenNavigation(navigationConfig)
+	LinaNavigationHelper.flattenNavigation(navigationConfig)
 );
 /**
  * Redux Thunk actions related to the navigation store state
@@ -22,8 +22,8 @@ const initialState = navigationAdapter.upsertMany(
  */
 export const appendNavigationItem = (item, parentId) => async (dispatch, getState) => {
 	const AppState = getState();
-	const navigation = FuseNavigationHelper.unflattenNavigation(selectNavigationAll(AppState));
-	dispatch(setNavigation(FuseNavigationHelper.appendNavItem(navigation, FuseNavItemModel(item), parentId)));
+	const navigation = LinaNavigationHelper.unflattenNavigation(selectNavigationAll(AppState));
+	dispatch(setNavigation(LinaNavigationHelper.appendNavItem(navigation, LinaNavItemModel(item), parentId)));
 	return Promise.resolve();
 };
 /**
@@ -31,8 +31,8 @@ export const appendNavigationItem = (item, parentId) => async (dispatch, getStat
  */
 export const prependNavigationItem = (item, parentId) => async (dispatch, getState) => {
 	const AppState = getState();
-	const navigation = FuseNavigationHelper.unflattenNavigation(selectNavigationAll(AppState));
-	dispatch(setNavigation(FuseNavigationHelper.prependNavItem(navigation, FuseNavItemModel(item), parentId)));
+	const navigation = LinaNavigationHelper.unflattenNavigation(selectNavigationAll(AppState));
+	dispatch(setNavigation(LinaNavigationHelper.prependNavItem(navigation, LinaNavItemModel(item), parentId)));
 	return Promise.resolve();
 };
 /**
@@ -40,8 +40,8 @@ export const prependNavigationItem = (item, parentId) => async (dispatch, getSta
  */
 export const updateNavigationItem = (id, item) => async (dispatch, getState) => {
 	const AppState = getState();
-	const navigation = FuseNavigationHelper.unflattenNavigation(selectNavigationAll(AppState));
-	dispatch(setNavigation(FuseNavigationHelper.updateNavItem(navigation, id, item)));
+	const navigation = LinaNavigationHelper.unflattenNavigation(selectNavigationAll(AppState));
+	dispatch(setNavigation(LinaNavigationHelper.updateNavItem(navigation, id, item)));
 	return Promise.resolve();
 };
 /**
@@ -49,8 +49,8 @@ export const updateNavigationItem = (id, item) => async (dispatch, getState) => 
  */
 export const removeNavigationItem = (id) => async (dispatch, getState) => {
 	const AppState = getState();
-	const navigation = FuseNavigationHelper.unflattenNavigation(selectNavigationAll(AppState));
-	dispatch(setNavigation(FuseNavigationHelper.removeNavItem(navigation, id)));
+	const navigation = LinaNavigationHelper.unflattenNavigation(selectNavigationAll(AppState));
+	dispatch(setNavigation(LinaNavigationHelper.removeNavItem(navigation, id)));
 	return Promise.resolve();
 };
 export const {
@@ -66,7 +66,7 @@ export const navigationSlice = createSlice({
 	initialState,
 	reducers: {
 		setNavigation(state, action) {
-			return navigationAdapter.setAll(state, FuseNavigationHelper.flattenNavigation(action.payload));
+			return navigationAdapter.setAll(state, LinaNavigationHelper.flattenNavigation(action.payload));
 		},
 		resetNavigation: () => initialState
 	}
@@ -80,11 +80,11 @@ export const { setNavigation, resetNavigation } = navigationSlice.actions;
 export const selectNavigation = createSelector(
 	[selectNavigationAll, selectUserRole, selectCurrentLanguageId],
 	(navigationSimple, userRole) => {
-		const navigation = FuseNavigationHelper.unflattenNavigation(navigationSimple);
+		const navigation = LinaNavigationHelper.unflattenNavigation(navigationSimple);
 
 		function setAdditionalData(data) {
 			return data?.map((item) => ({
-				hasPermission: Boolean(FuseUtils.hasPermission(item?.auth, userRole)),
+				hasPermission: Boolean(LinaUtils.hasPermission(item?.auth, userRole)),
 				...item,
 				...(item?.translate && item?.title ? { title: i18next.t(`navigation:${item?.translate}`) } : {}),
 				...(item?.children ? { children: setAdditionalData(item?.children) } : {})
@@ -96,6 +96,6 @@ export const selectNavigation = createSelector(
 	}
 );
 export const selectFlatNavigation = createSelector([selectNavigation], (navigation) => {
-	return FuseNavigationHelper.flattenNavigation(navigation);
+	return LinaNavigationHelper.flattenNavigation(navigation);
 });
 export default navigationSlice.reducer;

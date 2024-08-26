@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import clsx from 'clsx';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import LinaSvgIcon from '@lina/core/LinaSvgIcon';
 
 const marks = [
 	{ value: 0.7, label: '70%' },
@@ -44,7 +44,7 @@ function AdjustFontSize(props) {
 				onClick={handleClick}
 				size="large"
 			>
-				<FuseSvgIcon>material-outline:format_size</FuseSvgIcon>
+				<LinaSvgIcon>material-outline:format_size</LinaSvgIcon>
 			</IconButton>
 			<Menu
 				classes={{ paper: 'w-320' }}
@@ -64,12 +64,12 @@ function AdjustFontSize(props) {
 			>
 				<div className="px-24 py-12">
 					<Typography className="mb-8 flex items-center justify-center text-16 font-semibold">
-						<FuseSvgIcon
+						<LinaSvgIcon
 							color="action"
 							className="mr-4"
 						>
 							material-outline:format_size
-						</FuseSvgIcon>
+						</LinaSvgIcon>
 						Font Size
 					</Typography>
 					<Slider

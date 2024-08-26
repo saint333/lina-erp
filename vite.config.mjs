@@ -38,7 +38,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": "/src",
-      "@fuse": "/src/@fuse",
+      "@lina": "/src/@lina",
       "@history": "/src/@history",
       "@lodash": "/src/@lodash",
       "@mock-api": "/src/@mock-api",

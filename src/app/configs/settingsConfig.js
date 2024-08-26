@@ -1,7 +1,7 @@
 import themesConfig from 'app/configs/themesConfig';
 import i18n from '../../i18n';
 /**
- * The settingsConfig object is a configuration object for the Fuse application's settings.
+ * The settingsConfig object is a configuration object for the Lina application's settings.
  */
 const settingsConfig = {
 	/**

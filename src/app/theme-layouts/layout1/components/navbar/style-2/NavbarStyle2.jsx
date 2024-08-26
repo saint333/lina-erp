@@ -5,10 +5,10 @@ import {
 	navbarCloseFolded,
 	navbarCloseMobile,
 	navbarOpenFolded,
-	selectFuseNavbar
+	selectLinaNavbar
 } from 'app/theme-layouts/shared-components/navbar/navbarSlice';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
-import { selectFuseCurrentLayoutConfig } from '@fuse/core/FuseSettings/fuseSettingsSlice';
+import { selectLinaCurrentLayoutConfig } from '@lina/core/LinaSettings/linaSettingsSlice';
 import NavbarStyle2Content from './NavbarStyle2Content';
 
 const navbarWidth = 280;
@@ -65,16 +65,16 @@ const StyledNavbar = styled('div')(({ theme, position, folded, foldedandopened, 
 			'& .react-badge': {
 				opacity: 0
 			},
-			'& .fuse-list-item': {
+			'& .lina-list-item': {
 				width: 56
 			},
-			'& .fuse-list-item-text, & .arrow-icon, & .item-badge': {
+			'& .lina-list-item-text, & .arrow-icon, & .item-badge': {
 				opacity: 0
 			},
-			'& .fuse-list-subheader .fuse-list-subheader-text': {
+			'& .lina-list-subheader .lina-list-subheader-text': {
 				opacity: 0
 			},
-			'& .fuse-list-subheader:before': {
+			'& .lina-list-subheader:before': {
 				content: '""',
 				display: 'block',
 				position: 'absolute',
@@ -106,8 +106,8 @@ const StyledNavbarMobile = styled(SwipeableDrawer)(({ theme }) => ({
  */
 function NavbarStyle2() {
 	const dispatch = useAppDispatch();
-	const config = useAppSelector(selectFuseCurrentLayoutConfig);
-	const navbar = useAppSelector(selectFuseNavbar);
+	const config = useAppSelector(selectLinaCurrentLayoutConfig);
+	const navbar = useAppSelector(selectLinaNavbar);
 	// const folded = !navbar.open;
 	const folded = config.navbar?.folded;
 	const foldedandclosed = folded && !navbar.foldedOpen;
@@ -116,7 +116,7 @@ function NavbarStyle2() {
 		<Root
 			folded={folded ? 1 : 0}
 			open={navbar.open}
-			id="fuse-navbar"
+			id="lina-navbar"
 			className="sticky top-0 z-20 h-screen shrink-0 shadow"
 		>
 			<Hidden lgDown>

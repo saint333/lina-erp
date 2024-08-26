@@ -2,7 +2,7 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import routes from 'app/configs/routesConfig';
 import { useMemo } from 'react';
 import { Provider } from 'react-redux';
-import ErrorBoundary from '@fuse/utils/ErrorBoundary';
+import ErrorBoundary from '@lina/utils/ErrorBoundary';
 import AppContext from './AppContext';
 import store from './store/store';
 

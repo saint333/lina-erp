@@ -1,4 +1,4 @@
-import { fuseDark, skyBlue } from '@fuse/colors';
+import { linaDark, skyBlue } from '@lina/colors';
 import { blueGrey } from '@mui/material/colors';
 /**
  * The lightPaletteText object defines the text color palette for the light theme.
@@ -17,7 +17,7 @@ export const darkPaletteText = {
 	disabled: 'rgb(156, 163, 175)'
 };
 /**
- * The themesConfig object is a configuration object for the color themes of the Fuse application.
+ * The themesConfig object is a configuration object for the color themes of the Lina application.
  */
 export const themesConfig = {
 	default: {
@@ -463,9 +463,9 @@ export const themesConfig = {
 				white: 'rgb(255, 255, 255)'
 			},
 			primary: {
-				light: fuseDark[200],
-				main: fuseDark[500],
-				dark: fuseDark[800],
+				light: linaDark[200],
+				main: linaDark[500],
+				dark: linaDark[800],
 				contrastText: darkPaletteText.primary
 			},
 			secondary: {
@@ -827,9 +827,9 @@ export const themesConfig = {
 			divider: 'rgba(241,245,249,.12)',
 			text: darkPaletteText,
 			primary: {
-				light: fuseDark[200],
-				main: fuseDark[700],
-				dark: fuseDark[800],
+				light: linaDark[200],
+				main: linaDark[700],
+				dark: linaDark[800],
 				contrastText: darkPaletteText.primary
 			},
 			secondary: {

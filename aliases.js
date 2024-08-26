@@ -2,7 +2,7 @@
  * Create aliases for the paths
  */
 const aliases = (prefix = `src`) => ({
-  '@fuse': `${prefix}/@fuse`,
+  '@lina': `${prefix}/@lina`,
   '@history': `${prefix}/@history`,
   '@lodash': `${prefix}/@lodash`,
   '@mock-api': `${prefix}/@mock-api`,

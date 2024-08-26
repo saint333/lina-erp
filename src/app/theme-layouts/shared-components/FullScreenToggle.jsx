@@ -2,7 +2,7 @@ import Tooltip from '@mui/material/Tooltip';
 import clsx from 'clsx';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import LinaSvgIcon from '@lina/core/LinaSvgIcon';
 
 const useEnhancedEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
@@ -97,7 +97,7 @@ function HeaderFullScreenToggle(props) {
 				className={clsx('h-40 w-40', className, isFullScreen && 'text-red-500')}
 				size="large"
 			>
-				<FuseSvgIcon>heroicons-outline:arrows-expand</FuseSvgIcon>
+				<LinaSvgIcon>heroicons-outline:arrows-expand</LinaSvgIcon>
 			</IconButton>
 		</Tooltip>
 	);

@@ -7,7 +7,7 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import LinaSvgIcon from '@lina/core/LinaSvgIcon';
 import { selectUser } from 'src/app/auth/user/store/userSlice';
 import { useAuth } from 'src/app/auth/AuthRouteProvider';
 import { darken } from '@mui/material/styles';
@@ -101,7 +101,7 @@ function UserMenu() {
 							role="button"
 						>
 							<ListItemIcon className="min-w-40">
-								<FuseSvgIcon>heroicons-outline:lock-closed</FuseSvgIcon>
+								<LinaSvgIcon>heroicons-outline:lock-closed</LinaSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Sign In" />
 						</MenuItem>
@@ -111,7 +111,7 @@ function UserMenu() {
 							role="button"
 						>
 							<ListItemIcon className="min-w-40">
-								<FuseSvgIcon>heroicons-outline:user-add </FuseSvgIcon>
+								<LinaSvgIcon>heroicons-outline:user-add </LinaSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Sign up" />
 						</MenuItem>
@@ -125,7 +125,7 @@ function UserMenu() {
 							role="button"
 						>
 							<ListItemIcon className="min-w-40">
-								<FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
+								<LinaSvgIcon>heroicons-outline:user-circle</LinaSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="My Profile" />
 						</MenuItem>
@@ -136,7 +136,7 @@ function UserMenu() {
 							role="button"
 						>
 							<ListItemIcon className="min-w-40">
-								<FuseSvgIcon>heroicons-outline:mail-open</FuseSvgIcon>
+								<LinaSvgIcon>heroicons-outline:mail-open</LinaSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Inbox" />
 						</MenuItem>
@@ -146,7 +146,7 @@ function UserMenu() {
 							}}
 						>
 							<ListItemIcon className="min-w-40">
-								<FuseSvgIcon>heroicons-outline:logout</FuseSvgIcon>
+								<LinaSvgIcon>heroicons-outline:logout</LinaSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Sign out" />
 						</MenuItem>

@@ -1,9 +1,9 @@
 import Hidden from '@mui/material/Hidden';
 import { styled } from '@mui/material/styles';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { selectFuseCurrentLayoutConfig } from '@fuse/core/FuseSettings/fuseSettingsSlice';
+import { selectLinaCurrentLayoutConfig } from '@lina/core/LinaSettings/linaSettingsSlice';
 import { useAppDispatch, useAppSelector } from 'app/store/hooks';
-import { navbarCloseMobile, selectFuseNavbar } from 'app/theme-layouts/shared-components/navbar/navbarSlice';
+import { navbarCloseMobile, selectLinaNavbar } from 'app/theme-layouts/shared-components/navbar/navbarSlice';
 import NavbarStyle1Content from './NavbarStyle1Content';
 
 const navbarWidth = 280;
@@ -43,8 +43,8 @@ const StyledNavBarMobile = styled(SwipeableDrawer)(() => ({
  */
 function NavbarStyle1() {
 	const dispatch = useAppDispatch();
-	const config = useAppSelector(selectFuseCurrentLayoutConfig);
-	const navbar = useAppSelector(selectFuseNavbar);
+	const config = useAppSelector(selectLinaCurrentLayoutConfig);
+	const navbar = useAppSelector(selectLinaNavbar);
 	return (
 		<>
 			<Hidden lgDown>
