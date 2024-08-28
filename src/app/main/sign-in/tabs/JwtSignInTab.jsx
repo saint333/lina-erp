@@ -93,7 +93,7 @@ function jwtSignInTab() {
 
         <ReCAPTCHA
           // sitekey='6LdyZb0nAAAAAE6so_vgQ2JbuZPymOO1x7HvnF6I'
-          sitekey='6Letuy8qAAAAAMpbMu9uw8YvLXKHcZO7WiJaBhPF'
+          sitekey='6LfZcTAqAAAAAI-WCkF-nfRcl8nsO2AtZ5TRRVWE'
           onChange={(e) => setToken(e)}
           className="w-full"
         />
