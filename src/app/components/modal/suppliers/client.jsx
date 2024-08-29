@@ -150,9 +150,9 @@ export default function ModalSuppliers({ open, setOpen, title, setData , client 
       handleClose={handleClose}
       title={title}
       actions={
-        <div className='flex gap-2 justify-end'>
-          <CancelButton text='Cancelar' onClick={handleClose} />
+        <div className='flex gap-10 justify-end'>
           <SaveButton text='Guardar' onClick={handleSubmit(onSubmit)} />
+          <CancelButton text='Cancelar' onClick={handleClose} />
         </div>
       }
     >

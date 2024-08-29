@@ -1,6 +1,7 @@
 import ClientConfig from "./client/config";
 import Product from "./products/page";
 import Suppliers from "./suppliers/page";
+import Various from "./various_maintenance/page";
 
 const MaintenanceConfig = {
 	routes: [
@@ -11,6 +12,10 @@ const MaintenanceConfig = {
     {
       path: 'maintenance/suppliers',
       element: <Suppliers />,
+    },
+		{
+      path: 'maintenance/various',
+      element: <Various />,
     },
     ...ClientConfig
 	]

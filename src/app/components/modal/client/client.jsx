@@ -65,9 +65,11 @@ export default function ModalClient({ open, setOpen, title, client }) {
     defaultValues,
   });
 
-  const handleChange = (event, newValue) => {
+  const handleChange =  async(event, newValue) => {
     console.log("🚀 ~ handleChange ~ newValue:", newValue);
     reset();
+    const type = await commonServices({ letterAccion: newValue === 0 ? 12 : 13 });
+    setTipo(type);
     setValue(newValue);
   };
 
@@ -155,9 +157,9 @@ export default function ModalClient({ open, setOpen, title, client }) {
       handleClose={handleClose}
       title={title}
       actions={
-        <div className='flex gap-2 justify-end'>
-          <CancelButton text='Cancelar' onClick={handleClose} />
+        <div className='flex gap-10 justify-end'>
           <SaveButton text='Guardar' onClick={handleSubmit(onSubmit)} />
+          <CancelButton text='Cancelar' onClick={handleClose} />
         </div>
       }
     >

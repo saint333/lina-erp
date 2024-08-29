@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import {
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {
@@ -90,13 +96,19 @@ export default function ClientList() {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          PopoverClasses={{ paper: "!shadow-lg" }}
+          PopoverClasses={{ paper: "!shadow-sm" }}
         >
           <MenuItem onClick={() => handleEdit(row)}>
-            <Edit />
+            <ListItemIcon>
+              <Edit fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Editar</ListItemText>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <Delete />
+            <ListItemIcon>
+            <Delete fontSize="small"/>
+            </ListItemIcon>
+            <ListItemText>Eliminar</ListItemText>
           </MenuItem>
         </Menu>
       </div>

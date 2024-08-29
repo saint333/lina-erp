@@ -25,7 +25,7 @@ export default function ModalBasic({
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'
     >
-      <Box sx={style} className='w-11/12 md:w-3/4 lg:w-3/6 rounded-md'>
+      <Box sx={style} className='w-11/12 md:w-3/4 lg:w-3/6 rounded-md py-14'>
         <Typography
           id='modal-modal-title'
           variant='h6'

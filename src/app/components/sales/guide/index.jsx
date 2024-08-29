@@ -92,10 +92,13 @@ export default function GuideTable({product}) {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          PopoverClasses={{ paper: '!shadow-lg' }}
+          PopoverClasses={{ paper: '!shadow-sm' }}
         >
           <MenuItem onClick={handleClose}>
-            <Shop />
+            <ListItemIcon>
+              <Shop fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Ver</ListItemText>
           </MenuItem>
         </Menu>
       </div>

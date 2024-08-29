@@ -18,3 +18,8 @@ export const SucursalData = async (session) => {
   const response = axios.get(`${baseApi}/auth/branch`);
   return (await response).data;
 };
+
+export const Master = async () => {
+  const response = axios.get(`${baseApi}/maintenance/master`);
+  return (await response).data;
+}

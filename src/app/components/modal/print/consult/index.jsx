@@ -12,7 +12,7 @@ export default function ConsultModal({ open, setOpen, title }) {
       handleClose={handleClose}
       title={title}
       actions={
-        <div className='flex gap-2 justify-end'>
+        <div className='flex gap-10 justify-end'>
           <SendButton text='Enviar por Whatsapp' color='success' />
           <SendButton text='Enviar por Correo' color='warning' />
           <CancelButton text='Cancelar' onClick={handleClose} />

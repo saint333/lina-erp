@@ -171,7 +171,7 @@ export default function Family({
         name={textKey}
         control={control}
         render={({ field }) => (
-          <FormControl fullWidth>
+          <FormControl fullWidth className="max-h-[30rem] overflow-hidden overflow-y-auto">
             <RadioGroup
               aria-labelledby={label}
               name={textKey}
@@ -225,8 +225,8 @@ export default function Family({
                     className='!flex-row justify-between items-center'
                   >
                     <div className='flex items-center'>
-                      <Radio value={item.p_inidfamiliadetalle} />
-                      <Typography>{item.chfamiliadetalle}</Typography>
+                      <Radio value={item.p_inidfamiliadetalle} id={`${String(item.p_inidfamiliadetalle)}`}/>
+                      <label htmlFor={item.p_inidfamiliadetalle}>{item.chfamiliadetalle}</label>
                     </div>
                     <ButtonAler item={item} />
                   </FormControl>
@@ -264,8 +264,8 @@ export default function Family({
                     className='!flex-row justify-between items-center'
                   >
                     <div className='flex items-center'>
-                      <Radio value={item.p_inidfamiliadetalle} />
-                      <Typography>{item.chfamiliadetalle}</Typography>
+                    <Radio value={item.p_inidfamiliadetalle} id={`${String(item.p_inidfamiliadetalle)}`}/>
+                    <label htmlFor={item.p_inidfamiliadetalle}>{item.chfamiliadetalle}</label>
                     </div>
                     <ButtonAler item={item} />
                   </FormControl>
@@ -300,8 +300,8 @@ export default function Family({
                     className='!flex-row justify-between items-center'
                   >
                     <div className='flex items-center'>
-                      <Radio value={item.p_inidfamiliadetalle} />
-                      <Typography>{item.chfamiliadetalle}</Typography>
+                    <Radio value={item.p_inidfamiliadetalle} id={`${String(item.p_inidfamiliadetalle)}`}/>
+                    <label htmlFor={item.p_inidfamiliadetalle}>{item.chfamiliadetalle}</label>
                     </div>
                     <ButtonAler item={item} />
                   </FormControl>
@@ -333,8 +333,8 @@ export default function Family({
                           className='!flex-row justify-between items-center'
                         >
                           <div className='flex items-center'>
-                            <Radio value={item.p_inidfamiliadetalle} />
-                            <Typography>{item.chfamiliadetalle}</Typography>
+                          <Radio value={item.p_inidfamiliadetalle} id={`${String(item.p_inidfamiliadetalle)}`}/>
+                          <label htmlFor={item.p_inidfamiliadetalle}>{item.chfamiliadetalle}</label>
                           </div>
                           <ButtonAler item={item} />
                         </FormControl>
@@ -367,8 +367,8 @@ export default function Family({
                           className='!flex-row justify-between items-center'
                         >
                           <div className='flex items-center'>
-                            <Radio value={item.p_inidfamiliadetalle} />
-                            <Typography>{item.chfamiliadetalle}</Typography>
+                          <Radio value={item.p_inidfamiliadetalle} id={`${String(item.p_inidfamiliadetalle)}`}/>
+                          <label htmlFor={item.p_inidfamiliadetalle}>{item.chfamiliadetalle}</label>
                           </div>
                           <ButtonAler item={item} />
                         </FormControl>
@@ -404,8 +404,8 @@ export default function Family({
                     className='!flex-row justify-between items-center'
                   >
                     <div className='flex items-center'>
-                      <Radio value={item.p_inidfamiliadetalle} />
-                      <Typography>{item.chfamiliadetalle}</Typography>
+                    <Radio value={item.p_inidfamiliadetalle} id={`${String(item.p_inidfamiliadetalle)}`}/>
+                    <label htmlFor={item.p_inidfamiliadetalle}>{item.chfamiliadetalle}</label>
                     </div>
                     <ButtonAler item={item} />
                   </FormControl>

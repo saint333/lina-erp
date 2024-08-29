@@ -5,7 +5,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Table from "../../table";
 import ConsultModal from "../../modal/print/consult";
 
-export default function ConsultTable({product}) {
+export default function ConsultTable({ product }) {
   const [data, setData] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -28,8 +28,8 @@ export default function ConsultTable({product}) {
         chnrodocumento: "12345678",
         chdireccion: "Av. Los Pinos",
         chtelefono: "123456789",
-        chemail: ""
-      }
+        chemail: "",
+      },
     ]);
   }, [product]);
 
@@ -79,7 +79,7 @@ export default function ConsultTable({product}) {
         accessorKey: "chtelefonocontacto",
         header: "ESTADO",
         size: 150,
-      }
+      },
     ],
     []
   );
@@ -105,19 +105,30 @@ export default function ConsultTable({product}) {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          PopoverClasses={{ paper: '!shadow-lg' }}
+          PopoverClasses={{ paper: "!shadow-sm" }}
         >
           <MenuItem onClick={handleClose}>
-            <Visibility />
+            <ListItemIcon>
+              <Visibility fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Ver</ListItemText>
           </MenuItem>
-          <MenuItem onClick={() => {
-            handleClose();
-            setOpenModal(true);
-          }}>
-            <Print />
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              setOpenModal(true);
+            }}
+          >
+            <ListItemIcon>  
+              <Print fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Imprimir</ListItemText>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <Delete />
+            <ListItemIcon>
+              <Delete fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Eliminar</ListItemText>
           </MenuItem>
         </Menu>
       </div>
@@ -126,12 +137,18 @@ export default function ConsultTable({product}) {
 
   return (
     <div className='grid gap-4 items-start'>
-    <Table
-      columns={columns}
-      data={data}
-      renderRowActions={renderRowActions}
-    />
-    {openModal && <ConsultModal open={openModal} setOpen={setOpenModal} title='Facturación Electronica - Salva la Amazonia con tus facturas' />}
+      <Table
+        columns={columns}
+        data={data}
+        renderRowActions={renderRowActions}
+      />
+      {openModal && (
+        <ConsultModal
+          open={openModal}
+          setOpen={setOpenModal}
+          title='Facturación Electronica - Salva la Amazonia con tus facturas'
+        />
+      )}
     </div>
   );
 }

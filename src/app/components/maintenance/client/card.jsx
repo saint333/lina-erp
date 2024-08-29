@@ -106,13 +106,19 @@ export default function CardLicense() {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          PopoverClasses={{ paper: "!shadow-lg" }}
+          PopoverClasses={{ paper: "!shadow-sm" }}
         >
           <MenuItem onClick={handleClose}>
-            <Edit />
+            <ListItemIcon>
+              <Edit fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Editar</ListItemText>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <Delete />
+            <ListItemIcon>
+            <Delete fontSize="small"/>
+            </ListItemIcon>
+            <ListItemText>Eliminar</ListItemText>
           </MenuItem>
         </Menu>
       </div>

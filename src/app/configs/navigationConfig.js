@@ -65,21 +65,21 @@ const navigationConfig = [
 							},
 							{
 								id: 'maintenance.card',
-								title: 'Clientes',
+								title: 'Tarjeta',
 								type: 'item',
 								icon: 'heroicons-outline:home',
 								url: '/maintenance/client/card'
 							},
 							{
 								id: 'maintenance.license',
-								title: 'Clientes',
+								title: 'Licencia',
 								type: 'item',
 								icon: 'heroicons-outline:home',
 								url: '/maintenance/client/license'
 							},
 							{
 								id: 'maintenance.resolution',
-								title: 'Clientes',
+								title: 'Resolución',
 								type: 'item',
 								icon: 'heroicons-outline:home',
 								url: '/maintenance/client/resolution'
@@ -92,6 +92,13 @@ const navigationConfig = [
 						type: 'item',
 						icon: 'heroicons-outline:home',
 						url: '/maintenance/products'
+					},
+					{
+						id: 'maintenance.various',
+						title: 'Varios',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/maintenance/various'
 					},
 				]
 			},

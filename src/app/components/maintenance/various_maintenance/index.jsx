@@ -1,12 +1,34 @@
-import { MoreHoriz, Visibility } from "@mui/icons-material";
-import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import Table from "../../table";
+import { Master } from "src/app/services";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import { Edit, Visibility } from "@mui/icons-material";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
-export default function ExhibitionTable({ product }) {
+export default function VariousMaintenance() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
   const open = Boolean(anchorEl);
+
+  const columns = useMemo(() => [
+    {
+      accessorKey: "p_inidmaestrocabecera",
+      header: "CODIGO",
+      size: 150,
+    },
+    {
+      accessorKey: "chcodigomaestrocabecera",
+      header: "DESCRIPCION",
+      size: 150,
+    },
+    {
+      accessorKey: "chmaestrocabecera",
+      header: "OBSERVACION",
+      size: 150,
+    }
+  ]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -15,51 +37,6 @@ export default function ExhibitionTable({ product }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  useEffect(() => {
-    setData(product);
-  }, [product]);
-
-  const columns = useMemo(
-    () => [
-      {
-        accessorKey: "razon",
-        header: "CODIGO",
-        size: 150,
-      },
-      {
-        accessorKey: "chcodigoproveedor",
-        header: "CATEGORIA",
-        size: 150,
-      },
-      {
-        accessorKey: "chtipodocumento",
-        header: "DESCRIPCION",
-        size: 200,
-      },
-      {
-        accessorKey: "chnrodocumento",
-        header: "UNIDAD MEDIDA",
-        size: 150,
-      },
-      {
-        accessorKey: "chdireccion",
-        header: "SERIE",
-        size: 150,
-      },
-      {
-        accessorKey: "chtelefono",
-        header: "EXHIBION",
-        size: 150,
-      },
-      {
-        accessorKey: "chemail",
-        header: "SITUACION",
-        size: 150,
-      },
-    ],
-    []
-  );
 
   const renderRowActions = (row) => {
     return (
@@ -72,7 +49,7 @@ export default function ExhibitionTable({ product }) {
           aria-haspopup='true'
           onClick={handleClick}
         >
-          <MoreHoriz />
+          <MoreHorizIcon />
         </IconButton>
         <Menu
           id='long-menu'
@@ -82,24 +59,35 @@ export default function ExhibitionTable({ product }) {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          PopoverClasses={{ paper: "!shadow-sm" }}
+          PopoverClasses={{ paper: "!shadow-lg" }}
         >
           <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <Visibility fontSize='small' />
-            </ListItemIcon>
-            <ListItemText>Ver</ListItemText>
+            <Edit />
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Visibility />
           </MenuItem>
         </Menu>
       </div>
     );
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const product = await Master();
+      setData(product);
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className='grid gap-4 items-start'>
       <Table
         columns={columns}
         data={data}
         renderRowActions={renderRowActions}
+        loading={loading}
       />
     </div>
   );

@@ -80,7 +80,8 @@ export default function ModalProduct({ open, setOpen, title }) {
       }}
       title={title}
       actions={
-        <div className='flex gap-2 justify-end'>
+        <div className='flex gap-6 justify-end'>
+          <SaveButton text='Guardar' onClick={handleSubmit(onSubmit)} />
           <CancelButton
             text='Cancelar'
             onClick={() => {
@@ -88,7 +89,6 @@ export default function ModalProduct({ open, setOpen, title }) {
               reset();
             }}
           />
-          <SaveButton text='Guardar' onClick={handleSubmit(onSubmit)} />
         </div>
       }
     >

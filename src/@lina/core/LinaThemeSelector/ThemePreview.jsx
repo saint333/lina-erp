@@ -18,7 +18,7 @@ function ThemePreview(props) {
 		<div className={clsx(className, 'w-full ')}>
 			<IconButton
 				className={clsx(
-					'flex min-h-full relative w-full cursor-pointer overflow-hidden text-left font-500 shadow transition-all hover:shadow-lg items-stretch hover:scale-105 duration-200 ease-in-out',
+					'flex min-h-full relative w-full cursor-pointer overflow-hidden text-left font-500 transition-all hover:shadow-lg items-stretch hover:scale-105 duration-200 ease-in-out',
 					// {
 					// 	'bg-white': id === 'default',
 					// 	'bg-gray-700': id !== 'default'
@@ -31,7 +31,6 @@ function ThemePreview(props) {
 				onClick={() => {
 					onSelect(theme);
 				}}
-				type="button"
 			>
 				{
 					mode === 'dark' ? (

@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { CardServices } from "src/app/services/maintenance/client";
+import { CardServices, List } from "src/app/services/maintenance/client";
 import { commonServices } from "src/app/services";
 import { CancelButton, SaveButton } from "../../button/button";
 
@@ -99,10 +99,9 @@ export default function ModalCard({ open, setOpen, title }) {
   useEffect(() => {
     const fetchModalidad = async () => {
       const data = await commonServices({ letterAccion: 14 });
-      const persona = await commonServices({ letterAccion: 12 });
-      const empresa = await commonServices({ letterAccion: 13 });
+      const persona = await List();
       setModalidad(data);
-      setCliente([...persona, ...empresa]);
+      setCliente(persona);
     };
     fetchModalidad();
   }, []);
@@ -113,9 +112,9 @@ export default function ModalCard({ open, setOpen, title }) {
       handleClose={handleClose}
       title={title}
       actions={
-        <div className='flex gap-2 justify-end'>
-          <CancelButton text='Cancelar' onClick={handleClose} />
+        <div className='flex gap-6 justify-end'>
           <SaveButton text='Guardar' onClick={handleSubmit(onSubmit)} />
+          <CancelButton text='Cancelar' onClick={handleClose} />
         </div>
       }
     >
@@ -174,10 +173,10 @@ export default function ModalCard({ open, setOpen, title }) {
           <CustomSelect label='Cliente' textKey='p_inidcliente'>
             {cliente.map((item) => (
               <MenuItem
-                key={item.p_inidmaestrodetalle}
-                value={item.p_inidmaestrodetalle}
+                key={item.p_inidcliente}
+                value={item.p_inidcliente}
               >
-                {item.chmaestrodetalle}
+                {item.razon} - {item.chcodigocliente}
               </MenuItem>
             ))}
           </CustomSelect>

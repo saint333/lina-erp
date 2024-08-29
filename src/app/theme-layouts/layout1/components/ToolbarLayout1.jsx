@@ -22,6 +22,8 @@ import SucursalComponent from "app/theme-layouts/shared-components/Sucursal";
 import LinaThemeSelector from "@lina/core/LinaThemeSelector";
 import themeOptions from "app/configs/themeOptions";
 import { showMessage } from "@lina/core/LinaMessage/linaMessageSlice";
+import { Language } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 
 /**
  * The toolbar layout 1.
@@ -35,11 +37,9 @@ function ToolbarLayout1(props) {
 
   function handleThemeSelect(_theme) {
     dispatch(changeLinaTheme(_theme?.section)).then(() => {
-      dispatch(
-        showMessage({ message: "Cambio de tema aplicado" })
-      );
+      dispatch(showMessage({ message: "Cambio de tema aplicado" }));
     });
-		localStorage.setItem('theme', JSON.stringify(_theme.id));
+    localStorage.setItem("theme", JSON.stringify(_theme.id));
   }
 
   return (
@@ -57,7 +57,7 @@ function ToolbarLayout1(props) {
         position='static'
         elevation={0}
       >
-        <Toolbar className='min-h-48 p-0 pt-6 md:min-h-64'>
+        <Toolbar className='min-h-48 p-0 pt-10 md:min-h-64'>
           <div className='flex flex-1 px-16'>
             {config.navbar.display && config.navbar.position === "left" && (
               <>
@@ -84,9 +84,17 @@ function ToolbarLayout1(props) {
           </div>
 
           <div
-            className='flex h-full items-center overflow-x-auto px-8 gap-3'
+            className='flex h-full items-center overflow-x-auto px-8 gap-3 py-8'
             style={{ scrollbarWidth: "none" }}
           >
+            <IconButton
+              className={clsx("h-40 w-40", className)}
+              aria-controls='font-size-menu'
+              aria-haspopup='true'
+              size='large'
+            >
+              <Language />
+            </IconButton>
             <div className='flex gap-3 w-full'>
               <DomainComponent />
               <SucursalComponent />

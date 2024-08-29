@@ -1,10 +1,16 @@
 import { MoreHoriz, Visibility } from "@mui/icons-material";
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import {
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import Table from "../../table";
 
 export default function KardexTable({ product }) {
-  console.log("🚀 ~ KardexTable ~ product:", product)
+  console.log("🚀 ~ KardexTable ~ product:", product);
   const [data, setData] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -73,10 +79,13 @@ export default function KardexTable({ product }) {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          PopoverClasses={{ paper: "!shadow-lg" }}
+          PopoverClasses={{ paper: "!shadow-sm" }}
         >
           <MenuItem onClick={handleClose}>
-            <Visibility />
+            <ListItemIcon>
+              <Visibility fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Ver</ListItemText>
           </MenuItem>
         </Menu>
       </div>
@@ -84,8 +93,11 @@ export default function KardexTable({ product }) {
   };
   return (
     <div className='grid gap-4 items-start'>
-      <Table columns={columns} data={data} renderRowActions={renderRowActions} />
-
+      <Table
+        columns={columns}
+        data={data}
+        renderRowActions={renderRowActions}
+      />
     </div>
   );
 }
