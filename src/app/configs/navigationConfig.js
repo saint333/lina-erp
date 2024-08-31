@@ -156,7 +156,38 @@ const navigationConfig = [
 						url: '/sales/guide'
 					},
 				]
-			}
+			},
+			{
+				id: 'administration',
+				title: 'Administración',
+				subtitle: '',
+				type: 'collapse',
+				icon: 'heroicons-outline:home',
+				translate: 'ADMINISTRATION',
+				children: [
+					{
+						id: 'administration.vehicles',
+						title: 'Vehículos',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/administration/vehicles'
+					},
+					{
+						id: 'administration.driver',
+						title: 'Conductores',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/administration/driver'
+					},
+					{
+						id: 'administration.carrier',
+						title: 'Trasportistas',
+						type: 'item',
+						icon: 'heroicons-outline:home',
+						url: '/administration/carrier'
+					},
+				]
+			},
 		]
 	},
 ];

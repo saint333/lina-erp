@@ -1,15 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
 import Table from "../../table";
 import { Master } from "src/app/services";
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import {
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { Edit, Visibility } from "@mui/icons-material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import ModalVarious from "../../modal/various_maintenence";
 
 export default function VariousMaintenance() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [idRow, setIdRow] = useState(null);
   const open = Boolean(anchorEl);
 
   const columns = useMemo(() => [
@@ -27,7 +35,7 @@ export default function VariousMaintenance() {
       accessorKey: "chmaestrocabecera",
       header: "OBSERVACION",
       size: 150,
-    }
+    },
   ]);
 
   const handleClick = (event) => {
@@ -39,6 +47,7 @@ export default function VariousMaintenance() {
   };
 
   const renderRowActions = (row) => {
+    console.log("🚀 ~ renderRowActions ~ row:", row.row)
     return (
       <div className='flex gap-2'>
         <IconButton
@@ -61,12 +70,18 @@ export default function VariousMaintenance() {
           onClose={handleClose}
           PopoverClasses={{ paper: "!shadow-lg" }}
         >
-          <MenuItem onClick={handleClose}>
-            <Edit />
+          <MenuItem onClick={() => handleEdit(row.row)}>
+            <ListItemIcon>
+              <Edit fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Editar</ListItemText>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <Visibility />
-          </MenuItem>
+          {/* <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <Visibility fontSize='small' />
+            </ListItemIcon>
+            <ListItemText>Editar</ListItemText>
+          </MenuItem> */}
         </Menu>
       </div>
     );
@@ -81,6 +96,13 @@ export default function VariousMaintenance() {
     fetchData();
   }, []);
 
+  const handleEdit = async (row) => {
+    console.log("🚀 ~ handleEdit ~ row:", row.row.original.p_inidmaestrocabecera)
+    setIdRow(row.row.original.p_inidmaestrocabecera)
+    handleClose();
+    setOpenModal(true);
+  }
+
   return (
     <div className='grid gap-4 items-start'>
       <Table
@@ -89,6 +111,9 @@ export default function VariousMaintenance() {
         renderRowActions={renderRowActions}
         loading={loading}
       />
+      {
+        openModal && <ModalVarious open={openModal} setOpen={setOpenModal} id={idRow} title='Mantenimiento de Productos' />
+      }
     </div>
   );
 }

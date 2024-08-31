@@ -10,6 +10,7 @@ import DashboardConfig from '../main/dashboard/config';
 import MaintenanceConfig from '../main/maintenance/config';
 import ManagementConfig from '../main/management/config';
 import SalesConfig from '../main/sales/config';
+import AdministrationConfig from '../main/administration/config';
 
 const routeConfigs = [
 	SignOutConfig,
@@ -18,7 +19,8 @@ const routeConfigs = [
 	DashboardConfig,
 	MaintenanceConfig,
 	ManagementConfig,
-	SalesConfig
+	SalesConfig,
+	AdministrationConfig
 ];
 /**
  * The routes of the application.
