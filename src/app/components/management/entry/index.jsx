@@ -1,5 +1,5 @@
-import { Delete, Edit, MoreHoriz } from "@mui/icons-material";
-import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
+import { Delete, Edit } from "@mui/icons-material";
+import { ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { AgregarButton } from "../../button/button";
 import Table from "../../table";
@@ -7,17 +7,7 @@ import EntryModal from "../../modal/management/entry";
 
 export default function EntryTable({ product }) {
   const [data, setData] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const [openModal, setOpenModal] = useState(false);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   useEffect(() => {
     setData(product);
@@ -54,58 +44,52 @@ export default function EntryTable({ product }) {
     []
   );
 
-  const renderRowActions = (row) => {
-    return (
-      <div className='flex gap-2'>
-        <IconButton
-          aria-label='more'
-          id='long-button'
-          aria-controls={open ? "long-menu" : undefined}
-          aria-expanded={open ? "true" : undefined}
-          aria-haspopup='true'
-          onClick={handleClick}
-        >
-          <MoreHoriz />
-        </IconButton>
-        <Menu
-          id='long-menu'
-          MenuListProps={{
-            "aria-labelledby": "long-button",
-          }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          PopoverClasses={{ paper: "!shadow-sm" }}
-        >
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <Edit fontSize='small' />
-            </ListItemIcon>
-            <ListItemText>Editar</ListItemText>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-            <Delete fontSize="small"/>
-            </ListItemIcon>
-            <ListItemText>Eliminar</ListItemText>
-          </MenuItem>
-        </Menu>
-      </div>
-    );
-  };
+  const renderRowActions = ({ closeMenu, row }) => [
+    <MenuItem
+      onClick={() => {
+        closeMenu();
+      }}
+      key={0}
+    >
+      <ListItemIcon>
+        <Edit fontSize='small' />
+      </ListItemIcon>
+      <ListItemText>Editar</ListItemText>
+    </MenuItem>,
+    <MenuItem
+      onClick={() => {
+        closeMenu();
+      }}
+      key={1}
+    >
+      <ListItemIcon>
+        <Delete fontSize='small' />
+      </ListItemIcon>
+      <ListItemText>Eliminar</ListItemText>
+    </MenuItem>,
+  ];
+
   return (
     <div className='grid gap-4 items-start'>
       <Table
         columns={columns}
         data={data}
-        renderRowActions={renderRowActions}
-        acciones={<AgregarButton
-          text='Nuevo Ingreso'
-          className='w-fit'
-          onClick={() => setOpenModal(true)}
-        />}
+        renderRowActionMenuItems={renderRowActions}
+        acciones={
+          <AgregarButton
+            text='Nuevo Ingreso'
+            className='w-fit'
+            onClick={() => setOpenModal(true)}
+          />
+        }
       />
-      {openModal && <EntryModal open={openModal} setOpen={setOpenModal} title="Ingreso de Productos" />}
+      {openModal && (
+        <EntryModal
+          open={openModal}
+          setOpen={setOpenModal}
+          title='Ingreso de Productos'
+        />
+      )}
     </div>
   );
 }

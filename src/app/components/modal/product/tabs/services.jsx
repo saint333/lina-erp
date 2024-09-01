@@ -8,7 +8,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import { arrayData, handleCategory, handleModel, handleType } from "./helper";
 
@@ -26,6 +26,14 @@ export default function Service({
     caliber,
     category,
   });
+
+  useEffect(() => {
+    setValueSelect((prev) => ({
+      ...prev,
+      caliber,
+      category,
+    }));
+  }, [caliber, category]);
 
   const CustomSelect = ({ label, textKey, handleChange, children }) => {
     return (

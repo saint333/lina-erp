@@ -2,23 +2,18 @@ import { useEffect, useMemo, useState } from "react";
 import Table from "../../table";
 import { Master } from "src/app/services";
 import {
-  IconButton,
   ListItemIcon,
   ListItemText,
-  Menu,
   MenuItem,
 } from "@mui/material";
-import { Edit, Visibility } from "@mui/icons-material";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { Edit } from "@mui/icons-material";
 import ModalVarious from "../../modal/various_maintenence";
 
 export default function VariousMaintenance() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [idRow, setIdRow] = useState(null);
-  const open = Boolean(anchorEl);
 
   const columns = useMemo(() => [
     {
@@ -38,54 +33,20 @@ export default function VariousMaintenance() {
     },
   ]);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const renderRowActions = (row) => {
-    console.log("🚀 ~ renderRowActions ~ row:", row.row)
-    return (
-      <div className='flex gap-2'>
-        <IconButton
-          aria-label='more'
-          id='long-button'
-          aria-controls={open ? "long-menu" : undefined}
-          aria-expanded={open ? "true" : undefined}
-          aria-haspopup='true'
-          onClick={handleClick}
-        >
-          <MoreHorizIcon />
-        </IconButton>
-        <Menu
-          id='long-menu'
-          MenuListProps={{
-            "aria-labelledby": "long-button",
-          }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          PopoverClasses={{ paper: "!shadow-lg" }}
-        >
-          <MenuItem onClick={() => handleEdit(row.row)}>
-            <ListItemIcon>
-              <Edit fontSize='small' />
-            </ListItemIcon>
-            <ListItemText>Editar</ListItemText>
-          </MenuItem>
-          {/* <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <Visibility fontSize='small' />
-            </ListItemIcon>
-            <ListItemText>Editar</ListItemText>
-          </MenuItem> */}
-        </Menu>
-      </div>
-    );
-  };
+  const renderRowActions = ({ closeMenu, row }) => [
+    <MenuItem
+      onClick={() => {
+        handleEdit(row);
+        closeMenu();
+      }}
+      key={0}
+    >
+      <ListItemIcon>
+        <Edit fontSize='small' />
+      </ListItemIcon>
+      <ListItemText>Editar</ListItemText>
+    </MenuItem>,
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,23 +58,26 @@ export default function VariousMaintenance() {
   }, []);
 
   const handleEdit = async (row) => {
-    console.log("🚀 ~ handleEdit ~ row:", row.row.original.p_inidmaestrocabecera)
-    setIdRow(row.row.original.p_inidmaestrocabecera)
-    handleClose();
+    setIdRow(row.original.p_inidmaestrocabecera);
     setOpenModal(true);
-  }
+  };
 
   return (
     <div className='grid gap-4 items-start'>
       <Table
         columns={columns}
         data={data}
-        renderRowActions={renderRowActions}
+        renderRowActionMenuItems={renderRowActions}
         loading={loading}
       />
-      {
-        openModal && <ModalVarious open={openModal} setOpen={setOpenModal} id={idRow} title='Mantenimiento de Productos' />
-      }
+      {openModal && (
+        <ModalVarious
+          open={openModal}
+          setOpen={setOpenModal}
+          id={idRow}
+          title='Mantenimiento de Productos'
+        />
+      )}
     </div>
   );
 }

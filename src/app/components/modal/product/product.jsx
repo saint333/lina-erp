@@ -63,8 +63,6 @@ export default function ModalProduct({ open, setOpen, title }) {
         fetchDataProduct(1, 0),
         fetchDataProduct(5, 0),
       ]);
-
-      // console.log("🚀 ~ fecthData ~ response:", response)
       setCategory(response);
       setCaliber(responseCaliber);
     };

@@ -1,13 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-} from "@mui/material";
+import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {
   DetailClientServices,
   List,
@@ -18,18 +11,8 @@ import ModalClient from "../../modal/client/client";
 
 export default function ClientList() {
   const [data, setData] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const [openModal, setOpenModal] = useState(false);
   const [client, setClient] = useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,54 +58,39 @@ export default function ClientList() {
     []
   );
 
-  const renderRowActions = (row) => {
-    return (
-      <div className='flex gap-2'>
-        <IconButton
-          aria-label='more'
-          id='long-button'
-          aria-controls={open ? "long-menu" : undefined}
-          aria-expanded={open ? "true" : undefined}
-          aria-haspopup='true'
-          onClick={handleClick}
-        >
-          <MoreHorizIcon />
-        </IconButton>
-        <Menu
-          id='long-menu'
-          MenuListProps={{
-            "aria-labelledby": "long-button",
-          }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          PopoverClasses={{ paper: "!shadow-sm" }}
-        >
-          <MenuItem onClick={() => handleEdit(row)}>
-            <ListItemIcon>
-              <Edit fontSize='small' />
-            </ListItemIcon>
-            <ListItemText>Editar</ListItemText>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-            <Delete fontSize="small"/>
-            </ListItemIcon>
-            <ListItemText>Eliminar</ListItemText>
-          </MenuItem>
-        </Menu>
-      </div>
-    );
-  };
+  const renderRowActions = ({ closeMenu, row }) => [
+    <MenuItem
+      onClick={() => {
+        handleEdit(row);
+        closeMenu();
+      }}
+      key={0}
+    >
+      <ListItemIcon>
+        <Edit fontSize='small' />
+      </ListItemIcon>
+      <ListItemText>Editar</ListItemText>
+    </MenuItem>,
+    <MenuItem
+      onClick={() => {
+        closeMenu();
+      }}
+      key={1}
+    >
+      <ListItemIcon>
+        <Delete fontSize='small' />
+      </ListItemIcon>
+      <ListItemText>Eliminar</ListItemText>
+    </MenuItem>,
+  ];
 
   const handleEdit = async (row) => {
     const response = await DetailClientServices({
-      client: row.row.original.p_inidcliente,
-      legal: row.row.original.p_inidjurinat,
+      client: row.original.p_inidcliente,
+      legal: row.original.p_inidjurinat,
     });
     setClient(response[0]);
     setOpenModal(true);
-    handleClose();
   };
 
   return (
@@ -130,7 +98,7 @@ export default function ClientList() {
       <Table
         columns={columns}
         data={data}
-        renderRowActions={renderRowActions}
+        renderRowActionMenuItems={renderRowActions}
         acciones={
           <AgregarButton
             text='Agregar'
