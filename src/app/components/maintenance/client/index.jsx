@@ -103,7 +103,10 @@ export default function ClientList() {
           <AgregarButton
             text='Agregar'
             className='w-fit'
-            onClick={() => setOpenModal(true)}
+            onClick={() => {
+              setClient(null);
+              setOpenModal(true)
+            }}
           />
         }
         loading={data.length === 0}

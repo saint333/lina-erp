@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import ModalBasic from "..";
 import {
-  Autocomplete,
   Box,
   FormControl,
   InputLabel,
   MenuItem,
-  Select,
+  Select as Select2,
   Tab,
   Tabs,
   TextField,
@@ -23,12 +22,13 @@ import { commonServices } from "src/app/services";
 import { CancelButton, SaveButton } from "../../button/button";
 import CustomTabPanel, { a11yProps } from "../../tabs/tabs";
 import { ubigeo } from "src/app/util/ubigeo";
+import Select from "react-select";
 
 export default function ModalClient({ open, setOpen, title, client }) {
   const [value, setValue] = useState(0);
   const [paises, setPaises] = useState([]);
   const [cliente, setCliente] = useState([]);
-  const [inputValue, setInputValue] = useState();
+  const [inputValue, setInputValue] = useState(null);
   const [tipo, setTipo] = useState([]);
   const defaultValues = {
     chruc: "",
@@ -65,10 +65,12 @@ export default function ModalClient({ open, setOpen, title, client }) {
     defaultValues,
   });
 
-  const handleChange =  async(event, newValue) => {
+  const handleChange = async (event, newValue) => {
     console.log("🚀 ~ handleChange ~ newValue:", newValue);
     reset();
-    const type = await commonServices({ letterAccion: newValue === 0 ? 12 : 13 });
+    const type = await commonServices({
+      letterAccion: newValue === 0 ? 12 : 13,
+    });
     setTipo(type);
     setValue(newValue);
   };
@@ -110,7 +112,7 @@ export default function ModalClient({ open, setOpen, title, client }) {
             <InputLabel id={`role-${textKey}-label`} error={errors[textKey]}>
               {label}
             </InputLabel>
-            <Select
+            <Select2
               {...field}
               labelId={`role-${textKey}-label`}
               label={label}
@@ -120,9 +122,11 @@ export default function ModalClient({ open, setOpen, title, client }) {
                 handleChange && handleChange(e);
               }}
             >
-              <MenuItem value=''>-</MenuItem>
+              <MenuItem value='' disabled>
+                -
+              </MenuItem>
               {children}
-            </Select>
+            </Select2>
           </FormControl>
         )}
         rules={{ required: "Este campo es requerido" }}
@@ -137,6 +141,10 @@ export default function ModalClient({ open, setOpen, title, client }) {
 
   useEffect(() => {
     client && reset(client);
+    client &&
+      setInputValue(
+        ubigeo.find((item) => item.p_inidubigeo === client.p_inidubigeo)
+      );
   }, [client, reset]);
 
   useEffect(() => {
@@ -180,6 +188,7 @@ export default function ModalClient({ open, setOpen, title, client }) {
               iconPosition='start'
               className='!min-h-[50px]'
               {...a11yProps(0)}
+              {...(client?.p_inidjurinat == 2 && { disabled: true })}
             />
             <Tab
               label='Empresa'
@@ -187,6 +196,7 @@ export default function ModalClient({ open, setOpen, title, client }) {
               icon={<BusinessIcon />}
               className='!min-h-[50px]'
               {...a11yProps(1)}
+              {...(client?.p_inidjurinat == 1 && { disabled: true })}
             />
           </Tabs>
         </Box>
@@ -247,36 +257,19 @@ export default function ModalClient({ open, setOpen, title, client }) {
               <RoomIcon color='primary' /> Datos de dirección
             </legend>
             <CustomInput label='Direccion' textKey='chdireccion' />
-            <Autocomplete
-              freeSolo
-              id='free-solo-2-demo'
-              disableClearable
+            <Select
               value={inputValue}
-              onChange={(event, newValue) => {
-                setInputValue(newValue);
-                setFormValue("p_inidubigeo", newValue.p_inidubigeo);
-              }}
               options={ubigeo}
-              getOptionLabel={(option) =>
-                option.chdepartamento +
-                " - " +
-                option.chprovincia +
-                " - " +
-                option.chdistrito
+              getOptionLabel={(data) =>
+                `${data.chdepartamento} - ${data.chprovincia} - ${data.chdistrito}`
               }
-              size='small'
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label='Ubigeo'
-                  InputProps={{
-                    ...params.InputProps,
-                    type: "search",
-                  }}
-                  error={errors.p_inidubigeo}
-                  InputLabelProps={{ error: errors.p_inidubigeo }}
-                />
-              )}
+              getOptionValue={(data) => data.p_inidubigeo}
+              onChange={(e) => {
+                setInputValue(e);
+                setFormValue("p_inidubigeo", e.p_inidubigeo);
+              }}
+              className='z-10'
+              placeholder='Ubigeo'
             />
             <CustomSelect
               label='Pais'
