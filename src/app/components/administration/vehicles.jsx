@@ -4,6 +4,7 @@ import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import { getVehicles } from "src/app/services/administration/vehicles";
 import ModalVehicle from "../modal/administration/vehicles";
+import { AgregarButton } from "../button/button";
 
 export default function VehiclesTable() {
   const [data, setData] = useState([]);
@@ -56,6 +57,14 @@ export default function VehiclesTable() {
         columns={columns}
         data={data}
         renderRowActionMenuItems={renderRowActions}
+        loading={data.length === 0}
+        acciones={
+          <AgregarButton
+            text='Nuevo Vehiculo'
+            className='w-fit text-sm md:text-base'
+            onClick={() => setOpenModal(true)}
+          />
+        }
       />
       {openModal && (
         <ModalVehicle

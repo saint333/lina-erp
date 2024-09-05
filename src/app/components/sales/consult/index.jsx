@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { MenuItem } from "@mui/material";
+import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { Delete, Print, Visibility } from "@mui/icons-material";
 import Table from "../../table";
 import ConsultModal from "../../modal/print/consult";

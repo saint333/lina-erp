@@ -107,7 +107,7 @@ export default function Supplier() {
         renderRowActionMenuItems={renderRowActions}
         acciones={
           <AgregarButton
-            text='Nueva Tarjeta'
+            text='Nuevo Proveedor'
             className='w-fit text-sm md:text-base'
             onClick={() => setOpenModal(true)}
           />

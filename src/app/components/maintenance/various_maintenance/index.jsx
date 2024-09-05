@@ -6,7 +6,7 @@ import {
   ListItemText,
   MenuItem,
 } from "@mui/material";
-import { Edit } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import ModalVarious from "../../modal/various_maintenence";
 
 export default function VariousMaintenance() {
@@ -46,6 +46,17 @@ export default function VariousMaintenance() {
       </ListItemIcon>
       <ListItemText>Editar</ListItemText>
     </MenuItem>,
+    <MenuItem
+    onClick={() => {
+      closeMenu();
+    }}
+    key={1}
+  >
+    <ListItemIcon>
+      <Delete fontSize='small' />
+    </ListItemIcon>
+    <ListItemText>Eliminar</ListItemText>
+  </MenuItem>,
   ];
 
   useEffect(() => {

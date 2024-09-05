@@ -4,6 +4,7 @@ import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import { getDriver } from "src/app/services/administration/driver";
 import ModalDriver from "../modal/administration/driver";
+import { AgregarButton } from "../button/button";
 
 export default function DriverTable() {
   const [data, setData] = useState([]);
@@ -66,6 +67,14 @@ export default function DriverTable() {
         columns={columns}
         data={data}
         renderRowActionMenuItems={renderRowActions}
+        loading={data.length === 0}
+        acciones={
+          <AgregarButton
+            text='Nuevo Conductor'
+            className='w-fit text-sm md:text-base'
+            onClick={() => setOpenModal(true)}
+          />
+        }
       />
       {openModal && (
         <ModalDriver

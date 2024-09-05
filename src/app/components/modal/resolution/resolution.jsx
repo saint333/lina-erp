@@ -55,7 +55,7 @@ export default function ModalResolution({ open, setOpen, title }) {
                 handleChange(e);
               }}
             >
-              <MenuItem value=''>-</MenuItem>
+              <MenuItem value='' disabled>-</MenuItem>
               {children}
             </Select>
           </FormControl>

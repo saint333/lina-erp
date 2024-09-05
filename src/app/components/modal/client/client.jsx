@@ -23,6 +23,7 @@ import { CancelButton, SaveButton } from "../../button/button";
 import CustomTabPanel, { a11yProps } from "../../tabs/tabs";
 import { ubigeo } from "src/app/util/ubigeo";
 import Select from "react-select";
+import { FixedSizeList as List } from 'react-window';
 
 export default function ModalClient({ open, setOpen, title, client }) {
   const [value, setValue] = useState(0);
@@ -270,6 +271,15 @@ export default function ModalClient({ open, setOpen, title, client }) {
               }}
               className='z-10'
               placeholder='Ubigeo'
+              components={{
+                MenuList: ({ children, ...props }) => (
+                  <List height={300} itemCount={children.length} itemSize={35}>
+                    {({ index, style }) => (
+                      <div style={style}>{children[index]}</div>
+                    )}
+                  </List>
+                )
+              }}
             />
             <CustomSelect
               label='Pais'

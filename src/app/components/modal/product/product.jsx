@@ -12,11 +12,13 @@ import {
 } from "src/app/services/maintenance/product";
 import { CancelButton, SaveButton } from "../../button/button";
 import CustomTabPanel, { a11yProps } from "../../tabs/tabs";
+import { commonServices } from "src/app/services";
 
 export default function ModalProduct({ open, setOpen, title }) {
   const [value, setValue] = useState(0);
   const [category, setCategory] = useState([]);
   const [caliber, setCaliber] = useState([]);
+  const [extent, setExtent] = useState([]);
   const {
     register,
     handleSubmit,
@@ -59,12 +61,14 @@ export default function ModalProduct({ open, setOpen, title }) {
 
   useEffect(() => {
     const fecthData = async () => {
-      const [response, responseCaliber] = await Promise.all([
+      const [response, responseCaliber, responseExtent] = await Promise.all([
         fetchDataProduct(1, 0),
         fetchDataProduct(5, 0),
+        commonServices({ letterAccion: 10 }),
       ]);
       setCategory(response);
       setCaliber(responseCaliber);
+      setExtent(responseExtent);
     };
     fecthData();
   }, []);
@@ -125,6 +129,7 @@ export default function ModalProduct({ open, setOpen, title }) {
             control={control}
             setFormValue={setFormValue}
             caliber={caliber}
+            measure={extent}
           />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>

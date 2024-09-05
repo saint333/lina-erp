@@ -16,7 +16,6 @@ const navigationConfig = [
 		subtitle: '',
 		type: 'group',
 		icon: 'heroicons-outline:home',
-		translate: 'DASHBOARDS',
 		children: [
 			{
 				id: 'dashboard.index',
@@ -33,7 +32,6 @@ const navigationConfig = [
 		subtitle: '',
 		type: 'group',
 		icon: 'heroicons-outline:home',
-		translate: 'SISTEMA',
 		children: [
 			{
 				id: 'maintenance',
@@ -41,7 +39,6 @@ const navigationConfig = [
 				subtitle: '',
 				type: 'collapse',
 				icon: 'heroicons-outline:home',
-				translate: 'MAINTENANCE',
 				children: [
 					{
 						id: 'maintenance.suppliers',
@@ -108,7 +105,6 @@ const navigationConfig = [
 				subtitle: '',
 				type: 'collapse',
 				icon: 'heroicons-outline:home',
-				translate: 'MANAGEMENT',
 				children: [
 					{
 						id: 'management.products',
@@ -139,7 +135,6 @@ const navigationConfig = [
 				subtitle: '',
 				type: 'collapse',
 				icon: 'heroicons-outline:home',
-				translate: 'SALES',
 				children:[
 					{
 						id: 'sales.consult',
@@ -163,7 +158,6 @@ const navigationConfig = [
 				subtitle: '',
 				type: 'collapse',
 				icon: 'heroicons-outline:home',
-				translate: 'ADMINISTRATION',
 				children: [
 					{
 						id: 'administration.vehicles',

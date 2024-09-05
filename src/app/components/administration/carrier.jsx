@@ -4,6 +4,7 @@ import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import { getCarrier } from "src/app/services/administration/carrier";
 import ModalCarrier from "../modal/administration/carrier";
+import { AgregarButton } from "../button/button";
 
 export default function CarrierTable() {
   const [data, setData] = useState([]);
@@ -66,6 +67,14 @@ export default function CarrierTable() {
         columns={columns}
         data={data}
         renderRowActionMenuItems={renderRowActions}
+        loading={data.length === 0}
+        acciones={
+          <AgregarButton
+            text='Nuevo Trasportista'
+            className='w-fit text-sm md:text-base'
+            onClick={() => setOpenModal(true)}
+          />
+        }
       />
       {openModal && (
         <ModalCarrier

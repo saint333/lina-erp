@@ -82,7 +82,7 @@ export default function ModalCarrier({ open, setOpen, title }) {
                 handleChange && handleChange(e);
               }}
             >
-              <MenuItem value=''>-</MenuItem>
+              <MenuItem value='' disabled>-</MenuItem>
               {children}
             </Select>
           </FormControl>

@@ -19,12 +19,20 @@ export default function Service({
   control,
   setFormValue,
   caliber,
+  measure,
 }) {
-  // console.log("🚀 ~ category:", category)
+  const [inputRequired, setInputRequired] = useState({
+    type: true,
+    description: true,
+    brand: true,
+    model: true,
+    caliber: true,
+  });
   const [valueSelect, setValueSelect] = useState({
     ...arrayData,
     caliber,
     category,
+    measure
   });
 
   useEffect(() => {
@@ -32,10 +40,17 @@ export default function Service({
       ...prev,
       caliber,
       category,
+      measure
     }));
-  }, [caliber, category]);
+  }, [caliber, category, measure]);
 
-  const CustomSelect = ({ label, textKey, handleChange, children }) => {
+  const CustomSelect = ({
+    label,
+    textKey,
+    handleChange,
+    children,
+    required,
+  }) => {
     return (
       <Controller
         name={textKey}
@@ -55,12 +70,14 @@ export default function Service({
                 handleChange(e);
               }}
             >
-              <MenuItem value=''>-</MenuItem>
+              <MenuItem value='' disabled>
+                -
+              </MenuItem>
               {children}
             </Select>
           </FormControl>
         )}
-        rules={{ required: "Este campo es requerido" }}
+        rules={{ required: required }}
       />
     );
   };
@@ -71,9 +88,30 @@ export default function Service({
         <CustomSelect
           label='Categoria'
           textKey='category'
-          handleChange={(e) =>
-            handleCategory(e, setFormValue, setValueSelect, valueSelect)
-          }
+          required={true}
+          handleChange={(e) => {
+            if (e.target.value === 2) {
+              setInputRequired((prev) => ({
+                ...prev,
+                type: true,
+                description: true,
+                brand: false,
+                model: false,
+                caliber: false,
+              }));
+            }
+            if (e.target.value === 3 || e.target.value === 4) {
+              setInputRequired((prev) => ({
+                ...prev,
+                type: true,
+                description: true,
+                brand: true,
+                model: true,
+                caliber: true,
+              }));
+            }
+            handleCategory(e, setFormValue, setValueSelect, valueSelect);
+          }}
         >
           {valueSelect.category.map((item, index) => (
             <MenuItem key={index} value={item.p_inidfamiliadetalle}>
@@ -100,6 +138,7 @@ export default function Service({
         <CustomSelect
           label='Tipo'
           textKey='type'
+          required={inputRequired.type}
           handleChange={(e) =>
             handleType(e, setFormValue, setValueSelect, valueSelect)
           }
@@ -110,7 +149,12 @@ export default function Service({
             </MenuItem>
           ))}
         </CustomSelect>
-        <CustomSelect label='Marca' textKey='brand' handleChange={() => null}>
+        <CustomSelect
+          label='Marca'
+          textKey='brand'
+          handleChange={() => null}
+          required={inputRequired.brand}
+        >
           {valueSelect.brand?.map((item, index) => (
             <MenuItem key={index} value={item.p_inidfamiliadetalle}>
               {item.chfamiliadetalle}
@@ -122,6 +166,7 @@ export default function Service({
         <CustomSelect
           label='Modelo'
           textKey='model'
+          required={inputRequired.model}
           handleChange={(e) =>
             handleModel(e, setFormValue, setValueSelect, valueSelect)
           }
@@ -135,6 +180,7 @@ export default function Service({
         <CustomSelect
           label='Calibre'
           textKey='caliber'
+          required={inputRequired.caliber}
           handleChange={() => null}
         >
           {valueSelect.caliber?.map((item, index) => (
@@ -183,14 +229,14 @@ export default function Service({
         )}
       />
       <div className='flex flex-col gap-10 md:flex-row'>
-        <CustomSelect label='Medida' textKey='measure'>
+        <CustomSelect label='Medida' textKey='measure' handleChange={() => {}}>
           {valueSelect.measure?.map((item, index) => (
-            <MenuItem key={index} value={item.p_inidfamiliadetalle}>
-              {item.chfamiliadetalle}
+            <MenuItem key={index} value={item.p_inidmaestrodetalle}>
+              {item.chmaestrodetalle}
             </MenuItem>
           ))}
         </CustomSelect>
-        <CustomSelect label='Situación' textKey='situation'>
+        <CustomSelect label='Situación' textKey='situation' handleChange={() => {}}>
           {valueSelect.situation?.map((item, index) => (
             <MenuItem key={index} value={item.p_inidfamiliadetalle}>
               {item.chfamiliadetalle}

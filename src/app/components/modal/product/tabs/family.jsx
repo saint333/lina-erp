@@ -155,7 +155,7 @@ export default function Family({
                 handleChange(e);
               }}
             >
-              <MenuItem value=''>-</MenuItem>
+              <MenuItem value='' disabled>-</MenuItem>
               {children}
             </Select>
           </FormControl>

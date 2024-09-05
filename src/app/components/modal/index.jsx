@@ -44,7 +44,7 @@ export default function ModalBasic({
           component='div'
           className='overflow-y-auto max-h-[550px] pr-1'
         >
-          <div className='mt-3'>{children}</div>
+          <div className='mt-5'>{children}</div>
         </Typography>
         <Typography id='modal-modal-description' sx={{ mt: 2 }} component='div'>
           <Divider className='!mb-3' />
