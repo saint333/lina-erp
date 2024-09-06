@@ -19,7 +19,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import RoomIcon from "@mui/icons-material/Room";
 import { ClientServices } from "src/app/services/maintenance/client";
 import { commonServices } from "src/app/services";
-import { CancelButton, SaveButton } from "../../button/button";
+import { CancelButton, SaveButton } from "../../iu/button";
 import CustomTabPanel, { a11yProps } from "../../tabs/tabs";
 import { ubigeo } from "src/app/util/ubigeo";
 import Select from "react-select";

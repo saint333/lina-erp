@@ -1,4 +1,4 @@
-import { CancelButton, SendButton } from "src/app/components/button/button";
+import { CancelButton, SendButton } from "src/app/components/iu/button";
 import ModalBasic from "../..";
 
 export default function ConsultModal({ open, setOpen, title }) {

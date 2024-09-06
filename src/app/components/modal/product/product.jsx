@@ -10,7 +10,7 @@ import {
   fetchDataProduct,
   ProductServices,
 } from "src/app/services/maintenance/product";
-import { CancelButton, SaveButton } from "../../button/button";
+import { CancelButton, SaveButton } from "../../iu/button";
 import CustomTabPanel, { a11yProps } from "../../tabs/tabs";
 import { commonServices } from "src/app/services";
 

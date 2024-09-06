@@ -15,7 +15,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { LicenseServices } from "src/app/services/maintenance/client";
 import { commonServices } from "src/app/services";
-import { CancelButton, SaveButton } from "../../button/button";
+import { CancelButton, SaveButton } from "../../iu/button";
 
 export default function ModalLicense({ open, setOpen, title }) {
   const [cliente, setCliente] = useState([]);

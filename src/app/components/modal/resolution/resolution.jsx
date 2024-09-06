@@ -10,7 +10,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { ResolucionServices } from "src/app/services/maintenance/client";
 import { commonServices } from "src/app/services";
-import { CancelButton, SaveButton } from "../../button/button";
+import { CancelButton, SaveButton } from "../../iu/button";
 
 export default function ModalResolution({ open, setOpen, title }) {
   const [cliente, setCliente] = useState([]);

@@ -10,7 +10,7 @@ import {
   SupplierList,
 } from "src/app/services/maintenance/suppliers";
 import Table from "../../table";
-import { AgregarButton } from "../../button/button";
+import { AgregarButton } from "../../iu/button";
 import ModalSuppliers from "../../modal/suppliers/client";
 
 export default function Supplier() {

@@ -1,7 +1,7 @@
 import ModalBasic from "..";
 import { TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { CancelButton, SaveButton } from "../../button/button";
+import { CancelButton, SaveButton } from "../../iu/button";
 import { crudDriver } from "src/app/services/administration/driver";
 
 export default function ModalDriver({ open, setOpen, title }) {

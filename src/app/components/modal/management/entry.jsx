@@ -11,7 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import { CancelButton, SaveButton } from "../../button/button";
+import { CancelButton, SaveButton } from "../../iu/button";
 import Table from "../../table";
 
 export default function EntryModal({ open, setOpen, title }) {

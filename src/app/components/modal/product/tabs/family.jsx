@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import { Add, Delete, ExpandMore } from "@mui/icons-material";
 import { NewFamily } from "src/app/services/maintenance/product";
-import { CancelButton, SaveButton } from "src/app/components/button/button";
+import { CancelButton, SaveButton } from "src/app/components/iu/button";
 
 const AddNewValue = ({
   setValue,

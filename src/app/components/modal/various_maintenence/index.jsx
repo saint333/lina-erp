@@ -1,6 +1,6 @@
 import { Controller, useForm } from "react-hook-form";
 import ModalBasic from "..";
-import { AgregarButton, CancelButton, SaveButton } from "../../button/button";
+import { AgregarButton, CancelButton, SaveButton } from "../../iu/button";
 import { useEffect, useMemo, useState } from "react";
 import { addMaster, commonServices } from "src/app/services";
 import Table from "../../table";

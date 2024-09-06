@@ -4,7 +4,7 @@ import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import { getCarrier } from "src/app/services/administration/carrier";
 import ModalCarrier from "../modal/administration/carrier";
-import { AgregarButton } from "../button/button";
+import { AgregarButton } from "../iu/button";
 
 export default function CarrierTable() {
   const [data, setData] = useState([]);

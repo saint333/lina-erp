@@ -7,7 +7,7 @@ import {
 import { Delete, Edit } from "@mui/icons-material";
 import { LicenseList } from "src/app/services/maintenance/client";
 import Table from "../../table";
-import { AgregarButton } from "../../button/button";
+import { AgregarButton } from "../../iu/button";
 import ModalLicense from "../../modal/license/license";
 
 export default function License() {

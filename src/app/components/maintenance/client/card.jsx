@@ -3,7 +3,7 @@ import { MenuItem } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { CardList } from "src/app/services/maintenance/client";
 import Table from "../../table";
-import { AgregarButton } from "../../button/button";
+import { AgregarButton } from "../../iu/button";
 import ModalCard from "../../modal/card";
 
 export default function CardLicense() {

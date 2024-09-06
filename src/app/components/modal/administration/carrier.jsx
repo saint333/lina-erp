@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { commonServices } from "src/app/services";
-import { CancelButton, SaveButton } from "../../button/button";
+import { CancelButton, SaveButton } from "../../iu/button";
 import { Room } from "@mui/icons-material";
 import { ubigeo } from "src/app/util/ubigeo";
 import { crudCarrier } from "src/app/services/administration/carrier";

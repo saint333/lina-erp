@@ -7,7 +7,7 @@ import {
 import { Delete, Edit } from "@mui/icons-material";
 import { productList } from "src/app/services/maintenance/product";
 import Table from "../../table";
-import { AgregarButton } from "../../button/button";
+import { AgregarButton } from "../../iu/button";
 import ModalProduct from "../../modal/product/product";
 
 export default function ProductsList() {

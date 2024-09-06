@@ -34,7 +34,6 @@ export default function Person({
           variant='outlined'
           className='w-full'
           error={errors.chfechanacimiento}
-          helperText={errors.chfechanacimiento ? "Este campo es requerido" : null}
           defaultValue={""}
           InputLabelProps={{ shrink: true }}
           {...register("chfechanacimiento", { required: true })}

@@ -6,7 +6,7 @@ import {
   List,
 } from "src/app/services/maintenance/client";
 import Table from "../../table";
-import { AgregarButton } from "../../button/button";
+import { AgregarButton } from "../../iu/button";
 import ModalClient from "../../modal/client/client";
 
 export default function ClientList() {

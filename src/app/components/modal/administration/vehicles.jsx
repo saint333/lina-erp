@@ -3,7 +3,7 @@ import {
   TextField,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { CancelButton, SaveButton } from "../../button/button";
+import { CancelButton, SaveButton } from "../../iu/button";
 import { crudVehicles } from "src/app/services/administration/vehicles";
 
 export default function ModalVehicle({ open, setOpen, title }) {

@@ -3,7 +3,7 @@ import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { ResolutionList } from "src/app/services/maintenance/client";
 import Table from "../../table";
-import { AgregarButton } from "../../button/button";
+import { AgregarButton } from "../../iu/button";
 import ModalResolution from "../../modal/resolution/resolution";
 
 export default function ResolutionCard() {

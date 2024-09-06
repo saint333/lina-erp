@@ -10,7 +10,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { CardServices, List } from "src/app/services/maintenance/client";
 import { commonServices } from "src/app/services";
-import { CancelButton, SaveButton } from "../../button/button";
+import { CancelButton, SaveButton } from "../../iu/button";
 import Select from "react-select";
 import { FixedSizeList as Lists } from "react-window";
 

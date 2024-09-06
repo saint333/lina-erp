@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import ModalBasic from "..";
 import {
-  Autocomplete,
   Box,
   FormControl,
   InputLabel,
@@ -20,17 +19,22 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import RoomIcon from "@mui/icons-material/Room";
 import { SupplierServices } from "src/app/services/maintenance/suppliers";
 import { commonServices } from "src/app/services";
-import { CancelButton, SaveButton } from "../../button/button";
+import { CancelButton, SaveButton } from "../../iu/button";
 import CustomTabPanel, { a11yProps } from "../../tabs/tabs";
 import { ubigeo } from "src/app/util/ubigeo";
-import Select from "react-select";
-import { FixedSizeList as List } from 'react-window';
+import { SelectAsyncCustom } from "../../iu/select";
 
-export default function ModalSuppliers({ open, setOpen, title, setData , client }) {
+export default function ModalSuppliers({
+  open,
+  setOpen,
+  title,
+  setData,
+  client,
+}) {
   const [value, setValue] = useState(0);
   const [paises, setPaises] = useState([]);
   const [cliente, setCliente] = useState([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const defaultValues = {
     chruc: "",
     chnombrecomercial: "",
@@ -52,7 +56,7 @@ export default function ModalSuppliers({ open, setOpen, title, setData , client 
     p_inidpersona: 0,
     p_inidjurinat: value === 0 ? 1 : 2,
     p_inidproveedor: 0,
-  }
+  };
 
   const {
     register,
@@ -62,7 +66,7 @@ export default function ModalSuppliers({ open, setOpen, title, setData , client 
     reset,
     setValue: setFormValue,
   } = useForm({
-    defaultValues
+    defaultValues,
   });
 
   const handleChange = (event, newValue) => {
@@ -71,10 +75,10 @@ export default function ModalSuppliers({ open, setOpen, title, setData , client 
   };
 
   const onSubmit = async (data) => {
-    console.log("🚀 ~ onSubmit ~ data:", data)
+    console.log("🚀 ~ onSubmit ~ data:", data);
     const letterAccion = "I";
     const list = await SupplierServices({ data, letterAccion });
-    setData(prev => [...prev, data]);
+    setData((prev) => [...prev, data]);
     handleClose();
   };
 
@@ -115,7 +119,9 @@ export default function ModalSuppliers({ open, setOpen, title, setData , client 
                 handleChange && handleChange(e);
               }}
             >
-              <MenuItem value='' disabled>-</MenuItem>
+              <MenuItem value='' disabled>
+                -
+              </MenuItem>
               {children}
             </Select2>
           </FormControl>
@@ -232,28 +238,13 @@ export default function ModalSuppliers({ open, setOpen, title, setData , client 
               <RoomIcon color='primary' /> Datos de dirección
             </legend>
             <CustomInput label='Direccion' textKey='chdireccion' />
-            <Select
-              value={inputValue}
-              options={ubigeo}
-              getOptionLabel={(data) =>
-                `${data.chdepartamento} - ${data.chprovincia} - ${data.chdistrito}`
-              }
-              getOptionValue={(data) => data.p_inidubigeo}
-              onChange={(e) => {
-                setInputValue(e);
-                setFormValue("p_inidubigeo", e.p_inidubigeo);
-              }}
-              className='z-10'
+            <SelectAsyncCustom
+              options={ubigeo.map((item) => ({
+                value: item.p_inidubigeo,
+                label: `${item.chdepartamento} - ${item.chprovincia} - ${item.chdistrito}`,
+              }))}
               placeholder='Ubigeo'
-              components={{
-                MenuList: ({ children, ...props }) => (
-                  <List height={300} itemCount={children.length} itemSize={35}>
-                    {({ index, style }) => (
-                      <div style={style}>{children[index]}</div>
-                    )}
-                  </List>
-                )
-              }}
+              handleChange={(e) => setFormValue("p_inidubigeo", e.value)}
             />
             <CustomSelect
               label='Pais'

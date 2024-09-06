@@ -1,7 +1,7 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
-import { AgregarButton } from "../../button/button";
+import { AgregarButton } from "../../iu/button";
 import Table from "../../table";
 import EntryModal from "../../modal/management/entry";
 

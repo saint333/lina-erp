@@ -4,7 +4,7 @@ import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import { getDriver } from "src/app/services/administration/driver";
 import ModalDriver from "../modal/administration/driver";
-import { AgregarButton } from "../button/button";
+import { AgregarButton } from "../iu/button";
 
 export default function DriverTable() {
   const [data, setData] = useState([]);

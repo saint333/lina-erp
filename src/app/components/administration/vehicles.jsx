@@ -4,7 +4,7 @@ import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import { getVehicles } from "src/app/services/administration/vehicles";
 import ModalVehicle from "../modal/administration/vehicles";
-import { AgregarButton } from "../button/button";
+import { AgregarButton } from "../iu/button";
 
 export default function VehiclesTable() {
   const [data, setData] = useState([]);
