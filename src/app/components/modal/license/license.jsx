@@ -122,14 +122,16 @@ export default function ModalLicense({ open, setOpen, title }) {
             />
           </FormGroup>
         </div>
-        <SelectAsyncCustom
-          options={cliente.map((item) => ({
-            value: item.p_inidcliente,
-            label: `${item.razon} - ${item.chcodigocliente}`,
-          }))}
-          placeholder='Cliente'
-          handleChange={(e) => setValue("p_inidcliente", e.value)}
-        />
+        {cliente.length != 0 && (
+          <SelectAsyncCustom
+            options={cliente.map((item) => ({
+              value: item.p_inidcliente,
+              label: `${item.razon} - ${item.chcodigocliente}`,
+            }))}
+            placeholder='Cliente'
+            handleChange={(e) => setValue("p_inidcliente", e.value)}
+          />
+        )}
       </Box>
     </ModalBasic>
   );

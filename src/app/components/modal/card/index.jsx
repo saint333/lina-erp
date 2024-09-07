@@ -174,14 +174,16 @@ export default function ModalCard({ open, setOpen, title }) {
           style={{ border: "1px solid rgba(0, 0, 0, 0.23)", padding: "10px" }}
         >
           <legend>Datos del Cliente</legend>
-          <SelectAsyncCustom
-            options={cliente.map((item) => ({
-              value: item.p_inidcliente,
-              label: `${item.razon} - ${item.chcodigocliente}`,
-            }))}
-            placeholder='Cliente'
-            handleChange={(e) => setValue("p_inidcliente", e.value)}
-          />
+          {cliente.length != 0 && (
+            <SelectAsyncCustom
+              options={cliente.map((item) => ({
+                value: item.p_inidcliente,
+                label: `${item.razon} - ${item.chcodigocliente}`,
+              }))}
+              placeholder='Cliente'
+              handleChange={(e) => setValue("p_inidcliente", e.value)}
+            />
+          )}
         </fieldset>
       </div>
     </ModalBasic>
