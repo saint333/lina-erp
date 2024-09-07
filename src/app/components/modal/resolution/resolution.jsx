@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ModalBasic from "..";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
-import { ResolucionServices } from "src/app/services/maintenance/client";
-import { commonServices } from "src/app/services";
+import { TextField } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { List, ResolucionServices } from "src/app/services/maintenance/client";
 import { CancelButton, SaveButton } from "../../iu/button";
+import { SelectAsyncCustom } from "../../iu/select";
 
 export default function ModalResolution({ open, setOpen, title }) {
   const [cliente, setCliente] = useState([]);
@@ -18,8 +12,8 @@ export default function ModalResolution({ open, setOpen, title }) {
     register,
     handleSubmit,
     formState: { errors },
-    control,
     reset,
+    setValue
   } = useForm({
     defaultValues: {
       chresolucion: "",
@@ -35,36 +29,6 @@ export default function ModalResolution({ open, setOpen, title }) {
     handleClose();
   };
 
-  const CustomSelect = ({ label, textKey, handleChange, children }) => {
-    return (
-      <Controller
-        name={textKey}
-        control={control}
-        render={({ field }) => (
-          <FormControl fullWidth size='small'>
-            <InputLabel id={`role-${textKey}-label`} error={errors[textKey]}>
-              {label}
-            </InputLabel>
-            <Select
-              {...field}
-              labelId={`role-${textKey}-label`}
-              label={label}
-              error={errors[textKey]}
-              onChange={(e) => {
-                field.onChange(e);
-                handleChange(e);
-              }}
-            >
-              <MenuItem value='' disabled>-</MenuItem>
-              {children}
-            </Select>
-          </FormControl>
-        )}
-        rules={{ required: "Este campo es requerido" }}
-      />
-    );
-  };
-
   const handleClose = () => {
     reset();
     setOpen(false);
@@ -72,9 +36,8 @@ export default function ModalResolution({ open, setOpen, title }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const persona = await commonServices({ letterAccion: 12 });
-      const empresa = await commonServices({ letterAccion: 13 });
-      setCliente([...persona, ...empresa]);
+      const persona = await List();
+      setCliente(persona);
     };
     fetchData();
   }, []);
@@ -127,20 +90,14 @@ export default function ModalResolution({ open, setOpen, title }) {
           style={{ border: "1px solid rgba(0, 0, 0, 0.23)", padding: "10px" }}
         >
           <legend>Datos del Cliente</legend>
-          <CustomSelect
-            label='Cliente'
-            textKey='p_inidcliente'
-            handleChange={() => null}
-          >
-            {cliente.map((item) => (
-              <MenuItem
-                key={item.p_inidmaestrodetalle}
-                value={item.p_inidmaestrodetalle}
-              >
-                {item.chmaestrodetalle}
-              </MenuItem>
-            ))}
-          </CustomSelect>
+          <SelectAsyncCustom
+            options={cliente.map((item) => ({
+              value: item.p_inidcliente,
+              label: `${item.razon} - ${item.chcodigocliente}`,
+            }))}
+            placeholder='Cliente'
+            handleChange={(e) => setValue("p_inidcliente", e.value)}
+          />
         </fieldset>
       </div>
     </ModalBasic>

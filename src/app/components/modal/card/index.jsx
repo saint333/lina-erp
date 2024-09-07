@@ -11,13 +11,11 @@ import { Controller, useForm } from "react-hook-form";
 import { CardServices, List } from "src/app/services/maintenance/client";
 import { commonServices } from "src/app/services";
 import { CancelButton, SaveButton } from "../../iu/button";
-import Select from "react-select";
-import { FixedSizeList as Lists } from "react-window";
+import { SelectAsyncCustom } from "../../iu/select";
 
 export default function ModalCard({ open, setOpen, title }) {
   const [modalidad, setModalidad] = useState([]);
   const [cliente, setCliente] = useState([]);
-  const [inputValue, setInputValue] = useState('');
 
   const {
     register,
@@ -176,36 +174,14 @@ export default function ModalCard({ open, setOpen, title }) {
           style={{ border: "1px solid rgba(0, 0, 0, 0.23)", padding: "10px" }}
         >
           <legend>Datos del Cliente</legend>
-          {/* <CustomSelect label='Cliente' textKey='p_inidcliente'>
-            {cliente.map((item) => (
-              <MenuItem key={item.p_inidcliente} value={item.p_inidcliente}>
-                {item.razon} - {item.chcodigocliente}
-              </MenuItem>
-            ))}
-          </CustomSelect> */}
-          <Select
-              value={inputValue}
-              options={cliente}
-              getOptionLabel={(data) =>
-                `${data.razon} - ${data.chcodigocliente}`
-              }
-              getOptionValue={(data) => data.p_inidcliente}
-              onChange={(e) => {
-                setInputValue(e);
-                setValue("p_inidcliente", e.p_inidcliente);
-              }}
-              className='z-10'
-              placeholder='Ubigeo'
-              components={{
-                MenuList: ({ children, ...props }) => (
-                  <Lists height={300} itemCount={children.length} itemSize={35}>
-                    {({ index, style }) => (
-                      <div style={style}>{children[index]}</div>
-                    )}
-                  </Lists>
-                )
-              }}
-            />
+          <SelectAsyncCustom
+            options={cliente.map((item) => ({
+              value: item.p_inidcliente,
+              label: `${item.razon} - ${item.chcodigocliente}`,
+            }))}
+            placeholder='Cliente'
+            handleChange={(e) => setValue("p_inidcliente", e.value)}
+          />
         </fieldset>
       </div>
     </ModalBasic>

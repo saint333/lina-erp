@@ -3,19 +3,15 @@ import ModalBasic from "..";
 import {
   Box,
   Checkbox,
-  FormControl,
   FormControlLabel,
   FormGroup,
   FormLabel,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
 } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
-import { LicenseServices } from "src/app/services/maintenance/client";
-import { commonServices } from "src/app/services";
+import { useForm } from "react-hook-form";
+import { LicenseServices, List } from "src/app/services/maintenance/client";
 import { CancelButton, SaveButton } from "../../iu/button";
+import { SelectAsyncCustom } from "../../iu/select";
 
 export default function ModalLicense({ open, setOpen, title }) {
   const [cliente, setCliente] = useState([]);
@@ -25,6 +21,7 @@ export default function ModalLicense({ open, setOpen, title }) {
     formState: { errors },
     control,
     reset,
+    setValue,
   } = useForm({
     defaultValues: {
       chlicencia: "",
@@ -45,36 +42,6 @@ export default function ModalLicense({ open, setOpen, title }) {
     handleClose();
   };
 
-  const CustomSelect = ({ label, textKey, handleChange, children }) => {
-    return (
-      <Controller
-        name={textKey}
-        control={control}
-        render={({ field }) => (
-          <FormControl fullWidth size='small'>
-            <InputLabel id={`role-${textKey}-label`} error={errors[textKey]}>
-              {label}
-            </InputLabel>
-            <Select
-              {...field}
-              labelId={`role-${textKey}-label`}
-              label={label}
-              error={errors[textKey]}
-              onChange={(e) => {
-                field.onChange(e);
-                handleChange(e);
-              }}
-            >
-              <MenuItem value='' disabled>-</MenuItem>
-              {children}
-            </Select>
-          </FormControl>
-        )}
-        rules={{ required: "Este campo es requerido" }}
-      />
-    );
-  };
-
   const handleClose = () => {
     reset();
     setOpen(false);
@@ -82,9 +49,8 @@ export default function ModalLicense({ open, setOpen, title }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const persona = await commonServices({ letterAccion: 12 });
-      const empresa = await commonServices({ letterAccion: 13 });
-      setCliente([...persona, ...empresa]);
+      const persona = await List();
+      setCliente(persona);
     };
     fetchData();
   }, []);
@@ -156,20 +122,14 @@ export default function ModalLicense({ open, setOpen, title }) {
             />
           </FormGroup>
         </div>
-        <CustomSelect
-          label='Tipo Cliente'
-          textKey='p_inidcliente'
-          handleChange={() => null}
-        >
-          {cliente.map((item) => (
-            <MenuItem
-              key={item.p_inidmaestrodetalle}
-              value={item.p_inidmaestrodetalle}
-            >
-              {item.chmaestrodetalle}
-            </MenuItem>
-          ))}
-        </CustomSelect>
+        <SelectAsyncCustom
+          options={cliente.map((item) => ({
+            value: item.p_inidcliente,
+            label: `${item.razon} - ${item.chcodigocliente}`,
+          }))}
+          placeholder='Cliente'
+          handleChange={(e) => setValue("p_inidcliente", e.value)}
+        />
       </Box>
     </ModalBasic>
   );
