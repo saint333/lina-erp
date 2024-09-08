@@ -13,7 +13,7 @@ import { useState } from "react";
 import { CancelButton, SaveButton } from "../../iu/button";
 import Table from "../../table";
 
-export default function EntryModal({ open, setOpen, title }) {
+export default function ExitModal({ open, setOpen, title }) {
   const [productSelect, setProductSelect] = useState([]);
   const [product, setProduct] = useState([]);
 

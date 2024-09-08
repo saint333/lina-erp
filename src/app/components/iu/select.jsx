@@ -32,7 +32,7 @@ export const SelectCustom = ({
   );
 };
 
-export const SelectAsyncCustom = ({ options, handleChange, placeholder }) => {
+export const SelectAsyncCustom = ({ options, handleChange, placeholder, value }) => {
   const loadOptions = async (inputValue) => {
     try {
       const filteredOptions = options.filter((option) =>
@@ -75,6 +75,7 @@ export const SelectAsyncCustom = ({ options, handleChange, placeholder }) => {
       cacheOptions
       className='z-10'
       defaultOptions={options.slice(0, 200)}
+      value={value}
     />
   );
 };

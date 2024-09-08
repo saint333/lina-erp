@@ -1,5 +1,6 @@
 import Entry from "./entry/page";
 import Exhibition from "./exhibition/page";
+import Exit from "./exit";
 import Products from "./products/page";
 
 const ManagementConfig = {
@@ -15,6 +16,10 @@ const ManagementConfig = {
     {
       path: 'management/entry',
       element: <Entry />,
+    },
+    {
+      path: 'management/exit',
+      element: <Exit />,
     }
 	]
 };

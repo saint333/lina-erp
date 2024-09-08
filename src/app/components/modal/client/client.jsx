@@ -23,7 +23,8 @@ import { CancelButton, SaveButton } from "../../iu/button";
 import CustomTabPanel, { a11yProps } from "../../tabs/tabs";
 import { ubigeo } from "src/app/util/ubigeo";
 import Select from "react-select";
-import { FixedSizeList as List } from 'react-window';
+import { FixedSizeList as List } from "react-window";
+import { SelectAsyncCustom } from "../../iu/select";
 
 export default function ModalClient({ open, setOpen, title, client }) {
   const [value, setValue] = useState(0);
@@ -141,11 +142,15 @@ export default function ModalClient({ open, setOpen, title, client }) {
   };
 
   useEffect(() => {
+    const ubigeoData =
+      client &&
+      ubigeo.find((item) => item.p_inidubigeo === client.p_inidubigeo);
     client && reset(client);
     client &&
-      setInputValue(
-        ubigeo.find((item) => item.p_inidubigeo === client.p_inidubigeo)
-      );
+      setInputValue({
+        value: client.p_inidubigeo,
+        label: `${ubigeoData.chdepartamento} - ${ubigeoData.chprovincia} - ${ubigeoData.chdistrito}`,
+      });
   }, [client, reset]);
 
   useEffect(() => {
@@ -258,28 +263,14 @@ export default function ModalClient({ open, setOpen, title, client }) {
               <RoomIcon color='primary' /> Datos de dirección
             </legend>
             <CustomInput label='Direccion' textKey='chdireccion' />
-            <Select
-              value={inputValue}
-              options={ubigeo}
-              getOptionLabel={(data) =>
-                `${data.chdepartamento} - ${data.chprovincia} - ${data.chdistrito}`
-              }
-              getOptionValue={(data) => data.p_inidubigeo}
-              onChange={(e) => {
-                setInputValue(e);
-                setFormValue("p_inidubigeo", e.p_inidubigeo);
-              }}
-              className='z-10'
+            <SelectAsyncCustom
+              options={ubigeo.map((item) => ({
+                value: item.p_inidubigeo,
+                label: `${item.chdepartamento} - ${item.chprovincia} - ${item.chdistrito}`,
+              }))}
               placeholder='Ubigeo'
-              components={{
-                MenuList: ({ children, ...props }) => (
-                  <List height={300} itemCount={children.length} itemSize={35}>
-                    {({ index, style }) => (
-                      <div style={style}>{children[index]}</div>
-                    )}
-                  </List>
-                )
-              }}
+              handleChange={(e) => setFormValue("p_inidubigeo", e.value)}
+              value={inputValue}
             />
             <CustomSelect
               label='Pais'

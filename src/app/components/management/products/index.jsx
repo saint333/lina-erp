@@ -2,13 +2,25 @@ import { Visibility } from "@mui/icons-material";
 import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import Table from "../../table";
+import { ProductModal } from "../../modal/management/product";
 
-export default function KardexTable({ product }) {
-  const [data, setData] = useState([]);
+export default function KardexTable() {
+  const [data, setData] = useState([
+    {
+      razon: "0001",
+      chcodigoproveedor: "0001",
+      chtipodocumento: "0001",
+      chnrodocumento: "0001",
+      chdireccion: "0001",
+      chtelefono: "0001",
+      chemail: "0001",
+    }
+  ]);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    setData(product);
-  }, [product]);
+
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -45,6 +57,7 @@ export default function KardexTable({ product }) {
     <MenuItem
       onClick={() => {
         closeMenu();
+        setOpenModal(true);
       }}
       key={0}
     >
@@ -62,6 +75,9 @@ export default function KardexTable({ product }) {
         data={data}
         renderRowActionMenuItems={renderRowActions}
       />
+      {
+        openModal && <ProductModal open={openModal} setOpen={setOpenModal} title="Mantenimiento de tarjeta" />
+      }
     </div>
   );
 }

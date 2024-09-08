@@ -148,11 +148,15 @@ export default function ModalSuppliers({
   }, []);
 
   useEffect(() => {
-    client &&
-      setInputValue(
-        ubigeo.find((item) => item.p_inidubigeo === client.p_inidubigeo)
-      );
+    const ubigeoData =
+      client &&
+      ubigeo.find((item) => item.p_inidubigeo === client.p_inidubigeo);
     client && reset(client);
+    client &&
+      setInputValue({
+        value: client.p_inidubigeo,
+        label: `${ubigeoData.chdepartamento} - ${ubigeoData.chprovincia} - ${ubigeoData.chdistrito}`,
+      });
   }, [client, reset]);
 
   return (
@@ -245,6 +249,7 @@ export default function ModalSuppliers({
               }))}
               placeholder='Ubigeo'
               handleChange={(e) => setFormValue("p_inidubigeo", e.value)}
+              value={inputValue}
             />
             <CustomSelect
               label='Pais'
