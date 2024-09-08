@@ -5,6 +5,7 @@ import {
   InputLabel,
   MenuItem,
   Select as Select2,
+  Skeleton,
   TextField,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
@@ -174,7 +175,7 @@ export default function ModalCard({ open, setOpen, title }) {
           style={{ border: "1px solid rgba(0, 0, 0, 0.23)", padding: "10px" }}
         >
           <legend>Datos del Cliente</legend>
-          {cliente.length != 0 && (
+          {cliente.length != 0 ? (
             <SelectAsyncCustom
               options={cliente.map((item) => ({
                 value: item.p_inidcliente,
@@ -183,6 +184,8 @@ export default function ModalCard({ open, setOpen, title }) {
               placeholder='Cliente'
               handleChange={(e) => setValue("p_inidcliente", e.value)}
             />
+          ) : (
+            <Skeleton variant='rectangular' height={40} />
           )}
         </fieldset>
       </div>

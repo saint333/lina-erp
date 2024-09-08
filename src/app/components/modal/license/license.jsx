@@ -6,6 +6,7 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
+  Skeleton,
   TextField,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
@@ -122,7 +123,7 @@ export default function ModalLicense({ open, setOpen, title }) {
             />
           </FormGroup>
         </div>
-        {cliente.length != 0 && (
+        {cliente.length != 0 ? (
           <SelectAsyncCustom
             options={cliente.map((item) => ({
               value: item.p_inidcliente,
@@ -131,6 +132,8 @@ export default function ModalLicense({ open, setOpen, title }) {
             placeholder='Cliente'
             handleChange={(e) => setValue("p_inidcliente", e.value)}
           />
+        ) : (
+          <Skeleton variant='rectangular' height={40} />
         )}
       </Box>
     </ModalBasic>
