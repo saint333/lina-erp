@@ -19,6 +19,36 @@ export default function ModalProduct({ open, setOpen, title }) {
   const [category, setCategory] = useState([]);
   const [caliber, setCaliber] = useState([]);
   const [extent, setExtent] = useState([]);
+
+  const defaultValues = {
+    category: "",
+    code: "",
+    p_inidtipo: "",
+    p_inidmarca: "",
+    p_inidmodelo: "",
+    p_inidcalibre: "",
+    p_inidacabado: "",
+    p_inidcapacidad: "",
+    chdescripcion: "",
+    p_inidunidadmedida: "",
+    p_inidsituacion: "",
+    req_serie: false,
+    paginaweb: false,
+    destacado: false,
+
+    p_inidproducto: 3165,
+    chcodigoproducto: "ACCESORIO", //ENVIAR EL TEXTO DE LA CATEGORIA SOLO FUNCIONA PARA ACCION (I)
+    chcodigoproductoantes: "",
+    p_inidfamilia: 0,
+    nucantporuni: 0,
+    nustockminima: 0,
+    nuprecio: 5,
+    nuprecio2: 5,
+    nuprecio3: 5,
+    nuprecio4: 5,
+    churl: "",
+  };
+
   const {
     register,
     handleSubmit,
@@ -28,22 +58,7 @@ export default function ModalProduct({ open, setOpen, title }) {
     setValue: setFormValue,
     getValues,
   } = useForm({
-    defaultValues: {
-      category: "",
-      code: "",
-      type: "",
-      brand: "",
-      model: "",
-      caliber: "",
-      finish: "",
-      capacity: "",
-      description: "",
-      measure: "",
-      situation: "",
-      requiredserie: false,
-      web: false,
-      destacado: false,
-    },
+    defaultValues,
   });
 
   const handleChange = (event, newValue) => {

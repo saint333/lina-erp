@@ -137,8 +137,8 @@ export default function Service({
       <div className='flex flex-col gap-10 md:flex-row'>
         <CustomSelect
           label='Tipo'
-          textKey='type'
-          required={inputRequired.type}
+          textKey='p_inidtipo'
+          required={inputRequired.p_inidtipo}
           handleChange={(e) =>
             handleType(e, setFormValue, setValueSelect, valueSelect)
           }
@@ -151,9 +151,9 @@ export default function Service({
         </CustomSelect>
         <CustomSelect
           label='Marca'
-          textKey='brand'
+          textKey='p_inidmarca'
           handleChange={() => null}
-          required={inputRequired.brand}
+          required={inputRequired.p_inidmarca}
         >
           {valueSelect.brand?.map((item, index) => (
             <MenuItem key={index} value={item.p_inidfamiliadetalle}>
@@ -165,8 +165,8 @@ export default function Service({
       <div className='flex flex-col gap-10 md:flex-row'>
         <CustomSelect
           label='Modelo'
-          textKey='model'
-          required={inputRequired.model}
+          textKey='p_inidmodelo'
+          required={inputRequired.p_inidmodelo}
           handleChange={(e) =>
             handleModel(e, setFormValue, setValueSelect, valueSelect)
           }
@@ -179,8 +179,8 @@ export default function Service({
         </CustomSelect>
         <CustomSelect
           label='Calibre'
-          textKey='caliber'
-          required={inputRequired.caliber}
+          textKey='p_inidcalibre'
+          required={inputRequired.p_inidcalibre}
           handleChange={() => null}
         >
           {valueSelect.caliber?.map((item, index) => (
@@ -193,7 +193,7 @@ export default function Service({
       <div className='flex flex-col gap-10 md:flex-row'>
         <CustomSelect
           label='Acabado'
-          textKey='finish'
+          textKey='p_inidacabado'
           handleChange={() => null}
         >
           {valueSelect.finish?.map((item, index) => (
@@ -204,7 +204,7 @@ export default function Service({
         </CustomSelect>
         <CustomSelect
           label='Capacidad'
-          textKey='capacity'
+          textKey='p_inidcapacidad'
           handleChange={() => null}
         >
           {valueSelect.capacity?.map((item, index) => (
@@ -215,42 +215,43 @@ export default function Service({
         </CustomSelect>
       </div>
       <Controller
-        name='description'
+        name='chdescripcion'
         control={control}
         rules={{ required: "Este campo es requerido" }}
         render={({ field }) => (
           <TextField
             {...field}
             label='Descripción'
-            error={errors.description}
+            error={errors.chdescripcion}
             fullWidth
             size='small'
           />
         )}
       />
       <div className='flex flex-col gap-10 md:flex-row'>
-        <CustomSelect label='Medida' textKey='measure' handleChange={() => {}}>
+        <CustomSelect label='Medida' textKey='p_inidunidadmedida' handleChange={() => {}}>
           {valueSelect.measure?.map((item, index) => (
             <MenuItem key={index} value={item.p_inidmaestrodetalle}>
               {item.chmaestrodetalle}
             </MenuItem>
           ))}
         </CustomSelect>
-        <CustomSelect label='Situación' textKey='situation' handleChange={() => {}}>
-          {valueSelect.situation?.map((item, index) => (
-            <MenuItem key={index} value={item.p_inidfamiliadetalle}>
-              {item.chfamiliadetalle}
+        <CustomSelect label='Situación' textKey='p_inidsituacion' handleChange={() => {}}>
+            <MenuItem value={true}>
+              Activo
             </MenuItem>
-          ))}
+            <MenuItem value={false}>
+              Desactivado
+            </MenuItem>
         </CustomSelect>
       </div>
       <FormGroup className='!flex-row'>
         <FormControlLabel
-          control={<Checkbox {...register("requiredserie")} />}
+          control={<Checkbox {...register("req_serie")} />}
           label='Requiere Serie'
         />
         <FormControlLabel
-          control={<Checkbox {...register("web")} />}
+          control={<Checkbox {...register("paginaweb")} />}
           label='Pagina Web'
         />
         <FormControlLabel

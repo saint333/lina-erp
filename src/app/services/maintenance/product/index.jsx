@@ -1,33 +1,11 @@
 import axios from "axios";
 import { baseApi } from "../..";
 
-export const ProductServices = async ({ data, accion, letterAccion }) => {
+export const ProductServices = async ({ data, letterAccion }) => {
   const response = axios.post(`${baseApi}/maintenance/product`, {
-    p_inidproducto: 3068,
+    ...data,
     p_iniddominio: 1,
-    chcodigoproducto: "",
-    chcodigoproductoantes: "",
-    p_inidfamilia: 0,
-    p_inidtipo: 0,
-    p_inidmarca: 0,
-    p_inidmodelo: 0,
-    p_inidcalibre: 0,
-    p_inidacabado: 0,
-    p_inidcapacidad: 0,
-    p_inidunidadmedida: 0,
-    nucantporuni: 0,
-    chdescripcion: "PRUEBA ",
-    nustockminima: 0,
-    nuprecio: 5,
-    nuprecio2: 5,
-    nuprecio3: 5,
-    nuprecio4: 5,
-    p_inidsituacion: true,
-    req_serie: true,
-    paginaweb: true,
-    destacado: true,
-    churl: "",
-    accion: "U",
+    accion: letterAccion,
   });
   return (await response).data;
 };
