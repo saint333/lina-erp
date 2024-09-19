@@ -6,11 +6,14 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Skeleton,
   TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import { arrayData, handleCategory, handleModel, handleType } from "./helper";
+import { SelectAsyncCustom } from "src/app/components/iu/select";
+import { fetchDataProduct } from "src/app/services/maintenance/product";
 
 export default function Service({
   register,
@@ -20,27 +23,30 @@ export default function Service({
   setFormValue,
   caliber,
   measure,
+  product,
+  reset,
 }) {
   const [inputRequired, setInputRequired] = useState({
-    type: true,
-    description: true,
-    brand: true,
-    model: true,
-    caliber: true,
+    p_inidtipo: true,
+    chdescripcion: true,
+    p_inidmarca: true,
+    p_inidmodelo: true,
+    p_inidcalibre: true,
   });
   const [valueSelect, setValueSelect] = useState({
     ...arrayData,
     caliber,
     category,
-    measure
+    measure,
   });
+  const [brand, setBrand] = useState(null);
 
   useEffect(() => {
     setValueSelect((prev) => ({
       ...prev,
       caliber,
       category,
-      measure
+      measure,
     }));
   }, [caliber, category, measure]);
 
@@ -65,12 +71,12 @@ export default function Service({
               labelId={`role-${textKey}-label`}
               label={label}
               error={errors[textKey]}
-              onChange={(e) => {
-                field.onChange(e);
-                handleChange(e);
+              onChange={(e, child) => {
+                field.onChange(e, child);
+                handleChange(e, child);
               }}
             >
-              <MenuItem value='' disabled>
+              <MenuItem value='0' disabled>
                 -
               </MenuItem>
               {children}
@@ -82,34 +88,67 @@ export default function Service({
     );
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (product) {
+        reset(product);
+        setFormValue("code", product.chcodigoproducto);
+        const type = await fetchDataProduct(2, product.p_inidfamilia);
+        const response = await fetchDataProduct(3, product.p_inidtipo);
+        const responseModel = await fetchDataProduct(4, product.p_inidtipo);
+        const finish = await fetchDataProduct(6, product.p_inidmodelo);
+        setFormValue("p_inidtipo", product.p_inidtipo);
+        setFormValue("p_inidmarca", product.p_inidmarca);
+        setFormValue("p_inidmodelo", product.p_inidmodelo);
+        setFormValue("p_inidacabado", product.p_inidacabado);
+        const brand = response.find(
+          (item) => item.p_inidfamiliadetalle === product.p_inidmarca
+        );
+        setBrand({
+          label: brand.chfamiliadetalle,
+          value: brand.p_inidfamiliadetalle,
+        });
+        setValueSelect((prev) => ({
+          ...prev,
+          type,
+          brand: response,
+          model: responseModel,
+          finish,
+        }));
+      }
+    };
+    fetchData();
+  }, [product]);
+
   return (
     <div className='flex gap-10 flex-col'>
       <div className='flex flex-col gap-10 md:flex-row'>
         <CustomSelect
           label='Categoria'
-          textKey='category'
+          textKey='p_inidfamilia'
           required={true}
-          handleChange={(e) => {
+          handleChange={(e, child) => {
             if (e.target.value === 2) {
               setInputRequired((prev) => ({
                 ...prev,
-                type: true,
-                description: true,
-                brand: false,
-                model: false,
-                caliber: false,
+                p_inidtipo: true,
+                chdescripcion: true,
+                p_inidmarca: false,
+                p_inidmodelo: false,
+                p_inidcalibre: false,
               }));
             }
             if (e.target.value === 3 || e.target.value === 4) {
               setInputRequired((prev) => ({
                 ...prev,
-                type: true,
-                description: true,
-                brand: true,
-                model: true,
-                caliber: true,
+                p_inidtipo: true,
+                chdescripcion: true,
+                p_inidmarca: true,
+                p_inidmodelo: true,
+                p_inidcalibre: true,
               }));
             }
+            setFormValue("chcodigoproducto", child.props.children);
             handleCategory(e, setFormValue, setValueSelect, valueSelect);
           }}
         >
@@ -122,7 +161,6 @@ export default function Service({
         <Controller
           name='code'
           control={control}
-          rules={{ required: "Este campo es requerido" }}
           render={({ field }) => (
             <TextField
               {...field}
@@ -130,6 +168,7 @@ export default function Service({
               error={errors.code}
               fullWidth
               size='small'
+              disabled
             />
           )}
         />
@@ -149,18 +188,24 @@ export default function Service({
             </MenuItem>
           ))}
         </CustomSelect>
-        <CustomSelect
-          label='Marca'
-          textKey='p_inidmarca'
-          handleChange={() => null}
-          required={inputRequired.p_inidmarca}
-        >
-          {valueSelect.brand?.map((item, index) => (
-            <MenuItem key={index} value={item.p_inidfamiliadetalle}>
-              {item.chfamiliadetalle}
-            </MenuItem>
-          ))}
-        </CustomSelect>
+        <div className='w-full'>
+          {valueSelect.brand.length != 0 ? (
+            <SelectAsyncCustom
+              placeholder='Marca'
+              options={valueSelect.brand?.map((item) => ({
+                label: item.chfamiliadetalle,
+                value: item.p_inidfamiliadetalle,
+              }))}
+              handleChange={(e) => {
+                setFormValue("p_inidmarca", e.value);
+                setBrand(e);
+              }}
+              value={brand}
+            />
+          ) : (
+            <Skeleton variant='rectangular' height={40} />
+          )}
+        </div>
       </div>
       <div className='flex flex-col gap-10 md:flex-row'>
         <CustomSelect
@@ -229,20 +274,25 @@ export default function Service({
         )}
       />
       <div className='flex flex-col gap-10 md:flex-row'>
-        <CustomSelect label='Medida' textKey='p_inidunidadmedida' handleChange={() => {}}>
+        <CustomSelect
+          label='Medida'
+          textKey='p_inidunidadmedida'
+          handleChange={() => {}}
+          required={true}
+        >
           {valueSelect.measure?.map((item, index) => (
             <MenuItem key={index} value={item.p_inidmaestrodetalle}>
               {item.chmaestrodetalle}
             </MenuItem>
           ))}
         </CustomSelect>
-        <CustomSelect label='Situación' textKey='p_inidsituacion' handleChange={() => {}}>
-            <MenuItem value={true}>
-              Activo
-            </MenuItem>
-            <MenuItem value={false}>
-              Desactivado
-            </MenuItem>
+        <CustomSelect
+          label='Situación'
+          textKey='p_inidsituacion'
+          handleChange={() => {}}
+        >
+          <MenuItem value={true}>Activo</MenuItem>
+          <MenuItem value={false}>Desactivado</MenuItem>
         </CustomSelect>
       </div>
       <FormGroup className='!flex-row'>

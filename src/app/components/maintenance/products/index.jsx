@@ -1,18 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  ListItemIcon,
-  ListItemText,
-  MenuItem,
-} from "@mui/material";
+import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
-import { productList } from "src/app/services/maintenance/product";
+import {
+  DetailProduct,
+  productList,
+} from "src/app/services/maintenance/product";
 import Table from "../../table";
-import { AgregarButton } from "../../iu/button";
+import { AgregarButton, CancelButton, SaveButton } from "../../iu/button";
 import ModalProduct from "../../modal/product/product";
+import { useSnackbar } from "notistack";
+import { Confirm } from "../../iu/confirm";
 
 export default function ProductsList() {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [product, setProduct] = useState(null);
+  const [confirm, setConfirm] = useState(false);
+  const [rowData, setRowData] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,7 +71,7 @@ export default function ProductsList() {
   const renderRowActions = ({ closeMenu, row }) => [
     <MenuItem
       onClick={() => {
-        setOpenModal(true);
+        handleEdit(row);
         closeMenu();
       }}
       key={0}
@@ -79,6 +84,8 @@ export default function ProductsList() {
     <MenuItem
       onClick={() => {
         closeMenu();
+        setRowData(row);
+        setConfirm(true);
       }}
       key={1}
     >
@@ -88,6 +95,20 @@ export default function ProductsList() {
       <ListItemText>Eliminar</ListItemText>
     </MenuItem>,
   ];
+
+  const handleEdit = async (row) => {
+    const response = await DetailProduct(row.original.p_inidproducto);
+    setProduct(response);
+    setOpenModal(true);
+  };
+
+  const handleDelete = async () => {
+    setConfirm(false);
+  };
+
+  const handleCloseDelete = () => {
+    setConfirm(false);
+  };
 
   return (
     <div className='grid gap-4 items-start'>
@@ -109,6 +130,23 @@ export default function ProductsList() {
           open={openModal}
           setOpen={setOpenModal}
           title='Nuevo Producto'
+          product={product}
+          setProduct={setProduct}
+          setData={setData}
+        />
+      )}
+      {confirm && (
+        <Confirm
+          open={confirm}
+          message={`Desea eliminar el siguiente registro`}
+          actions={
+            <>
+              <SaveButton text='Eliminar' onClick={handleDelete} />
+              <CancelButton text='Cancelar' onClick={handleCloseDelete} />
+            </>
+          }
+          handleClose={handleCloseDelete}
+          title={"Eliminar Registro"}
         />
       )}
     </div>

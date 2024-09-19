@@ -33,7 +33,7 @@ export default function ModalSuppliers({
   client,
   setClient,
 }) {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
   const [paises, setPaises] = useState([]);
   const [cliente, setCliente] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -76,6 +76,8 @@ export default function ModalSuppliers({
   const handleChange = (event, newValue) => {
     reset();
     setValue(newValue);
+    setFormValue("proceso", newValue === 0 ? "PERSONA" : "EMPRESA");
+    setFormValue("p_inidjurinat", newValue === 0 ? 1 : 2);
   };
 
   const onSubmit = async (data) => {
@@ -88,7 +90,7 @@ export default function ModalSuppliers({
         variant: "success",
         style: { fontSize: "1.3rem" },
       });
-    } 
+    }
     if(list.message) {
       enqueueSnackbar(
         `Error al ${letterAccion == "I" ? "insertar" : "actualizar"} proveedor`,
@@ -214,6 +216,7 @@ export default function ModalSuppliers({
               iconPosition='start'
               className='!min-h-[50px]'
               {...a11yProps(0)}
+              {...(client?.p_inidjurinat == 2 && { disabled: true })}
             />
             <Tab
               label='Empresa'
@@ -221,6 +224,7 @@ export default function ModalSuppliers({
               icon={<BusinessIcon />}
               className='!min-h-[50px]'
               {...a11yProps(1)}
+              {...(client?.p_inidjurinat == 1 && { disabled: true })}
             />
           </Tabs>
         </Box>

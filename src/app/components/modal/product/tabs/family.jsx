@@ -195,7 +195,7 @@ export default function Family({
       <div className='flex flex-col gap-10 flex-1'>
         <CustomSelect
           label='Categoria'
-          textKey='category'
+          textKey='p_inidfamilia'
           handleChange={(e) =>
             handleCategory(e, setFormValue, setValueSelect, valueSelect)
           }
@@ -210,9 +210,9 @@ export default function Family({
           <Typography variant='subtitle1'>TIPO</Typography>
           <Card>
             <CardContent>
-              <AddNewValue headOne={2} headTwo={getValues("category")} />
+              <AddNewValue headOne={2} headTwo={getValues("p_inidfamilia")} />
               <CustomGruopRadio
-                textKey='type'
+                textKey='p_inidtipo'
                 label='Tipo'
                 handleChange={(e) =>
                   handleType(e, setFormValue, setValueSelect, valueSelect)
@@ -251,9 +251,9 @@ export default function Family({
               <Typography>MARCAS</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <AddNewValue headOne={3} headTwo={getValues("type")} />
+              <AddNewValue headOne={3} headTwo={getValues("p_inidtipo")} />
               <CustomGruopRadio
-                textKey='brand'
+                textKey='p_inidmarca'
                 label='Marca'
                 handleChange={() => null}
               >
@@ -285,9 +285,9 @@ export default function Family({
               <Typography>MODELOS</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <AddNewValue headOne={4} headTwo={getValues("type")} />
+              <AddNewValue headOne={4} headTwo={getValues("p_inidtipo")} />
               <CustomGruopRadio
-                textKey='model'
+                textKey='p_inidmodelo'
                 label='Modelo'
                 handleChange={(e) =>
                   handleModel(e, setFormValue, setValueSelect, valueSelect)
@@ -320,9 +320,9 @@ export default function Family({
                     <Typography>ACABADO</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <AddNewValue headOne={6} headTwo={getValues("model")} />
+                    <AddNewValue headOne={6} headTwo={getValues("p_inidmodelo")} />
                     <CustomGruopRadio
-                      textKey='finish'
+                      textKey='p_inidacabado'
                       label='Acabado'
                       handleChange={() => null}
                     >
@@ -354,9 +354,9 @@ export default function Family({
                     <Typography>CAPACIDAD</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <AddNewValue headOne={7} headTwo={getValues("model")} />
+                    <AddNewValue headOne={7} headTwo={getValues("p_inidmodelo")} />
                     <CustomGruopRadio
-                      textKey='capacity'
+                      textKey='p_inidcapacidad'
                       label='Capacidad'
                       handleChange={() => null}
                     >
@@ -393,7 +393,7 @@ export default function Family({
             <AccordionDetails>
               <AddNewValue headOne={5} headTwo={0} />
               <CustomGruopRadio
-                textKey='caliber'
+                textKey='p_inidcalibre'
                 label='Calibre'
                 handleChange={() => null}
               >

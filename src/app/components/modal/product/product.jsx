@@ -13,33 +13,34 @@ import {
 import { CancelButton, SaveButton } from "../../iu/button";
 import CustomTabPanel, { a11yProps } from "../../tabs/tabs";
 import { commonServices } from "src/app/services";
+import { useSnackbar } from "notistack";
+import { handleCategory } from "./tabs/helper";
 
-export default function ModalProduct({ open, setOpen, title }) {
+export default function ModalProduct({ open, setOpen, title, product, setProduct, setData }) {
   const [value, setValue] = useState(0);
   const [category, setCategory] = useState([]);
   const [caliber, setCaliber] = useState([]);
   const [extent, setExtent] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    category: "",
+    p_inidfamilia: 0,
     code: "",
-    p_inidtipo: "",
-    p_inidmarca: "",
-    p_inidmodelo: "",
-    p_inidcalibre: "",
-    p_inidacabado: "",
-    p_inidcapacidad: "",
+    p_inidtipo: 0,
+    p_inidmarca: 0,
+    p_inidmodelo: 0,
+    p_inidcalibre: 0,
+    p_inidacabado: 0,
+    p_inidcapacidad: 0,
     chdescripcion: "",
-    p_inidunidadmedida: "",
-    p_inidsituacion: "",
+    p_inidunidadmedida: 37,
+    p_inidsituacion: 0,
     req_serie: false,
     paginaweb: false,
     destacado: false,
-
-    p_inidproducto: 3165,
-    chcodigoproducto: "ACCESORIO", //ENVIAR EL TEXTO DE LA CATEGORIA SOLO FUNCIONA PARA ACCION (I)
+    chcodigoproducto: "", //ENVIAR EL TEXTO DE LA CATEGORIA SOLO FUNCIONA PARA ACCION (I)
+    p_inidproducto: null,
     chcodigoproductoantes: "",
-    p_inidfamilia: 0,
     nucantporuni: 0,
     nustockminima: 0,
     nuprecio: 5,
@@ -67,11 +68,29 @@ export default function ModalProduct({ open, setOpen, title }) {
   };
 
   const onSubmit = async (data) => {
+    const letterAccion = product ? "U" : "I";
     const response = await ProductServices({
       data,
-      accion: "POST",
-      letterAccion: "I",
+      letterAccion
     });
+    console.log("🚀 ~ onSubmit ~ response:", response)
+    if (typeof response.obj === "object") {
+      setData((prev) => [...prev, response.obj]);
+      enqueueSnackbar("Producto registrado correctamente", {
+        variant: "success",
+        style: { fontSize: "1.3rem" },
+      });
+    }
+    if(response.message) {
+      enqueueSnackbar(
+        `Error al ${letterAccion == "I" ? "insertar" : "actualizar"} producto`,
+        {
+          variant: "error",
+          style: { fontSize: "1.3rem" },
+        }
+      );
+    }
+    handleClose();
   };
 
   useEffect(() => {
@@ -88,23 +107,23 @@ export default function ModalProduct({ open, setOpen, title }) {
     fecthData();
   }, []);
 
+  const handleClose = () => {
+    reset(defaultValues);
+    setProduct(null);
+    setOpen(false);
+  };
+
   return (
     <ModalBasic
       open={open}
-      handleClose={() => {
-        setOpen(false);
-        reset();
-      }}
+      handleClose={handleClose}
       title={title}
       actions={
         <div className='flex gap-6 justify-end'>
           <SaveButton text='Guardar' onClick={handleSubmit(onSubmit)} />
           <CancelButton
             text='Cancelar'
-            onClick={() => {
-              setOpen(false);
-              reset();
-            }}
+            onClick={handleClose}
           />
         </div>
       }
@@ -145,6 +164,8 @@ export default function ModalProduct({ open, setOpen, title }) {
             setFormValue={setFormValue}
             caliber={caliber}
             measure={extent}
+            product={product}
+            reset={reset}
           />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>

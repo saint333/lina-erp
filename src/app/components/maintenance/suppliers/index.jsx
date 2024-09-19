@@ -145,7 +145,7 @@ export default function Supplier() {
       {confirm && (
         <Confirm
           open={confirm}
-          message={"Desea eliminar el siguiente registro"}
+          message={`Desea eliminar el siguiente registro, ${rowData.original.razon}`}
           actions={
             <>
               <SaveButton text='Eliminar' onClick={handleDelete} />

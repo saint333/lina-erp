@@ -18,10 +18,14 @@ export const handleCategory = async (
   setValueSelect,
   valueSelect
 ) => {
-  setFormValue("type", "");
+  setFormValue("p_inidtipo", "0");
+  setFormValue("p_inidmarca", "0");
+  setFormValue("p_inidmodelo", "0");
   const response = await fetchDataProduct(2, e.target.value);
   setValueSelect({
     ...valueSelect,
+    brand: [],
+    model: [],
     type: response,
   });
 };
@@ -32,7 +36,7 @@ export const handleType = async (
   setValueSelect,
   valueSelect
 ) => {
-  setFormValue("brand", "");
+  setFormValue("p_inidmarca", "0");
   const response = await fetchDataProduct(3, e.target.value);
   await handleBrand(e, setFormValue, setValueSelect, valueSelect, response);
 };
@@ -44,7 +48,7 @@ const handleBrand = async (
   valueSelect,
   brand
 ) => {
-  setFormValue("model", "");
+  setFormValue("p_inidmodelo", "0");
   const response = await fetchDataProduct(4, e.target.value);
   setValueSelect({
     ...valueSelect,
@@ -64,7 +68,7 @@ export const handleModel = async (
 };
 
 const handleCaliber = async (e, setFormValue) => {
-  setFormValue("finish", "");
+  setFormValue("p_inidacabado", "0");
   const response = await fetchDataProduct(6, e.target.value);
   return response;
 };
@@ -76,7 +80,7 @@ const handleFinish = async (
   valueSelect,
   finish
 ) => {
-  setFormValue("capacity", "");
+  setFormValue("p_inidcapacidad", "0");
   const response = await fetchDataProduct(7, e.target.value);
   setValueSelect({
     ...valueSelect,

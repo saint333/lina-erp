@@ -34,3 +34,8 @@ export const productList = async () => {
   const response = axios.get(`${baseApi}/maintenance/product`);
   return (await response).data;
 };
+
+export const DetailProduct = async (id) => {
+  const response = axios.get(`${baseApi}/maintenance/product/detail?p_inidproducto=${id}`);
+  return (await response).data;
+}
