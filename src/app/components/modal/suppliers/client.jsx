@@ -23,6 +23,7 @@ import { CancelButton, SaveButton } from "../../iu/button";
 import CustomTabPanel, { a11yProps } from "../../tabs/tabs";
 import { ubigeo } from "src/app/util/ubigeo";
 import { SelectAsyncCustom } from "../../iu/select";
+import { useSnackbar } from "notistack";
 
 export default function ModalSuppliers({
   open,
@@ -30,11 +31,14 @@ export default function ModalSuppliers({
   title,
   setData,
   client,
+  setClient,
 }) {
   const [value, setValue] = useState(0);
   const [paises, setPaises] = useState([]);
   const [cliente, setCliente] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
+
   const defaultValues = {
     chruc: "",
     chnombrecomercial: "",
@@ -75,10 +79,25 @@ export default function ModalSuppliers({
   };
 
   const onSubmit = async (data) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
     const letterAccion = "I";
     const list = await SupplierServices({ data, letterAccion });
-    setData((prev) => [...prev, data]);
+    console.log("🚀 ~ onSubmit ~ list:", list)
+    if (typeof list.obj === "object") {
+      setData((prev) => [...prev, list.obj]);
+      enqueueSnackbar("Proveedor registrado correctamente", {
+        variant: "success",
+        style: { fontSize: "1.3rem" },
+      });
+    } 
+    if(list.message) {
+      enqueueSnackbar(
+        `Error al ${letterAccion == "I" ? "insertar" : "actualizar"} proveedor`,
+        {
+          variant: "error",
+          style: { fontSize: "1.3rem" },
+        }
+      );
+    }
     handleClose();
   };
 
@@ -135,6 +154,7 @@ export default function ModalSuppliers({
     reset(defaultValues);
     setOpen(false);
     setInputValue(null);
+    setClient(null);
   };
 
   useEffect(() => {
@@ -148,15 +168,21 @@ export default function ModalSuppliers({
   }, []);
 
   useEffect(() => {
-    const ubigeoData =
-      client &&
-      ubigeo.find((item) => item.p_inidubigeo === client.p_inidubigeo);
-    client && reset(client);
-    client &&
+    if (client) {
+      const ubigeoData = ubigeo.find(
+        (item) => item.p_inidubigeo === client.p_inidubigeo
+      );
+      reset(client);
       setInputValue({
         value: client.p_inidubigeo,
         label: `${ubigeoData.chdepartamento} - ${ubigeoData.chprovincia} - ${ubigeoData.chdistrito}`,
       });
+      if (client.p_inidjurinat == 1) {
+        handleChange(null, 0);
+      } else {
+        handleChange(null, 1);
+      }
+    }
   }, [client, reset]);
 
   return (
@@ -248,7 +274,10 @@ export default function ModalSuppliers({
                 label: `${item.chdepartamento} - ${item.chprovincia} - ${item.chdistrito}`,
               }))}
               placeholder='Ubigeo'
-              handleChange={(e) => setFormValue("p_inidubigeo", e.value)}
+              handleChange={(e) => {
+                setFormValue("p_inidubigeo", e.value);
+                setInputValue(e);
+              }}
               value={inputValue}
             />
             <CustomSelect

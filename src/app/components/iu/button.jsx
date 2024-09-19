@@ -9,7 +9,7 @@ export const SaveButton = ({ text, onClick }) => {
       variant='contained'
       color='success'
       startIcon={<SaveIcon />}
-      onClick={onClick}
+      onClick={onClick} 
     >
       {text}
     </Button>

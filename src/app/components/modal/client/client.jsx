@@ -269,7 +269,10 @@ export default function ModalClient({ open, setOpen, title, client }) {
                 label: `${item.chdepartamento} - ${item.chprovincia} - ${item.chdistrito}`,
               }))}
               placeholder='Ubigeo'
-              handleChange={(e) => setFormValue("p_inidubigeo", e.value)}
+              handleChange={(e) => {
+                setFormValue("p_inidubigeo", e.value);
+                setInputValue(e);
+              }}
               value={inputValue}
             />
             <CustomSelect

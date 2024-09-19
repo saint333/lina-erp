@@ -8,6 +8,8 @@ export const SupplierList = async () => {
 
 export const SupplierServices = async ({ data, letterAccion }) => {
   const response = axios.post(`${baseApi}/maintenance/provider`, {
+    ...data,
+    chfechanacimiento: data?.chfechanacimiento?.split("-")?.reverse()?.join("-") || null,
     p_iniddominio: 1,
     accion: letterAccion,
   });

@@ -37,6 +37,7 @@ export default function Person({
           defaultValue={""}
           InputLabelProps={{ shrink: true }}
           {...register("chfechanacimiento", { required: true })}
+          onChange={e => console.log(e.target.value)}
         />
         <CustomSelect label='Sexo' textKey='p_inidtiposexo'>
           <MenuItem value='58'>Masculino</MenuItem>
