@@ -4,7 +4,9 @@ import { AgregarButton, CancelButton, SaveButton } from "../../iu/button";
 import { useEffect, useMemo, useState } from "react";
 import { addMaster, commonServices } from "src/app/services";
 import Table from "../../table";
-import { TextField } from "@mui/material";
+import { ListItemIcon, ListItemText, MenuItem, TextField } from "@mui/material";
+import { Delete } from "@mui/icons-material";
+import { useSnackbar } from "notistack";
 
 export default function ModalVarious({ open, setOpen, title, id }) {
   const defaultValues = {
@@ -15,6 +17,7 @@ export default function ModalVarious({ open, setOpen, title, id }) {
   };
 
   const [data, setData] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
 
   const {
     register,
@@ -37,23 +40,36 @@ export default function ModalVarious({ open, setOpen, title, id }) {
     data = { ...data, p_inidmaestrocabecera: id };
     const letterAccion = "I";
     const list = await addMaster({ data, letterAccion });
+    if (list.codigo == 1) {
+      enqueueSnackbar(list.valor, {
+        variant: "success",
+        style: { fontSize: "1.3rem" },
+      });
+    } else {
+      enqueueSnackbar(list.valor, {
+        variant: "error",
+        style: { fontSize: "1.3rem" },
+      });
+    }
+    setFormValue("chmaestrodetalle", "");
+    setData((prev) => [...prev, data]);
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      const product = await commonServices({letterAccion: id});
+      const product = await commonServices({ letterAccion: id });
       setData(product);
     };
     fetchData();
   }, [id]);
 
-  const columns = useMemo( () => [
+  const columns = useMemo(() => [
     {
       accessorKey: "chmaestrodetalle",
       header: "DESCRIPCION",
       size: 150,
-    }
-  ])
+    },
+  ]);
 
   const CustomInput = ({ label, textKey }) => (
     <Controller
@@ -72,6 +88,20 @@ export default function ModalVarious({ open, setOpen, title, id }) {
     />
   );
 
+  const renderRowActions = ({ closeMenu, row }) => [
+    <MenuItem
+      onClick={() => {
+        closeMenu();
+      }}
+      key={0}
+    >
+      <ListItemIcon>
+        <Delete fontSize='small' />
+      </ListItemIcon>
+      <ListItemText>Eliminar</ListItemText>
+    </MenuItem>,
+  ];
+
   return (
     <ModalBasic
       open={open}
@@ -84,11 +114,15 @@ export default function ModalVarious({ open, setOpen, title, id }) {
         </div>
       }
     >
-      <div className="mt-6 flex gap-10">
+      <div className='mt-6 flex'>
         <CustomInput label='DESCRIPCION' textKey='chmaestrodetalle' />
-        <AgregarButton text='Agregar' onClick={handleSubmit(onSubmit)} />
+        <AgregarButton text='Agregar' onClick={handleSubmit(onSubmit)} className="ml-5 w-min"/>
       </div>
-      <Table columns={columns} data={data} enableRowActions={false} />
+      <Table
+        columns={columns}
+        data={data}
+        renderRowActionMenuItems={renderRowActions}
+      />
     </ModalBasic>
   );
 }

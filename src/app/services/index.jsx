@@ -24,7 +24,10 @@ export const Master = async () => {
   return (await response).data;
 }
 
-export const addMaster = async (data) => {
-  const response = axios.post(`${baseApi}/maintenance/master/detail`, data);
+export const addMaster = async ({data, letterAccion}) => {
+  const response = axios.post(`${baseApi}/maintenance/master/detail`, {
+    ...data,
+    accion: letterAccion
+  });
   return (await response).data;
 }
