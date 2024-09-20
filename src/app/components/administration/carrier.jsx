@@ -9,6 +9,7 @@ import { AgregarButton } from "../iu/button";
 export default function CarrierTable() {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [rowData, setRowData] = useState(null);
 
   const columns = useMemo(() => [
     {
@@ -42,6 +43,7 @@ export default function CarrierTable() {
     <MenuItem
       onClick={() => {
         closeMenu();
+        setRowData(row.original);
         setOpenModal(true);
       }}
       key={0}
@@ -59,7 +61,7 @@ export default function CarrierTable() {
       setData(carrier);
     };
     fetchData();
-  }, []);
+  }, [openModal]);
 
   return (
     <div>
@@ -81,6 +83,8 @@ export default function CarrierTable() {
           open={openModal}
           setOpen={setOpenModal}
           title='Transportista'
+          rowData={rowData}
+          setRowData={setRowData}
         />
       )}
     </div>

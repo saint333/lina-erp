@@ -14,10 +14,24 @@ import { CancelButton, SaveButton } from "../../iu/button";
 import { Room } from "@mui/icons-material";
 import { ubigeo } from "src/app/util/ubigeo";
 import { crudCarrier } from "src/app/services/administration/carrier";
+import { SelectAsyncCustom } from "../../iu/select";
+import { useSnackbar } from "notistack";
 
-export default function ModalCarrier({ open, setOpen, title }) {
+export default function ModalCarrier({ open, setOpen, title, rowData, setRowData }) {
   const [inputValue, setInputValue] = useState("");
   const [paises, setPaises] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const defaultValues= {
+    p_inidtransportista: 0,
+    p_iniddominio: 1,
+    chrazonsocial: "",
+    chruc: "",
+    chtelefono: "",
+    chdirecfiscal: "",
+    p_inidubigeo: "",
+    p_inidpais: ""
+  }
 
   const {
     handleSubmit,
@@ -26,22 +40,24 @@ export default function ModalCarrier({ open, setOpen, title }) {
     reset,
     setValue,
   } = useForm({
-    defaultValues: {
-      p_inidtransportista: 0,
-      p_iniddominio: 1,
-      chrazonsocial: "",
-      chruc: "",
-      chtelefono: "",
-      chdirecfiscal: "",
-      p_inidubigeo: "",
-      p_inidpais: ""
-    },
+    defaultValues
   });
 
   const onSubmit = async (data) => {
-    const accion = "I";
+    const accion = rowData ? "U" : "I";
     const response = await crudCarrier({ ...data, accion });
     console.log("🚀 ~ onSubmit ~ data:", response);
+    if (response.codigo == 1) {
+      enqueueSnackbar(response.valor, {
+        variant: "success",
+        style: { fontSize: "1.3rem" },
+      });
+    } else {
+      enqueueSnackbar(response.valor, {
+        variant: "error",
+        style: { fontSize: "1.3rem" },
+      });
+    }
     handleClose();
   };
 
@@ -93,7 +109,8 @@ export default function ModalCarrier({ open, setOpen, title }) {
   };
 
   const handleClose = () => {
-    reset();
+    reset(defaultValues);
+    setRowData(null);
     setOpen(false);
   };
 
@@ -104,6 +121,19 @@ export default function ModalCarrier({ open, setOpen, title }) {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (rowData) {
+      const ubigeoData = ubigeo.find(
+        (item) => item.p_inidubigeo === rowData.p_inidubigeo
+      );
+      reset(rowData);
+      setInputValue({
+        value: rowData.p_inidubigeo,
+        label: `${ubigeoData.chdepartamento} - ${ubigeoData.chprovincia} - ${ubigeoData.chdistrito}`,
+      });
+    }
+  }, [rowData]);
 
   return (
     <ModalBasic
@@ -141,40 +171,18 @@ export default function ModalCarrier({ open, setOpen, title }) {
             <Room color='primary' /> Datos de dirección
           </legend>
           <CustomInput label='Direccion' textKey='chdirecfiscal' />
-          <Autocomplete
-            freeSolo
-            id='free-solo-2-demo'
-            disableClearable
-            value={
-              ubigeo.find((option) => option.p_inidubigeo === inputValue) ||
-              null
-            }
-            onChange={(event, newValue) => {
-              setInputValue(newValue.p_inidubigeo);
-              setValue("p_inidubigeo", newValue.p_inidubigeo);
-            }}
-            options={ubigeo}
-            getOptionLabel={(option) =>
-              option.chdepartamento +
-              " - " +
-              option.chprovincia +
-              " - " +
-              option.chdistrito
-            }
-            size='small'
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label='Ubigeo'
-                InputProps={{
-                  ...params.InputProps,
-                  type: "search",
-                }}
-                error={errors.p_inidubigeo}
-                InputLabelProps={{ error: errors.p_inidubigeo }}
-              />
-            )}
-          />
+          <SelectAsyncCustom
+              options={ubigeo.map((item) => ({
+                value: item.p_inidubigeo,
+                label: `${item.chdepartamento} - ${item.chprovincia} - ${item.chdistrito}`,
+              }))}
+              placeholder='Ubigeo'
+              handleChange={(e) => {
+                setValue("p_inidubigeo", e.value);
+                setInputValue(e);
+              }}
+              value={inputValue}
+            />
           <CustomSelect
             label='Pais'
             textKey='p_inidpais'
