@@ -51,7 +51,7 @@ export const SelectAsyncCustom = ({ options, handleChange, placeholder, value })
   const MenuList = memo((props) => {
     const { options, children } = props;
     return (
-      <List height={200} itemCount={options.length} itemSize={35} width='100%' className="z-999">
+      <List height={200} itemCount={options.length} itemSize={45} width='100%' className="z-999">
         {({ index, style }) => (
           <div style={style} key={index}>
             {children[index]}

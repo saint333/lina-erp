@@ -9,9 +9,11 @@ import {
   Skeleton,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CancelButton, SaveButton } from "../../iu/button";
 import Table from "../../table";
+import { productList } from "src/app/services/maintenance/product";
+import { SelectAsyncCustom } from "../../iu/select";
 
 export default function EntryModal({ open, setOpen, title }) {
   const [productSelect, setProductSelect] = useState([]);
@@ -33,6 +35,14 @@ export default function EntryModal({ open, setOpen, title }) {
   const onSubmit = async (data) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await productList();
+      setProduct(response);
+    };
+    fetchData();
+  }, []);
 
   const CustomSelect = ({ label, textKey, handleChange = null, children }) => {
     return (
@@ -101,12 +111,16 @@ export default function EntryModal({ open, setOpen, title }) {
           <CardContent>
             {product.length != 0 ? (
               <SelectAsyncCustom
-                options={cliente.map((item) => ({
-                  value: item.p_inidcliente,
-                  label: `${item.razon} - ${item.chcodigocliente}`,
+                options={product.map((item) => ({
+                  value: item.p_inidproducto,
+                  label: `${item.chcodigoproducto} - ${item.chdescripcion}`,
                 }))}
                 placeholder='Cliente'
-                handleChange={(e) => setValue("p_inidcliente", e.value)}
+                handleChange={(e) => {
+                  setValue("p_inidcliente", e.value);
+                  setProductSelect(e);
+                }}
+                value={productSelect}
               />
             ) : (
               <Skeleton variant='rectangular' height={40} />
@@ -115,9 +129,12 @@ export default function EntryModal({ open, setOpen, title }) {
           </CardContent>
         </div>
         <div className='flex-1'>
-          <CardContent className="flex gap-10 flex-col">
-            <CustomSelect label='Tipo Movimiento' textKey='modalidades'></CustomSelect>
-            <div className="flex gap-10 flex-col md:flex-row">
+          <CardContent className='flex gap-10 flex-col'>
+            <CustomSelect
+              label='Tipo Movimiento'
+              textKey='modalidades'
+            ></CustomSelect>
+            <div className='flex gap-10 flex-col md:flex-row'>
               <TextField
                 size='small'
                 label='F. Nacimiento'

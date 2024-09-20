@@ -9,6 +9,7 @@ import { getProductManagement } from "src/app/services/management/entry";
 export default function EntryTable() {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [rowData, setRowData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +56,7 @@ export default function EntryTable() {
   const renderRowActions = ({ closeMenu, row }) => [
     <MenuItem
       onClick={() => {
+        handleEdit(row);
         closeMenu();
       }}
       key={0}
@@ -76,6 +78,11 @@ export default function EntryTable() {
       <ListItemText>Eliminar</ListItemText>
     </MenuItem>,
   ];
+
+  const handleEdit = async (row) => {
+    setRowData(row);
+    setOpenModal(true);
+  };
 
   return (
     <div className='grid gap-4 items-start'>
