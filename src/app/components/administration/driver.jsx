@@ -9,6 +9,7 @@ import { AgregarButton } from "../iu/button";
 export default function DriverTable() {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [rowData, setRowData] = useState(null);
 
   const columns = useMemo(() => [
     {
@@ -42,6 +43,7 @@ export default function DriverTable() {
     <MenuItem
       onClick={() => {
         closeMenu();
+        setRowData(row.original);
         setOpenModal(true);
       }}
       key={0}
@@ -81,6 +83,8 @@ export default function DriverTable() {
           open={openModal}
           setOpen={setOpenModal}
           title='Conductor'
+          rowData={rowData}
+          setRowData={setRowData}
         />
       )}
     </div>
