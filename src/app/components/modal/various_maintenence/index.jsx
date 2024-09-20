@@ -91,6 +91,8 @@ export default function ModalVarious({ open, setOpen, title, id }) {
   const renderRowActions = ({ closeMenu, row }) => [
     <MenuItem
       onClick={() => {
+        console.log(row.original);
+        
         closeMenu();
       }}
       key={0}

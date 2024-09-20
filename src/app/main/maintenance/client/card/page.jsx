@@ -17,7 +17,7 @@ export default function CardTarjeta() {
             href: "/",
           },
           {
-            title: "Productos",
+            title: "Tarjetas",
             href: "/",
           },
         ],

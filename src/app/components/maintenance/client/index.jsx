@@ -89,7 +89,7 @@ export default function ClientList() {
       client: row.original.p_inidcliente,
       legal: row.original.p_inidjurinat,
     });
-    setClient(response[0]);
+    setClient(response);
     setOpenModal(true);
   };
 
