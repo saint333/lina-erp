@@ -90,9 +90,21 @@ export default function ModalVarious({ open, setOpen, title, id }) {
 
   const renderRowActions = ({ closeMenu, row }) => [
     <MenuItem
-      onClick={() => {
-        console.log(row.original);
-        
+      onClick={async () => {
+        const data = row.original
+        const list = await addMaster({ data, letterAccion: "D" });
+        if (list.codigo == 1) {
+          enqueueSnackbar(list.valor, {
+            variant: "success",
+            style: { fontSize: "1.3rem" },
+          });
+        } else {
+          enqueueSnackbar(list.valor, {
+            variant: "error",
+            style: { fontSize: "1.3rem" },
+          });
+        }
+        setData((prev) => prev.filter((item) => item !== row.original));
         closeMenu();
       }}
       key={0}
@@ -118,7 +130,11 @@ export default function ModalVarious({ open, setOpen, title, id }) {
     >
       <div className='mt-6 flex'>
         <CustomInput label='DESCRIPCION' textKey='chmaestrodetalle' />
-        <AgregarButton text='Agregar' onClick={handleSubmit(onSubmit)} className="ml-5 w-min"/>
+        <AgregarButton
+          text='Agregar'
+          onClick={handleSubmit(onSubmit)}
+          className='ml-5 w-min'
+        />
       </div>
       <Table
         columns={columns}
