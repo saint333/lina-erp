@@ -4,39 +4,47 @@ import { useEffect, useMemo, useState } from "react";
 import { AgregarButton } from "../../iu/button";
 import Table from "../../table";
 import EntryModal from "../../modal/management/entry";
+import { getProductManagement } from "src/app/services/management/entry";
 
-export default function EntryTable({ product }) {
+export default function EntryTable() {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    setData(product);
-  }, [product]);
+    const fetchData = async () => {
+      const response = await getProductManagement({
+        clase: "I",
+        movimiento: "14",
+      });
+      setData(response);
+    };
+    fetchData();
+  }, []);
 
   const columns = useMemo(
     () => [
       {
-        accessorKey: "razon",
+        accessorKey: "p_inidcorrevale",
         header: "N° INGRESO",
         size: 150,
       },
       {
-        accessorKey: "chcodigoproveedor",
+        accessorKey: "chvalefechaemision",
         header: "FECHA EMISION",
         size: 150,
       },
       {
-        accessorKey: "chtipodocumento",
+        accessorKey: "chmovimiento",
         header: "MOVIMIENTO",
         size: 200,
       },
       {
-        accessorKey: "chnrodocumento",
+        accessorKey: "chobservacion",
         header: "OBSERVACION",
         size: 150,
       },
       {
-        accessorKey: "chdireccion",
+        accessorKey: "chestado",
         header: "ESTADO",
         size: 150,
       },
@@ -82,6 +90,7 @@ export default function EntryTable({ product }) {
             onClick={() => setOpenModal(true)}
           />
         }
+        loading={data.length === 0}
       />
       {openModal && (
         <EntryModal
