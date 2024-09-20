@@ -1,30 +1,50 @@
 import ModalBasic from "..";
-import {
-  TextField,
-} from "@mui/material";
+import { TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { CancelButton, SaveButton } from "../../iu/button";
 import { crudVehicles } from "src/app/services/administration/vehicles";
+import { useEffect } from "react";
+import { useSnackbar } from "notistack";
 
-export default function ModalVehicle({ open, setOpen, title }) {
+export default function ModalVehicle({
+  open,
+  setOpen,
+  title,
+  rowData,
+  setRowData,
+}) {
+  const defaultValues = {
+    p_inidvehiculo: 0,
+    p_iniddominio: 1,
+    chmarca: "",
+    chplaca: "",
+  };
+  const { enqueueSnackbar } = useSnackbar();
+
   const {
     handleSubmit,
     formState: { errors },
     control,
     reset,
   } = useForm({
-    defaultValues: {
-      p_inidvehiculo: 0,
-      p_iniddominio: 1,
-      chmarca: "",
-      chplaca: "",
-    },
+    defaultValues,
   });
 
   const onSubmit = async (data) => {
-    const accion = "I";
+    const accion = rowData ? "U" : "I";
     const response = await crudVehicles({ ...data, accion });
     console.log("🚀 ~ onSubmit ~ data:", response);
+    if (response.codigo == 1) {
+      enqueueSnackbar(response.valor, {
+        variant: "success",
+        style: { fontSize: "1.3rem" },
+      });
+    } else {
+      enqueueSnackbar(response.valor, {
+        variant: "error",
+        style: { fontSize: "1.3rem" },
+      });
+    }
     handleClose();
   };
 
@@ -46,9 +66,16 @@ export default function ModalVehicle({ open, setOpen, title }) {
   );
 
   const handleClose = () => {
-    reset();
+    reset(defaultValues);
+    setRowData(null);
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (rowData) {
+      reset(rowData);
+    }
+  }, [rowData]);
 
   return (
     <ModalBasic

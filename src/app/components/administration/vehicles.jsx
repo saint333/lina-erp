@@ -9,6 +9,7 @@ import { AgregarButton } from "../iu/button";
 export default function VehiclesTable() {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [rowData, setRowData] = useState(null);
 
   const columns = useMemo(() => [
     {
@@ -32,6 +33,7 @@ export default function VehiclesTable() {
     <MenuItem
       onClick={() => {
         closeMenu();
+        setRowData(row.original);
         setOpenModal(true);
       }}
       key={0}
@@ -49,7 +51,7 @@ export default function VehiclesTable() {
       setData(vehicles);
     };
     fetchData();
-  }, []);
+  }, [openModal]);
 
   return (
     <div>
@@ -71,6 +73,8 @@ export default function VehiclesTable() {
           open={openModal}
           setOpen={setOpenModal}
           title='Vehiculo añadir'
+          rowData={rowData}
+          setRowData={setRowData}
         />
       )}
     </div>

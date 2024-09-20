@@ -59,7 +59,7 @@ export default function DriverTable() {
       setData(driver);
     };
     fetchData();
-  }, []);
+  }, [openModal]);
 
   return (
     <div>
