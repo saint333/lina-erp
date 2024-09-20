@@ -31,7 +31,6 @@ const Root = styled(List)(({ theme, ...props }) => ({
 		},
 		'& > .lina-list-item-icon': {
 			marginRight: 16,
-			color: 'inherit'
 		}
 	}
 }));
@@ -89,7 +88,7 @@ function LinaNavVerticalCollapse(props) {
 					{item.icon && (
 						<LinaSvgIcon
 							className={clsx('lina-list-item-icon shrink-0', item.iconClass)}
-							color="action"
+							color="secondary"
 						>
 							{item.icon}
 						</LinaSvgIcon>
@@ -125,7 +124,7 @@ function LinaNavVerticalCollapse(props) {
 						<LinaSvgIcon
 							size={16}
 							className="arrow-icon"
-							color="inherit"
+							color="secondary"
 						>
 							{open ? 'heroicons-solid:chevron-down' : 'heroicons-solid:chevron-right'}
 						</LinaSvgIcon>

@@ -32,12 +32,11 @@ const Root = styled(ListItemButton)(({ theme, ...props }) => ({
 			color: 'inherit'
 		},
 		'& > .lina-list-item-icon': {
-			color: 'inherit'
+			color: theme.palette.mode == "light" ? "#FF66C4" : 'inherit'
 		}
 	},
 	'& >.lina-list-item-icon': {
 		marginRight: 16,
-		color: 'inherit'
 	},
 	'& > .lina-list-item-text': {}
 }));
@@ -77,7 +76,7 @@ function LinaNavVerticalItem(props) {
 				{item.icon && (
 					<LinaSvgIcon
 						className={clsx('lina-list-item-icon shrink-0', item.iconClass)}
-						color="action"
+						color="secondary"
 					>
 						{item.icon}
 					</LinaSvgIcon>

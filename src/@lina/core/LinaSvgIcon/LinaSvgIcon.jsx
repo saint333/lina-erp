@@ -23,7 +23,7 @@ const Root = styled(Box)(({ theme, size = 24, color = 'inherit' }) => ({
 		action: theme.palette.action.active,
 		error: theme.palette.error.main,
 		disabled: theme.palette.action.disabled,
-		inherit: 'currentColor'
+		inherit: theme.palette.mode === "light" ? "#FF66C4" : 'inherit'
 	}[color]
 }));
 /**

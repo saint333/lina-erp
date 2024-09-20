@@ -30,7 +30,7 @@ const Root = styled(ListItemButton)(({ theme }) => ({
 			padding: '0 0 0 16px'
 		},
 		'& .lina-list-item-icon': {
-			color: 'inherit'
+			color: theme.palette.mode == "light" ? "#FF66C4" : 'inherit'
 		}
 	}
 }));

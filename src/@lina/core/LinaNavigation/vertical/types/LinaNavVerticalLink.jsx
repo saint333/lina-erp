@@ -24,7 +24,7 @@ const Root = styled(ListItemButton)(({ theme, ...props }) => ({
 			color: 'inherit'
 		},
 		'& > .lina-list-item-icon': {
-			color: 'inherit'
+			color: theme.palette.mode == "light" ? "#FF66C4" : 'inherit'
 		}
 	},
 	'& > .lina-list-item-icon': {

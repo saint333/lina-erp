@@ -37,7 +37,7 @@ export const themesConfig = {
 			},
 			secondary: {
 				light: '#818cf8',
-				main: '#4f46e5',
+				main: '#FF66C4',
 				dark: '#3730a3',
 				contrastText: darkPaletteText.primary
 			},
@@ -70,7 +70,7 @@ export const themesConfig = {
 			},
 			secondary: {
 				light: '#818cf8',
-				main: '#4f46e5',
+				main: '#FF66C4',
 				dark: '#3730a3',
 				contrastText: darkPaletteText.primary
 			},

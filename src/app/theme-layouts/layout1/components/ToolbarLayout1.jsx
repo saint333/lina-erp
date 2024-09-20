@@ -24,6 +24,7 @@ import themeOptions from "app/configs/themeOptions";
 import { showMessage } from "@lina/core/LinaMessage/linaMessageSlice";
 import { Language } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
+import LinaSvgIcon from "@lina/core/LinaSvgIcon";
 
 /**
  * The toolbar layout 1.
@@ -93,7 +94,7 @@ function ToolbarLayout1(props) {
               aria-haspopup='true'
               size='large'
             >
-              <Language />
+              <LinaSvgIcon>material-outline:language</LinaSvgIcon>
             </IconButton>
             <div className='flex gap-3 w-full'>
               <DomainComponent />

@@ -191,5 +191,21 @@ const navigationConfig = [
       },
     ],
   },
+  {
+    id: "crm",
+    title: "CRM",
+    subtitle: "",
+    type: "group",
+    icon: "heroicons-outline:home",
+    children: [
+      {
+        id: "crm.index",
+        title: "Whastapp",
+        type: "item",
+        icon: "heroicons-outline:home",
+        url: "/crm",
+      },
+    ],
+  }
 ];
 export default navigationConfig;
