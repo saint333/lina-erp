@@ -42,8 +42,7 @@ function ViewPrincipal({ header, content }) {
                     <Link
                       className='font-medium hover:underline'
                       key={index}
-                      style={{ color: "rgb(17, 24, 39)" }}
-                      // color='#64748b'
+                      style={{ color: "inherit" }}
                       to={breadcrumb.link}
                     >
                       {breadcrumb.title}

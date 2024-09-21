@@ -203,7 +203,7 @@ const navigationConfig = [
         title: "Whastapp",
         type: "item",
         icon: "heroicons-outline:home",
-        url: "/crm",
+        url: "/crm/whastapp",
       },
     ],
   }

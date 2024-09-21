@@ -58,7 +58,7 @@ function ToolbarLayout1(props) {
         position='static'
         elevation={0}
       >
-        <Toolbar className='min-h-48 p-0 pt-10 md:min-h-64'>
+        <Toolbar className='min-h-48 p-0 py-10 md:min-h-64'>
           <div className='flex flex-1 px-16'>
             {config.navbar.display && config.navbar.position === "left" && (
               <>

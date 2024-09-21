@@ -11,6 +11,7 @@ import MaintenanceConfig from '../main/maintenance/config';
 import ManagementConfig from '../main/management/config';
 import SalesConfig from '../main/sales/config';
 import AdministrationConfig from '../main/administration/config';
+import WhastappConfig from '../main/whastapp/config';
 
 const routeConfigs = [
 	SignOutConfig,
@@ -20,7 +21,8 @@ const routeConfigs = [
 	MaintenanceConfig,
 	ManagementConfig,
 	SalesConfig,
-	AdministrationConfig
+	AdministrationConfig,
+	WhastappConfig
 ];
 /**
  * The routes of the application.
