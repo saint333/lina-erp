@@ -3,49 +3,44 @@ import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import Table from "../../table";
 import { ProductModal } from "../../modal/management/product";
+import { getProductManagement, getWarehouseBalanceDetail } from "src/app/services/management/product";
 
 export default function KardexTable() {
-  const [data, setData] = useState([
-    {
-      razon: "0001",
-      chcodigoproveedor: "0001",
-      chtipodocumento: "0001",
-      chnrodocumento: "0001",
-      chdireccion: "0001",
-      chtelefono: "0001",
-      chemail: "0001",
-    }
-  ]);
+  const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-
+    const fetchData = async () => {
+      const response = await getProductManagement();
+      setData(response);
+    };
+    fetchData();
   }, []);
 
   const columns = useMemo(
     () => [
       {
-        accessorKey: "chcodigoproveedor",
+        accessorKey: "chfamiliaproducto",
         header: "CATEGORIA",
         size: 150,
       },
       {
-        accessorKey: "razon",
+        accessorKey: "chcodigoproducto",
         header: "CODIGO",
         size: 150,
       },
       {
-        accessorKey: "chtipodocumento",
+        accessorKey: "chdescripcion",
         header: "DESCRIPCION",
-        size: 200,
+        size: 500,
       },
       {
-        accessorKey: "chnrodocumento",
+        accessorKey: "chunidadmedida",
         header: "UNIDAD MEDIDA",
         size: 150,
       },
       {
-        accessorKey: "chdireccion",
+        accessorKey: "stock",
         header: "STOCK",
         size: 150,
       },
@@ -57,7 +52,7 @@ export default function KardexTable() {
     <MenuItem
       onClick={() => {
         closeMenu();
-        setOpenModal(true);
+        handleView(row);
       }}
       key={0}
     >
@@ -68,16 +63,27 @@ export default function KardexTable() {
     </MenuItem>,
   ];
 
+  const handleView = async (row) => {
+    const response = await getWarehouseBalanceDetail(row.original.p_inidproducto);
+    console.log("🚀 ~ handleView ~ response:", response)
+    setOpenModal(true);
+  }
+
   return (
     <div className='grid gap-4 items-start'>
       <Table
         columns={columns}
         data={data}
         renderRowActionMenuItems={renderRowActions}
+        loading={data.length === 0}
       />
-      {
-        openModal && <ProductModal open={openModal} setOpen={setOpenModal} title="Mantenimiento de tarjeta" />
-      }
+      {openModal && (
+        <ProductModal
+          open={openModal}
+          setOpen={setOpenModal}
+          title='Mantenimiento de tarjeta'
+        />
+      )}
     </div>
   );
 }

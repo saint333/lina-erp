@@ -3,20 +3,18 @@ import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import Table from "../../table";
 import { ExhibitionModal } from "../../modal/management/exhibition";
+import { getExhibition } from "src/app/services/management/exhibition";
 
 export default function ExhibitionTable() {
-  const [data, setData] = useState([{
-    razon: "0001",
-    chcodigoproveedor: "0001",
-    chtipodocumento: "0001",
-    chnrodocumento: "0001",
-    chdireccion: "0001",
-    chtelefono: "0001",
-    chemail: "0001",
-  }]);
+  const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const response = await getExhibition();
+      setData(response);
+    };
+    fetchData();
   }, []);
 
   const columns = useMemo(
@@ -81,10 +79,15 @@ export default function ExhibitionTable() {
         columns={columns}
         data={data}
         renderRowActionMenuItems={renderRowActions}
+        loading={data.length === 0}
       />
-      {
-        openModal && <ExhibitionModal open={openModal} setOpen={setOpenModal} title="Mantenimiento de tarjeta" />
-      }
+      {openModal && (
+        <ExhibitionModal
+          open={openModal}
+          setOpen={setOpenModal}
+          title='Mantenimiento de tarjeta'
+        />
+      )}
     </div>
   );
 }
