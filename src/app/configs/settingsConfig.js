@@ -31,9 +31,9 @@ const settingsConfig = {
 	 */
 	theme: {
 		main: themesConfig.default,
-		navbar: themesConfig.defaultDark,
+		navbar: themesConfig.default,
 		toolbar: themesConfig.default,
-		footer: themesConfig.defaultDark
+		footer: themesConfig.default
 	},
 	/**
 	 * The defaultAuth property defines the default authorization roles for the application.

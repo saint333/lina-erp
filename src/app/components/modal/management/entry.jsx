@@ -104,7 +104,7 @@ export default function EntryModal({ open, setOpen, title }) {
           <CancelButton text='Cancelar' onClick={handleClose} />
         </div>
       }
-      className='lg:w-3/4'
+      className='lg:!w-3/4'
     >
       <div className='flex flex-col lg:flex-row gap-3'>
         <div className='flex-1'>

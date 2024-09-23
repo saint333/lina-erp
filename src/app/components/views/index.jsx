@@ -10,6 +10,7 @@ const Root = styled(LinaPageSimple)(({ theme }) => ({
     borderBottomWidth: 1,
     borderStyle: "solid",
     borderColor: theme.palette.divider,
+    border: "none"
   },
   "& .LinaPageSimple-toolbar": {},
   "& .LinaPageSimple-content": {},
