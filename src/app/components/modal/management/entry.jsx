@@ -4,20 +4,24 @@ import {
   CardContent,
   FormControl,
   InputLabel,
+  ListItemIcon,
+  ListItemText,
   MenuItem,
   Select,
   Skeleton,
   TextField,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CancelButton, SaveButton } from "../../iu/button";
 import Table from "../../table";
 import { productList } from "src/app/services/maintenance/product";
 import { SelectAsyncCustom } from "../../iu/select";
+import { Delete } from "@mui/icons-material";
 
 export default function EntryModal({ open, setOpen, title }) {
   const [productSelect, setProductSelect] = useState([]);
   const [product, setProduct] = useState([]);
+  const [data, setData] = useState([]);
 
   const {
     register,
@@ -93,6 +97,57 @@ export default function EntryModal({ open, setOpen, title }) {
     />
   );
 
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: "chdescripcion",
+        header: "PRODUCTO",
+        size: 260,
+        accessorFn: (row) => row.chcodigoproducto + " " + row.chdescripcion,
+        enableEditing: false,
+      },
+      {
+        accessorKey: "nvcantidad",
+        header: "CANTIDAD",
+        size: 40,
+        muiEditTextFieldProps: ({ cell, row }) => ({
+          onBlur: (e) => {
+            const newData = data.map((item) => {
+              if (item.p_inidproducto === row.original.p_inidproducto) {
+                return {
+                  ...item,
+                  nvcantidad: e.target.value,
+                };
+              }
+              return item;
+            });
+            setData(newData);
+          },
+        }),
+      },
+    ],
+    [data]
+  );
+
+  const renderRowActions = ({ closeMenu, row }) => [
+    <MenuItem
+      onClick={() => {
+        closeMenu();
+        setData((prev) =>
+          prev.filter(
+            (item) => item.p_inidproducto !== row.original.p_inidproducto
+          )
+        );
+      }}
+      key={0}
+    >
+      <ListItemIcon>
+        <Delete fontSize='small' />
+      </ListItemIcon>
+      <ListItemText>Eliminar</ListItemText>
+    </MenuItem>,
+  ];
+
   return (
     <ModalBasic
       open={open}
@@ -107,7 +162,7 @@ export default function EntryModal({ open, setOpen, title }) {
       className='lg:!w-3/4'
     >
       <div className='flex flex-col lg:flex-row gap-3'>
-        <div className='flex-1'>
+        <div className='lg:w-8/12'>
           <CardContent>
             {product.length != 0 ? (
               <SelectAsyncCustom
@@ -118,17 +173,28 @@ export default function EntryModal({ open, setOpen, title }) {
                 placeholder='Cliente'
                 handleChange={(e) => {
                   setValue("p_inidcliente", e.value);
-                  setProductSelect(e);
+                  setProductSelect(null);
+                  setData((prev) => [
+                    ...prev,
+                    product.find((item) => item.p_inidproducto === e.value),
+                  ]);
                 }}
                 value={productSelect}
               />
             ) : (
               <Skeleton variant='rectangular' height={40} />
             )}
-            <Table enableRowActions={false} />
+            <Table
+              data={data}
+              columns={columns}
+              pageSize={5}
+              renderRowActionMenuItems={renderRowActions}
+              editDisplayMode='cell'
+              enableEditing={true}
+            />
           </CardContent>
         </div>
-        <div className='flex-1'>
+        <div className='lg:w-4/12'>
           <CardContent className='flex gap-10 flex-col'>
             <CustomSelect
               label='Tipo Movimiento'
