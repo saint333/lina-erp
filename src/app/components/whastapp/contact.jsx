@@ -2,7 +2,7 @@ import { Delete, Edit } from "@mui/icons-material";
 import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import Table from "../table";
-import { getContact } from "src/app/services/whatsapp/contact";
+import { actionContact, getContact } from "src/app/services/whatsapp/contact";
 import { AgregarButton } from "../iu/button";
 import { ContactModal } from "../modal/contact/contact";
 
@@ -52,8 +52,14 @@ export const ContactTable = () => {
       <ListItemText>Editar</ListItemText>
     </MenuItem>,
     <MenuItem
-      onClick={() => {
+      onClick={async () => {
         closeMenu();
+        const response = await actionContact(row.original, "D");
+        setData((prev) =>
+          prev.filter(
+            (item) => item.p_inidcontact !== row.original.p_inidcontact
+          )
+        );
       }}
       key={1}
     >
