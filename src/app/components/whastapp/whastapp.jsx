@@ -6,6 +6,7 @@ import { TextField } from "@mui/material";
 
 export const WhastappTable = () => {
   const [data, setData] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,14 +53,22 @@ export const WhastappTable = () => {
   );
 
   return (
-    <div className='flex gap-4 items-start'>
-      <div className="md:w-7/12 grid">
-      <Table enableRowSelection={true} columns={columns} data={data} loading={data.length === 0}/>
+    <div className='flex gap-7 items-start'>
+      <div className='md:w-8/12 grid'>
+        <Table
+          enableRowSelection={true}
+          columns={columns}
+          data={data}
+          loading={data.length === 0}
+          onRowSelectionChange={(selectedRows) => {
+            setSelectedRows(selectedRows);
+          }}
+        />
       </div>
-      <div className="md:w-5/12">
-        <div className="flex gap-6">
-        <TextField label="Outlined" variant="outlined" size="small"/>
-          <SendButton text="Enviar"/>
+      <div className='md:w-4/12'>
+        <div className='flex gap-6 flex-col'>
+          <TextField label='Outlined' variant='outlined' size='small' />
+          <SendButton text='Enviar' />
         </div>
       </div>
     </div>

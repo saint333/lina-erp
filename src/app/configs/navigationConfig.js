@@ -201,9 +201,31 @@ const navigationConfig = [
       {
         id: "crm.index",
         title: "Whastapp",
-        type: "item",
+        type: "collapse",
         icon: "heroicons-outline:home",
-        url: "/crm/whastapp",
+        children: [
+          {
+            id: "crm.bots",
+            title: "Bots",
+            type: "item",
+            icon: "heroicons-outline:home",
+            url: "/crm/bots",
+          },
+          {
+            id: "crm.contact",
+            title: "Contactos",
+            type: "item",
+            icon: "heroicons-outline:home",
+            url: "/crm/contact",
+          },
+          {
+            id: "crm.whatsapp",
+            title: "Whatsapp",
+            type: "item",
+            icon: "heroicons-outline:home",
+            url: "/crm/whastapp",
+          },
+        ],
       },
     ],
   }

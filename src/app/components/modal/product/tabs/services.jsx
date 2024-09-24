@@ -104,10 +104,12 @@ export default function Service({
         const brand = response.find(
           (item) => item.p_inidfamiliadetalle === product.p_inidmarca
         );
-        setBrand({
-          label: brand.chfamiliadetalle,
-          value: brand.p_inidfamiliadetalle,
-        });
+        if (brand) {
+          setBrand({
+            label: brand.chfamiliadetalle,
+            value: brand.p_inidfamiliadetalle,
+          });
+        }
         setValueSelect((prev) => ({
           ...prev,
           type,

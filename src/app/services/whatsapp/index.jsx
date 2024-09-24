@@ -1,0 +1,1 @@
+export const apiBaseCrm = import.meta.env.VITE_PUBLIC_API_URL_CRM
