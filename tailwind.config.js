@@ -15,7 +15,8 @@ module.exports = {
 			spin: 'spin 1s linear infinite',
 			ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
 			pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-			bounce: 'bounce 1s infinite'
+			bounce: 'bounce 1s infinite',
+			'bounce-up-down': 'bounceY 2s ease-in-out infinite',
 		},
 		aria: {
 			checked: 'checked="true"',
@@ -978,7 +979,11 @@ module.exports = {
 					transform: 'none',
 					animationTimingFunction: 'cubic-bezier(0,0,0.2,1)'
 				}
-			}
+			},
+			bounceY: {
+				'0%, 100%': { transform: 'translateY(0)' },
+				'50%': { transform: 'translateY(-20px)' },
+			},
 		},
 		letterSpacing: {
 			tighter: '-0.05em',

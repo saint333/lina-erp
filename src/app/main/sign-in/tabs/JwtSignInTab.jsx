@@ -6,6 +6,7 @@ import { useAuth } from "src/app/auth/AuthRouteProvider";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useRef, useState } from "react";
 import { useSnackbar } from "notistack";
+import { Link } from "react-router-dom";
 /**
  * Form Validation Schema
  */
@@ -22,14 +23,14 @@ function jwtSignInTab() {
   });
   const { isValid, dirtyFields, errors } = formState;
   const [token, setToken] = useState(null);
-  const { enqueueSnackbar} = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   function onSubmit(formData) {
     const { usuario, password } = formData;
     if (!token) {
       return enqueueSnackbar("Por favor, verifica que no eres un robot", {
         variant: "error",
-        style:{ fontSize: "1.3rem" }
+        style: { fontSize: "1.3rem" },
       });
     }
     jwtService
@@ -38,10 +39,10 @@ function jwtSignInTab() {
         password,
       })
       .catch((error) => {
-        console.log("🚀 ~ onSubmit ~ error:", error)
+        console.log("🚀 ~ onSubmit ~ error:", error);
         enqueueSnackbar(error.response.data.message, {
           variant: "error",
-          style:{ fontSize: "1.3rem" }
+          style: { fontSize: "1.3rem" },
         });
       });
   }
@@ -80,7 +81,7 @@ function jwtSignInTab() {
           render={({ field }) => (
             <TextField
               {...field}
-              className='mb-24'
+              className='mb-14'
               label='Password'
               type='password'
               error={!!errors.password}
@@ -91,11 +92,26 @@ function jwtSignInTab() {
           )}
         />
 
+        <div className='flex flex-col items-center justify-center sm:flex-row sm:justify-between mb-14'>
+          <Link
+            className='text-md font-medium'
+            to='/'
+          >
+            ¿Olvidaste tu contraseña?
+          </Link>
+          <Link
+            className='text-md font-medium'
+            to='/'
+          >
+            Crear cuenta
+          </Link>
+        </div>
+
         <ReCAPTCHA
           // sitekey='6LdyZb0nAAAAAE6so_vgQ2JbuZPymOO1x7HvnF6I'
           sitekey='6LfZcTAqAAAAAI-WCkF-nfRcl8nsO2AtZ5TRRVWE'
           onChange={(e) => setToken(e)}
-          className="w-full"
+          className='w-full'
         />
 
         <Button
