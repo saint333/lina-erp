@@ -106,7 +106,7 @@ function jwtSignInTab() {
           type='submit'
           size='large'
         >
-          Sign in
+          Iniciar sesión
         </Button>
       </form>
     </div>
