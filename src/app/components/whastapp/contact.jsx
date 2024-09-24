@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Table from "../table";
 import { actionContact, getContact } from "src/app/services/whatsapp/contact";
 import { AgregarButton } from "../iu/button";
-import { ContactModal } from "../modal/contact/contact";
+import { ContactModal } from "../modal/whatsapp/contact";
 import { useSnackbar } from "notistack";
 
 export const ContactTable = () => {

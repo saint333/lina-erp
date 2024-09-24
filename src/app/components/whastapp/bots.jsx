@@ -1,10 +1,13 @@
 import { IconButton, Paper, Typography } from "@mui/material";
 import FuseSvgIcon from "@lina/core/LinaSvgIcon";
 import { useEffect, useState } from "react";
-import { getBots, getQR } from "src/app/services/whatsapp/bots";
+import { getBots, getFlow, getQR } from "src/app/services/whatsapp/bots";
+import { BotModal } from "../modal/whatsapp/bot";
 
 export const BotsContent = () => {
   const [bot, setBot] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +32,12 @@ export const BotsContent = () => {
     setBot(bots);
   };
 
+  const handleFlow = async (id) => {
+    const response = await getFlow(id);
+    setData(response);
+    setOpenModal(true);
+  };
+
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-24 w-full min-w-0'>
       {bot.map((item, index) => {
@@ -44,18 +53,32 @@ export const BotsContent = () => {
               >
                 {item.chname}
               </Typography>
-              <IconButton
-                aria-label='more'
-                size='large'
-                onClick={() => handleRefresh(item.p_inidbot)}
-              >
-                <FuseSvgIcon>heroicons-outline:refresh</FuseSvgIcon>
-              </IconButton>
+              <div>
+                <IconButton onClick={() => handleFlow(item.p_inidbot)}>
+                  <FuseSvgIcon>heroicons-outline:map</FuseSvgIcon>
+                </IconButton>
+                <IconButton
+                  aria-label='more'
+                  size='large'
+                  onClick={() => handleRefresh(item.p_inidbot)}
+                >
+                  <FuseSvgIcon>heroicons-outline:refresh</FuseSvgIcon>
+                </IconButton>
+              </div>
             </div>
             <img src={item.qr} className='w-full m-auto' />
           </Paper>
         );
       })}
+      {openModal && (
+        <BotModal
+          open={openModal}
+          setOpen={setOpenModal}
+          title='Flujo'
+          data={data}
+          setData={setData}
+        />
+      )}
     </div>
   );
 };
