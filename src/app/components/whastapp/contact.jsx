@@ -5,11 +5,13 @@ import Table from "../table";
 import { actionContact, getContact } from "src/app/services/whatsapp/contact";
 import { AgregarButton } from "../iu/button";
 import { ContactModal } from "../modal/contact/contact";
+import { useSnackbar } from "notistack";
 
 export const ContactTable = () => {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [rowData, setRowData] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   const columns = useMemo(
     () => [
@@ -55,6 +57,17 @@ export const ContactTable = () => {
       onClick={async () => {
         closeMenu();
         const response = await actionContact(row.original, "D");
+        if (response.codigo == 1) {
+          enqueueSnackbar(response.valor, {
+            variant: "success",
+            style: { fontSize: "1.3rem" },
+          });
+        } else {
+          enqueueSnackbar(response.valor, {
+            variant: "error",
+            style: { fontSize: "1.3rem" },
+          });
+        }
         setData((prev) =>
           prev.filter(
             (item) => item.p_inidcontact !== row.original.p_inidcontact
