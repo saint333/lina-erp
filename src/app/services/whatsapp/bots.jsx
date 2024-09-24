@@ -7,6 +7,8 @@ export const getBots = async () => {
 };
 
 export const getQR = async (id) => {
-  const response = axios.get(`${apiBaseCrm}/api/whatsapp/qrcode/${id}`);
+  const response = axios.get(`${apiBaseCrm}/api/whatsapp/qrcode/${id}`,{
+    responseType: 'blob'
+  });
   return (await response).data;
 };

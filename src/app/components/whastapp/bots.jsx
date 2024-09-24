@@ -12,25 +12,35 @@ export const BotsContent = () => {
       for (let index = 0; index < response.length; index++) {
         const element = response[index];
         const data = await getQR(element.p_inidbot);
-        response[index].qr = data;
+        response[index].qr = URL.createObjectURL(data);
       }
       setBot(response);
     };
     fetchData();
   }, []);
 
+  const handleRefresh = async (id) => {
+    for (let index = 0; index < bot.length; index++) {
+      const data = await getQR(id);
+      bot[index].qr = URL.createObjectURL(data);
+    }
+    setBot(bot);
+  }
+
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-24 w-full min-w-0'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-24 w-full min-w-0'>
       {bot.map((item, index) => {
-        console.log(item);
-        
         return (
           <Paper
             className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden'
             key={index}
           >
-            {/* <img src={"image/png,"+item.qr.replace("PNG", "")}/> */}
-            <img src='https://api-messages.linaerp.com/api/whatsapp/qrcode/1'/>
+            <div className='flex items-center justify-end'>
+              <IconButton aria-label='more' size='large' onClick={() => handleRefresh(item.p_inidbot)}>
+                <FuseSvgIcon>heroicons-outline:refresh</FuseSvgIcon>
+              </IconButton>
+            </div>
+            <img src={item.qr} className="w-full m-auto" />
           </Paper>
         );
       })}
