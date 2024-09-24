@@ -20,12 +20,14 @@ export const BotsContent = () => {
   }, []);
 
   const handleRefresh = async (id) => {
-    for (let index = 0; index < bot.length; index++) {
+    const bots = [...bot];
+    for (let index = 0; index < bots.length; index++) {
       const data = await getQR(id);
-      bot[index].qr = URL.createObjectURL(data);
+      bots[index].qr = URL.createObjectURL(data);
+      console.log("🚀 ~ handleRefresh ~ bot:", bots);
     }
-    setBot(bot);
-  }
+    setBot(bots);
+  };
 
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-24 w-full min-w-0'>
@@ -35,12 +37,22 @@ export const BotsContent = () => {
             className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden'
             key={index}
           >
-            <div className='flex items-center justify-end'>
-              <IconButton aria-label='more' size='large' onClick={() => handleRefresh(item.p_inidbot)}>
+            <div className='flex items-center justify-between'>
+              <Typography
+                className='px-16 text-lg font-medium tracking-tight leading-6 truncate'
+                color='text.secondary'
+              >
+                {item.chname}
+              </Typography>
+              <IconButton
+                aria-label='more'
+                size='large'
+                onClick={() => handleRefresh(item.p_inidbot)}
+              >
                 <FuseSvgIcon>heroicons-outline:refresh</FuseSvgIcon>
               </IconButton>
             </div>
-            <img src={item.qr} className="w-full m-auto" />
+            <img src={item.qr} className='w-full m-auto' />
           </Paper>
         );
       })}
