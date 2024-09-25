@@ -1,7 +1,7 @@
 import ViewPrincipal from "src/app/components/views";
-import { BotsContent } from "src/app/components/whastapp/bots";
+import { FlowsContent } from "src/app/components/whastapp/flows";
 
-export default function Bots() {
+export default function Flows() {
   return (
     <ViewPrincipal
       header={{
@@ -14,11 +14,11 @@ export default function Bots() {
             title: "Crm",
           },
           {
-            title: "Bots",
+            title: "Flujos",
           },
         ],
       }}
-      content={<BotsContent />}
+      content={<FlowsContent />}
     />
   );
 }

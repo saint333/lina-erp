@@ -95,7 +95,7 @@ const DragAndDropList = ({ initialItems, setData }) => {
   return (
     // <Paper elevation={3} sx={{ width: 300, padding: 2 }}>
     <DragDropContext onDragEnd={handleOnDragEnd}>
-      <nav>
+      <nav className="max-h-[300px] overflow-hidden overflow-y-scroll">
         <Droppable droppableId='droppable-list'>
           {(provided) => (
             <List
@@ -143,80 +143,84 @@ export const BotModal = ({ open, setOpen, title, data, setData }) => {
       handleClose={handleClose}
       className='md:!w-8/12 lg:!w-6/12 '
     >
-      <div className='py-5'>
-        <Typography component='h3' fontSize={16} fontWeight={500}>
-          TITULO
-        </Typography>
-        <ListItem
-          sx={{
-            marginBottom: 1,
-            backgroundColor: "#f0f0f0",
-            borderRadius: "4px",
-          }}
-          className='flex items-center mt-4 justify-between'
-        >
-          {edit.title ? (
-            <TextField
-              value={titleFlow?.chname}
-              size='small'
-              fullWidth
-              onInput={(e) => {
-                setData((prev) => ({
-                  ...prev,
-                  titleFlow: { ...prev.titleFlow, chname: e.target.value },
-                }));
-              }}
-            />
-          ) : (
-            <ListItemText>{titleFlow?.chname}</ListItemText>
-          )}
-          <IconButton
-            onClick={() =>
-              setEdit((prev) => ({
-                ...prev,
-                title: !prev.title,
-              }))
-            }
+      <div className='py-5 flex flex-col md:flex-row gap-14'>
+        <div className='md:w-5/12'>
+          <Typography component='h3' fontSize={16} fontWeight={500}>
+            TIPOS DE RESPUESTA
+          </Typography>
+          <div className='grid grid-cols-2 gap-14 mt-5'>
+            <Paper className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'>
+              <IconButton onClick={() => {}} className='w-fit'>
+                <FuseSvgIcon size={30}>heroicons-outline:chat</FuseSvgIcon>
+              </IconButton>
+              <Typography className='px-16 text-lg font-medium tracking-tight leading-6 truncate'>
+                Mensaje
+              </Typography>
+            </Paper>
+            <Paper className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'>
+              <IconButton onClick={() => {}} className='w-fit'>
+                <FuseSvgIcon size={30}>heroicons-outline:beaker</FuseSvgIcon>
+              </IconButton>
+              <Typography className='px-16 text-lg font-medium tracking-tight leading-6 truncate'>
+                IA
+              </Typography>
+            </Paper>
+            <Paper className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'>
+              <IconButton onClick={() => {}} className='w-fit'>
+                <FuseSvgIcon size={30}>heroicons-outline:globe-alt</FuseSvgIcon>
+              </IconButton>
+              <Typography className='px-16 text-lg font-medium tracking-tight leading-6 truncate'>
+                HTTP
+              </Typography>
+            </Paper>
+          </div>
+        </div>
+        <div className='md:w-7/12'>
+          <Typography component='h3' fontSize={16} fontWeight={500}>
+            TITULO
+          </Typography>
+          <ListItem
+            sx={{
+              marginBottom: 1,
+              backgroundColor: "#f0f0f0",
+              borderRadius: "4px",
+            }}
+            className='flex items-center mt-4 justify-between'
           >
-            <FuseSvgIcon size={20}>
-              {edit.title
-                ? "heroicons-outline:save"
-                : "heroicons-outline:pencil"}
-            </FuseSvgIcon>
-          </IconButton>
-        </ListItem>
-        <Typography component='h3' fontSize={16} fontWeight={500}>
-          LISTA DE MENSAJES A ENVIAR
-        </Typography>
-        <DragAndDropList initialItems={listDetail} setData={setData} />
-        <Typography component='h3' fontSize={16} fontWeight={500}>
-          TIPOS DE RESPUESTA
-        </Typography>
-        <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-14'>
-          <Paper className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'>
-            <IconButton onClick={() => {}} className='w-fit'>
-              <FuseSvgIcon size={30}>heroicons-outline:chat</FuseSvgIcon>
+            {edit.title ? (
+              <TextField
+                value={titleFlow?.chname}
+                size='small'
+                fullWidth
+                onInput={(e) => {
+                  setData((prev) => ({
+                    ...prev,
+                    titleFlow: { ...prev.titleFlow, chname: e.target.value },
+                  }));
+                }}
+              />
+            ) : (
+              <ListItemText>{titleFlow?.chname}</ListItemText>
+            )}
+            <IconButton
+              onClick={() =>
+                setEdit((prev) => ({
+                  ...prev,
+                  title: !prev.title,
+                }))
+              }
+            >
+              <FuseSvgIcon size={20}>
+                {edit.title
+                  ? "heroicons-outline:save"
+                  : "heroicons-outline:pencil"}
+              </FuseSvgIcon>
             </IconButton>
-            <Typography className='px-16 text-lg font-medium tracking-tight leading-6 truncate'>
-              Mensaje
-            </Typography>
-          </Paper>
-          <Paper className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'>
-            <IconButton onClick={() => {}} className='w-fit'>
-              <FuseSvgIcon size={30}>heroicons-outline:beaker</FuseSvgIcon>
-            </IconButton>
-            <Typography className='px-16 text-lg font-medium tracking-tight leading-6 truncate'>
-              IA
-            </Typography>
-          </Paper>
-          <Paper className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'>
-            <IconButton onClick={() => {}} className='w-fit'>
-              <FuseSvgIcon size={30}>heroicons-outline:globe-alt</FuseSvgIcon>
-            </IconButton>
-            <Typography className='px-16 text-lg font-medium tracking-tight leading-6 truncate'>
-              HTTP
-            </Typography>
-          </Paper>
+          </ListItem>
+          <Typography component='h3' fontSize={16} fontWeight={500}>
+            LISTA DE MENSAJES A ENVIAR
+          </Typography>
+          <DragAndDropList initialItems={listDetail} setData={setData} />
         </div>
       </div>
     </ModalBasic>

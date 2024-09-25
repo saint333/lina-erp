@@ -1,13 +1,12 @@
 import { IconButton, Paper, Typography } from "@mui/material";
 import FuseSvgIcon from "@lina/core/LinaSvgIcon";
 import { useEffect, useState } from "react";
-import { getBots, getFlow, getFlowDetail, getQR } from "src/app/services/whatsapp/bots";
-import { BotModal } from "../modal/whatsapp/bot";
+import { getBots, getQR } from "src/app/services/whatsapp/bots";
+import { useNavigate } from "react-router-dom";
 
 export const BotsContent = () => {
   const [bot, setBot] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
-  const [data, setData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,10 +32,7 @@ export const BotsContent = () => {
   };
 
   const handleFlow = async (id) => {
-    const response = await getFlow(id);
-    const details = await getFlowDetail(response[0].p_inidflow);
-    setData({titleFlow: response[0], details});
-    setOpenModal(true);
+    navigate(`/crm/flows?bot=${id}`);
   };
 
   return (
@@ -71,15 +67,6 @@ export const BotsContent = () => {
           </Paper>
         );
       })}
-      {openModal && (
-        <BotModal
-          open={openModal}
-          setOpen={setOpenModal}
-          title='Flujo'
-          data={data}
-          setData={setData}
-        />
-      )}
     </div>
   );
 };
