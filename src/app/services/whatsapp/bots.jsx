@@ -17,3 +17,8 @@ export const getFlow = async (id) => {
   const response = axios.get(`${apiBaseCrm}/whatsapp/flow?bot=${id}`);
   return (await response).data;
 }
+
+export const getFlowDetail = async (id) => {
+  const response = axios.get(`${apiBaseCrm}/whatsapp/flowdetail?flow=${id}`);
+  return (await response).data;
+}

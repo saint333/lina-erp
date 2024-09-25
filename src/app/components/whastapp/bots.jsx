@@ -1,7 +1,7 @@
 import { IconButton, Paper, Typography } from "@mui/material";
 import FuseSvgIcon from "@lina/core/LinaSvgIcon";
 import { useEffect, useState } from "react";
-import { getBots, getFlow, getQR } from "src/app/services/whatsapp/bots";
+import { getBots, getFlow, getFlowDetail, getQR } from "src/app/services/whatsapp/bots";
 import { BotModal } from "../modal/whatsapp/bot";
 
 export const BotsContent = () => {
@@ -34,7 +34,8 @@ export const BotsContent = () => {
 
   const handleFlow = async (id) => {
     const response = await getFlow(id);
-    setData(response);
+    const details = await getFlowDetail(response[0].p_inidflow);
+    setData({titleFlow: response[0], details});
     setOpenModal(true);
   };
 
