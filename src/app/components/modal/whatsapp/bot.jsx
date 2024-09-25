@@ -5,22 +5,23 @@ import {
   List,
   ListItem,
   ListItemText,
-  MenuList,
   Paper,
   TextField,
   Typography,
 } from "@mui/material";
 import FuseSvgIcon from "@lina/core/LinaSvgIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { actionFlow, actionFlowDetail } from "src/app/services/whatsapp/bots";
 
 const ItemsList = ({ item, index, setData }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const [edit, setEdit] = useState({
     estado: false,
     item: item,
   });
   return (
-    <Draggable draggableId={String(item.p_inidflowdetail)} index={index}>
+    <Draggable draggableId={String(item.nuorden)} index={index}>
       {(provided) => (
         <ListItem
           ref={provided.innerRef}
@@ -48,17 +49,29 @@ const ItemsList = ({ item, index, setData }) => {
             <ListItemText primary={edit.item.chmessage} />
           )}
           <IconButton
-            onClick={() => {
+            onClick={async () => {
               if (edit.estado) {
-                setData((prev) => ({
-                  ...prev,
-                  details: prev.details.map((item) => {
+                const detail = await actionFlowDetail(edit.item);
+                if (detail.codigo == 1) {
+                  enqueueSnackbar(detail.valor, {
+                    variant: "success",
+                    style: { fontSize: "1.3rem" },
+                  });
+                } else {
+                  enqueueSnackbar(detail.valor, {
+                    variant: "error",
+                    style: { fontSize: "1.3rem" },
+                  });
+                }
+
+                setData((prev) =>
+                  prev.map((item) => {
                     if (item.p_inidflowdetail === edit.item.p_inidflowdetail) {
                       return edit.item;
                     }
                     return item;
-                  }),
-                }));
+                  })
+                );
               }
               setEdit((prev) => ({
                 ...prev,
@@ -81,21 +94,27 @@ const ItemsList = ({ item, index, setData }) => {
 const DragAndDropList = ({ initialItems, setData }) => {
   const [items, setItems] = useState(initialItems);
 
-  // Función que se ejecuta cuando se reordenan los elementos
+  useEffect(() => {
+    setItems(initialItems);
+  }, [initialItems]);
+
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
-    const newItems = Array.from(items);
+    let newItems = Array.from(items);
     const [reorderedItem] = newItems.splice(result.source.index, 1);
     newItems.splice(result.destination.index, 0, reorderedItem);
-
+    newItems = newItems.map((item, index) => ({
+      ...item,
+      nuorden: index + 1,
+    }));
     setItems(newItems);
+    setData(newItems);
   };
 
   return (
-    // <Paper elevation={3} sx={{ width: 300, padding: 2 }}>
-    <DragDropContext onDragEnd={handleOnDragEnd}>
-      <nav className="max-h-[300px] overflow-hidden overflow-y-scroll">
+    <nav className='max-h-[300px] overflow-hidden overflow-y-scroll'>
+      <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId='droppable-list'>
           {(provided) => (
             <List
@@ -115,16 +134,24 @@ const DragAndDropList = ({ initialItems, setData }) => {
             </List>
           )}
         </Droppable>
-      </nav>
-    </DragDropContext>
-    // </Paper>
+      </DragDropContext>
+    </nav>
   );
 };
 
 export const BotModal = ({ open, setOpen, title, data, setData }) => {
-  console.log("🚀 ~ BotModal ~ data:", data);
-  const { titleFlow, details } = data;
-  const listDetail = details?.sort((a, b) => a.nuorden - b.nuorden);
+  let { titleFlow, details } = data;
+  const [titleFlowEdit, setTitleFlowEdit] = useState(titleFlow);
+  const [listDetail, setListDetail] = useState(
+    details
+      ?.sort((a, b) => a.nuorden - b.nuorden)
+      .map((item, index) => ({
+        ...item,
+        nuorden: index + 1,
+        p_inidflow: titleFlow.p_inidflow,
+        accion: "U",
+      }))
+  );
 
   const { enqueueSnackbar } = useSnackbar();
   const [edit, setEdit] = useState({
@@ -136,12 +163,27 @@ export const BotModal = ({ open, setOpen, title, data, setData }) => {
     setOpen(false);
   };
 
+  const onSubmit = async () => {
+    const response = await actionFlow(titleFlowEdit, data ? "U" : "I");
+    if (response.codigo == 1) {
+      enqueueSnackbar(response.valor, {
+        variant: "success",
+        style: { fontSize: "1.3rem" },
+      });
+    } else {
+      enqueueSnackbar(response.valor, {
+        variant: "error",
+        style: { fontSize: "1.3rem" },
+      });
+    }
+  };
+
   return (
     <ModalBasic
       open={open}
       title={title}
       handleClose={handleClose}
-      className='md:!w-8/12 lg:!w-6/12 '
+      className='md:!w-8/12 lg:!w-6/12'
     >
       <div className='py-5 flex flex-col md:flex-row gap-14'>
         <div className='md:w-5/12'>
@@ -149,16 +191,48 @@ export const BotModal = ({ open, setOpen, title, data, setData }) => {
             TIPOS DE RESPUESTA
           </Typography>
           <div className='grid grid-cols-2 gap-14 mt-5'>
-            <Paper className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'>
-              <IconButton onClick={() => {}} className='w-fit'>
+            <Paper
+              className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'
+              onClick={() => {
+                setListDetail((prev) => [
+                  ...prev,
+                  {
+                    chmessage: "Mensaje",
+                    nuorden: prev.length + 1,
+                    p_inidflowdetail: titleFlow.p_inidflow,
+                    p_inidtype: 1,
+                    churl: null,
+                    status: true,
+                    accion: "I",
+                  },
+                ]);
+              }}
+            >
+              <IconButton className='w-fit'>
                 <FuseSvgIcon size={30}>heroicons-outline:chat</FuseSvgIcon>
               </IconButton>
               <Typography className='px-16 text-lg font-medium tracking-tight leading-6 truncate'>
                 Mensaje
               </Typography>
             </Paper>
-            <Paper className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'>
-              <IconButton onClick={() => {}} className='w-fit'>
+            <Paper
+              className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'
+              onClick={() => {
+                setListDetail((prev) => [
+                  ...prev,
+                  {
+                    chmessage: "Mensaje IA",
+                    nuorden: prev.length + 1,
+                    p_inidflowdetail: titleFlow.p_inidflow,
+                    p_inidtype: 1,
+                    churl: null,
+                    status: true,
+                    accion: "I",
+                  },
+                ]);
+              }}
+            >
+              <IconButton className='w-fit'>
                 <FuseSvgIcon size={30}>heroicons-outline:beaker</FuseSvgIcon>
               </IconButton>
               <Typography className='px-16 text-lg font-medium tracking-tight leading-6 truncate'>
@@ -166,8 +240,10 @@ export const BotModal = ({ open, setOpen, title, data, setData }) => {
               </Typography>
             </Paper>
             <Paper className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'>
-              <IconButton onClick={() => {}} className='w-fit'>
-                <FuseSvgIcon size={30}>heroicons-outline:globe-alt</FuseSvgIcon>
+              <IconButton disabled className='w-fit'>
+                <FuseSvgIcon size={30} color=''>
+                  heroicons-outline:globe-alt
+                </FuseSvgIcon>
               </IconButton>
               <Typography className='px-16 text-lg font-medium tracking-tight leading-6 truncate'>
                 HTTP
@@ -189,13 +265,13 @@ export const BotModal = ({ open, setOpen, title, data, setData }) => {
           >
             {edit.title ? (
               <TextField
-                value={titleFlow?.chname}
+                value={titleFlowEdit?.chname}
                 size='small'
                 fullWidth
                 onInput={(e) => {
-                  setData((prev) => ({
+                  setTitleFlowEdit((prev) => ({
                     ...prev,
-                    titleFlow: { ...prev.titleFlow, chname: e.target.value },
+                    chname: e.target.value,
                   }));
                 }}
               />
@@ -203,12 +279,22 @@ export const BotModal = ({ open, setOpen, title, data, setData }) => {
               <ListItemText>{titleFlow?.chname}</ListItemText>
             )}
             <IconButton
-              onClick={() =>
+              onClick={() => {
                 setEdit((prev) => ({
                   ...prev,
                   title: !prev.title,
-                }))
-              }
+                }));
+                setData((prev) => ({
+                  ...prev,
+                  titleFlow: {
+                    ...prev.titleFlow,
+                    chname: titleFlowEdit.chname,
+                  },
+                }));
+                if (edit.title) {
+                  onSubmit();
+                }
+              }}
             >
               <FuseSvgIcon size={20}>
                 {edit.title
@@ -220,7 +306,7 @@ export const BotModal = ({ open, setOpen, title, data, setData }) => {
           <Typography component='h3' fontSize={16} fontWeight={500}>
             LISTA DE MENSAJES A ENVIAR
           </Typography>
-          <DragAndDropList initialItems={listDetail} setData={setData} />
+          <DragAndDropList initialItems={listDetail} setData={setListDetail} />
         </div>
       </div>
     </ModalBasic>
