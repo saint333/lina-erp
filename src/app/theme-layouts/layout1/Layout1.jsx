@@ -47,7 +47,7 @@ function Layout1(props) {
 
         <main
           id='lina-main'
-          className='relative z-10 flex min-h-full min-w-0 flex-auto flex-col'
+          className='relative z-10 flex max-h-screen min-w-0 flex-auto flex-col'
         >
           {config.toolbar.display && (
             <ToolbarLayout1
