@@ -212,12 +212,12 @@ export const WhastappTable = () => {
             }}
           >
             <MenuItem value='text'>Texto</MenuItem>
-            <MenuItem value='imagen'>Imagen</MenuItem>
+            <MenuItem value='image'>Imagen</MenuItem>
             <MenuItem value='video'>Video</MenuItem>
             <MenuItem value='pdf'>PDF</MenuItem>
           </CustomSelect>
           <CustomInput label='Mensaje' textKey='message' required={required} disabled={bots.length == 0}/>
-          {type === "imagen" && (
+          {type === "image" && (
             <Button
               component='label'
               role={undefined}

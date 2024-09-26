@@ -27,7 +27,7 @@ export default function ModalBasic({
     >
       <Box
         sx={style}
-        className={`w-11/12 md:w-3/4 lg:w-7/12 rounded-md py-14 ${className}`}
+        className={`w-11/12 md:w-3/4 lg:w-7/12 rounded-md py-14 max-h-full ${className}`}
       >
         <Typography
           id='modal-modal-title'
