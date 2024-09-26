@@ -77,7 +77,7 @@ export const FlowsContent = () => {
       {bot.map((item, index) => {
         return (
           <Paper
-            className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden'
+            className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-10'
             key={index}
           >
             <div className='flex items-center justify-between'>
