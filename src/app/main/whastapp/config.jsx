@@ -1,6 +1,7 @@
 import Bots from "./bots";
 import Contacts from "./contact";
 import Flows from "./flows";
+import FlowsDetail from "./flows-detail";
 import Whastapp from "./whastapp";
 
 const WhastappConfig = {
@@ -20,6 +21,10 @@ const WhastappConfig = {
     {
       path: 'crm/flows',
       element: <Flows />
+    },
+    {
+      path: 'crm/flows-detail',
+      element: <FlowsDetail />
     }
 	]
 };

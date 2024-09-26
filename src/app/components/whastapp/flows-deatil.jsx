@@ -12,23 +12,30 @@ import {
 } from "@mui/material";
 import FuseSvgIcon from "@lina/core/LinaSvgIcon";
 import { useEffect, useState } from "react";
-import { actionFlow, getFlow } from "src/app/services/whatsapp/bots";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  actionFlow,
+  getFlow,
+  getFlowDetail,
+  getQR,
+} from "src/app/services/whatsapp/bots";
+import { BotModal } from "../modal/whatsapp/bot";
+import { useSearchParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
-export const FlowsContent = () => {
+export const FlowsDetailContent = () => {
   const [bot, setBot] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [data, setData] = useState(null);
   const [searchParams] = useSearchParams();
   const botId = searchParams.get("bot");
   const [chips, setChips] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
 
   const handleAddChip = (event) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
       setChips([...chips, inputValue.trim()]);
-      setInputValue("");
+      setInputValue(""); // Limpiar el campo de texto
       enqueueSnackbar("Se ha agregado correctamente", {
         variant: "success",
         style: { fontSize: "1.3rem" },
@@ -53,7 +60,10 @@ export const FlowsContent = () => {
   }, []);
 
   const handleFlow = async (id) => {
-    navigate(`/crm/flows-detail?bot=${id}`);
+    const response = await getFlow(id);
+    const details = await getFlowDetail(response[0].p_inidflow);
+    setData({ titleFlow: response[0], details });
+    setOpenModal(true);
   };
 
   const handleDelete = async (item) => {
@@ -171,6 +181,15 @@ export const FlowsContent = () => {
           </Paper>
         );
       })}
+      {openModal && (
+        <BotModal
+          open={openModal}
+          setOpen={setOpenModal}
+          title='Flujo'
+          data={data}
+          setData={setData}
+        />
+      )}
     </div>
   );
 };

@@ -172,7 +172,7 @@ export const WhastappTable = () => {
   };
 
   return (
-    <div className='flex gap-7 items-start'>
+    <div className='flex flex-col-reverse md:flex-row gap-7 items-start'>
       <div className='md:w-8/12 grid'>
         <Table
           enableRowSelection={true}
@@ -185,7 +185,7 @@ export const WhastappTable = () => {
           getRowId={(row) => row.chcountry + row.chnumber}
         />
       </div>
-      <div className='md:w-4/12'>
+      <div className='w-full md:w-4/12'>
         <div className='flex gap-10 flex-col'>
           <CustomSelect
             label='Bot'

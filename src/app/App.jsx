@@ -37,11 +37,11 @@ function App() {
 						<SnackbarProvider
 							maxSnack={4}
 							anchorOrigin={{
-								vertical: 'bottom',
+								vertical: 'top',
 								horizontal: 'right'
 							}}
 							classes={{
-								containerRoot: 'bottom-0 right-0 mb-52 md:mb-68 mr-8 lg:mr-80 z-99'
+								containerRoot: 'top-0 right-0 mt-52 md:mt-68 mr-8 lg:mr-80 z-99'
 							}}
 						>
 							<LinaLayout layouts={themeLayouts} />
