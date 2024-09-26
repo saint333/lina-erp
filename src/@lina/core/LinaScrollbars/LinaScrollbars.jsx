@@ -8,8 +8,9 @@ import { selectCustomScrollbarsEnabled } from '@lina/core/LinaSettings/linaSetti
 import { useAppSelector } from 'app/store/hooks';
 
 const Root = styled('div')(() => ({
-	overscrollBehavior: 'contain',
-	minHeight: '100%'
+	// overscrollBehavior: 'contain',
+	// minHeight: '100%'
+	marginBottom: "3rem"
 }));
 const md = new MobileDetect(window.navigator.userAgent);
 const isMobile = md.mobile();

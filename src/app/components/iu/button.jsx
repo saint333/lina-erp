@@ -43,13 +43,14 @@ export const AgregarButton = ({ text, onClick, className }) => {
   );
 };
 
-export const SendButton = ({ text, onClick, color }) => {
+export const SendButton = ({ text, onClick, color, disabled = false }) => {
   return (
     <Button
       variant='contained'
       color={color}
       startIcon={<NearMe />}
       onClick={onClick}
+      disabled={disabled}
     >
       {text}
     </Button>

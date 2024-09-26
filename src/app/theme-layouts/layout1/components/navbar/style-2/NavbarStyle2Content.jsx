@@ -17,7 +17,7 @@ const Root = styled('div')(({ theme }) => ({
 	}
 }));
 const StyledContent = styled(LinaScrollbars)(() => ({
-	overscrollBehavior: 'contain',
+	overscrollBehavior: 'none',
 	overflowX: 'hidden',
 	overflowY: 'auto',
 	WebkitOverflowScrolling: 'touch',

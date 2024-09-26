@@ -14,6 +14,8 @@ import { Controller, useForm } from "react-hook-form";
 import { getBots } from "src/app/services/whatsapp/bots";
 import { CloudUpload } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
+import { sendMessage } from "src/app/services/whatsapp";
+import { useSnackbar } from "notistack";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -32,6 +34,8 @@ export const WhastappTable = () => {
   const [selectedRow, setSelectedRow] = useState({});
   const [bots, setBots] = useState([]);
   const [file, setFile] = useState(null);
+  const [required, setRequired] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
     to: "",
@@ -115,16 +119,16 @@ export const WhastappTable = () => {
             </Select>
           </FormControl>
         )}
-        rules={{ required: "Este campo es requerido" }}
+        // rules={{ required: "Este campo es requerido" }}
       />
     );
   };
 
-  const CustomInput = ({ label, textKey, disabled }) => (
+  const CustomInput = ({ label, textKey, disabled, required }) => (
     <Controller
       name={textKey}
       control={control}
-      rules={{ required: "Este campo es requerido" }}
+      rules={{ required: required ? "Este campo es requerido" : "" }}
       render={({ field }) => (
         <TextField
           {...field}
@@ -133,13 +137,38 @@ export const WhastappTable = () => {
           fullWidth
           size='small'
           disabled={disabled}
+          multiline
+          rows={4}
         />
       )}
     />
   );
 
   const onSubmit = async (data) => {
-    console.log(data);
+    console.log(data, file, selectedRow);
+    const contactos = Object.keys(selectedRow);
+    const formdata = new FormData();
+    formdata.append("bot", data.bot || 1);
+    formdata.append("type", data.type);
+    formdata.append("message", data.message);
+    formdata.append("file", file);
+
+    for (let index = 0; index < contactos.length; index++) {
+      const element = contactos[index];
+      formdata.append("to", element);
+      const response = await sendMessage(formdata);
+      if (response.success) {
+        enqueueSnackbar(response.message, {
+          variant: "success",
+          style: { fontSize: "1.3rem" },
+        });
+      } else {
+        enqueueSnackbar(response.message, {
+          variant: "error",
+          style: { fontSize: "1.3rem" },
+        });
+      }
+    }
   };
 
   return (
@@ -153,14 +182,15 @@ export const WhastappTable = () => {
           onRowSelectionChange={setSelectedRow}
           rowSelection={selectedRow}
           enableRowActions={null}
+          getRowId={(row) => row.chcountry + row.chnumber}
         />
       </div>
       <div className='md:w-4/12'>
-        <div className='flex gap-6 flex-col'>
+        <div className='flex gap-10 flex-col'>
           <CustomSelect
             label='Bot'
             textKey='bot'
-            // disabled={bots.length == 0}
+            disabled={bots.length == 0}
           >
             {bots.map((bot) => (
               <MenuItem key={bot.p_inidbot} value={bot.p_inidbot}>
@@ -171,15 +201,22 @@ export const WhastappTable = () => {
           <CustomSelect
             label='Tipo'
             textKey='type'
-            // disabled={bots.length == 0}
-            handleChange={(e) => setFile(null)}
+            disabled={bots.length == 0}
+            handleChange={(e) => {
+              if (e.target.value == "text") {
+                setRequired(true);
+              } else {
+                setRequired(false);
+              }
+              setFile(null);
+            }}
           >
             <MenuItem value='text'>Texto</MenuItem>
             <MenuItem value='imagen'>Imagen</MenuItem>
             <MenuItem value='video'>Video</MenuItem>
             <MenuItem value='pdf'>PDF</MenuItem>
           </CustomSelect>
-          {type === "text" && <CustomInput label='Mensaje' textKey='message' />}
+          <CustomInput label='Mensaje' textKey='message' required={required} disabled={bots.length == 0}/>
           {type === "imagen" && (
             <Button
               component='label'
@@ -187,8 +224,9 @@ export const WhastappTable = () => {
               variant='contained'
               tabIndex={-1}
               startIcon={<CloudUpload />}
+              disabled={bots.length == 0}
             >
-              {file ? file.name : "Subir Imagen"}
+              <span className="truncate">{file ? file.name : "Subir Imagen"}</span>
               <VisuallyHiddenInput
                 type='file'
                 onChange={(event) => setFile(event.target.files[0])}
@@ -203,8 +241,9 @@ export const WhastappTable = () => {
               variant='contained'
               tabIndex={-1}
               startIcon={<CloudUpload />}
+              disabled={bots.length == 0}
             >
-              {file ? file.name : "Subir video"}
+              <span className="truncate">{file ? file.name : "Subir video"}</span>
               <VisuallyHiddenInput
                 type='file'
                 onChange={(event) => setFile(event.target.files[0])}
@@ -219,8 +258,9 @@ export const WhastappTable = () => {
               variant='contained'
               tabIndex={-1}
               startIcon={<CloudUpload />}
+              disabled={bots.length == 0}
             >
-              {file ? file.name : "Subir PDF"}
+              <span className="truncate">{file ? file.name : "Subir PDF"}</span>
               <VisuallyHiddenInput
                 type='file'
                 onChange={(event) => setFile(event.target.files[0])}
@@ -228,7 +268,7 @@ export const WhastappTable = () => {
               />
             </Button>
           )}
-          <SendButton text='Enviar' onClick={handleSubmit(onSubmit)} />
+          <SendButton text='Enviar' onClick={handleSubmit(onSubmit)} disabled={bots.length == 0}/>
         </div>
       </div>
     </div>

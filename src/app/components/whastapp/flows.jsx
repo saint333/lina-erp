@@ -20,15 +20,6 @@ export const FlowsContent = () => {
     fetchData();
   }, []);
 
-  const handleRefresh = async (id) => {
-    const bots = [...bot];
-    for (let index = 0; index < bots.length; index++) {
-      const data = await getQR(id);
-      bots[index].qr = URL.createObjectURL(data);
-    }
-    setBot(bots);
-  };
-
   const handleFlow = async (id) => {
     const response = await getFlow(id);
     const details = await getFlowDetail(response[0].p_inidflow);
@@ -58,7 +49,6 @@ export const FlowsContent = () => {
                 <IconButton
                   aria-label='more'
                   size='large'
-                  onClick={() => handleRefresh(item.p_inidbot)}
                 >
                   <FuseSvgIcon
                     color={item.actived ? "success" : "gray"}

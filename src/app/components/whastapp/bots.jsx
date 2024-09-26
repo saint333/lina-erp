@@ -45,21 +45,19 @@ export const BotsContent = () => {
           >
             <div className='flex items-center justify-between'>
               <Typography
-                className='px-16 text-lg font-medium tracking-tight leading-6 truncate'
+                className='px-16 text-sm md:text-md lg:text-lg font-medium tracking-tight leading-6 truncate'
                 color='text.secondary'
               >
                 {item.chname}
               </Typography>
-              <div>
+              <div className="flex">
                 <IconButton onClick={() => handleFlow(item.p_inidbot)}>
-                  <FuseSvgIcon>heroicons-outline:map</FuseSvgIcon>
+                  <FuseSvgIcon size={20}>heroicons-outline:map</FuseSvgIcon>
                 </IconButton>
                 <IconButton
-                  aria-label='more'
-                  size='large'
                   onClick={() => handleRefresh(item.p_inidbot)}
                 >
-                  <FuseSvgIcon>heroicons-outline:refresh</FuseSvgIcon>
+                  <FuseSvgIcon size={20}>heroicons-outline:refresh</FuseSvgIcon>
                 </IconButton>
               </div>
             </div>
