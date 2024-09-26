@@ -51,8 +51,8 @@ function SignInPage() {
 				sx={{ backgroundColor: 'primary.main' }}
 			>
 				{/* <img src="assets/images/logo/banner.png" className=""/> */}
-				<div className="relative z-10 w-full max-w-2xl">
-				<img src="assets/images/logo/banner.png" className="animate-bounce-up-down"/>
+				<div className="relative z-10 w-full max-w-2xl grid grid-rows-[80%,20%] h-full items-center">
+				<img src="assets/images/logo/banner.png" className="animate-bounce-up-down h-full w-full object-contain"/>
 					{/* <div className="text-7xl font-bold leading-none text-gray-100">
 						<div>Welcome to</div>
 						<div>our community</div>
