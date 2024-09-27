@@ -40,7 +40,7 @@ export const WhastappTable = () => {
   const defaultValues = {
     to: "",
     message: "",
-    type: "",
+    type: "text",
     bot: "",
   };
 
@@ -61,6 +61,7 @@ export const WhastappTable = () => {
       setData(product);
       const response = await getBots();
       setBots(response.filter((bot) => bot.actived === true));
+      setValue("bot", response.filter((bot) => bot.actived === true)[0].p_inidbot);
     };
     fetchData();
   }, []);
@@ -173,7 +174,7 @@ export const WhastappTable = () => {
   };
 
   return (
-    <div className='flex flex-col-reverse md:flex-row gap-7 items-start'>
+    <div className='flex flex-col-reverse md:flex-row gap-14 items-start'>
       <div className='md:w-8/12 grid'>
         <Table
           enableRowSelection={true}
