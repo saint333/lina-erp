@@ -166,6 +166,23 @@ export const FlowsDetailContent = () => {
     }
   }
 
+  const handleDeleteItem = async (item) => {
+    const response = await actionFlowDetail({...item, accion: "D"});
+    if (response.codigo == 1) {
+      enqueueSnackbar(response.valor, {
+        variant: "success",
+        style: { fontSize: "1.3rem" },
+      });
+      setDetails((prev) => prev.filter((detail) => detail.p_inidflowdetail !== item.p_inidflowdetail));
+      setItem(null);
+    } else {
+      enqueueSnackbar(response.valor, {
+        variant: "error",
+        style: { fontSize: "1.3rem" },
+      });
+    }
+  }
+
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-24 w-full min-w-0 grid-rows-3 sm:grid-rows-2 md:grid-rows-1'>
       <Paper className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-10'>
@@ -358,7 +375,7 @@ export const FlowsDetailContent = () => {
                       >
                         <ListItemText primary={item.chmessage} />
 
-                        <IconButton onClick={async () => {}}>
+                        <IconButton onClick={() => handleDeleteItem(item)}>
                           <FuseSvgIcon size={20}>
                             heroicons-outline:trash
                           </FuseSvgIcon>
