@@ -18,6 +18,7 @@ import FuseSvgIcon from "@lina/core/LinaSvgIcon";
 import { useEffect, useState } from "react";
 import {
   actionFlow,
+  actionFlowDetail,
   getFlow,
   getFlowDetail,
 } from "src/app/services/whatsapp/bots";
@@ -40,16 +41,19 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
+const classes =
+  "flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer";
+
 export const FlowsDetailContent = () => {
   const [bot, setBot] = useState(null);
   const [details, setDetails] = useState(null);
-  const [data, setData] = useState(null);
   const [searchParams] = useSearchParams();
   const botId = searchParams.get("bot");
   const [chips, setChips] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const { enqueueSnackbar } = useSnackbar();
   const [file, setFile] = useState(null);
+  const [item, setItem] = useState(null);
 
   const handleAddChip = (event) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
@@ -90,13 +94,6 @@ export const FlowsDetailContent = () => {
     fetchData();
   }, []);
 
-  const handleFlow = async (id) => {
-    const response = await getFlow(id);
-    const details = await getFlowDetail(response[0].p_inidflow);
-    setData({ titleFlow: response[0], details });
-    setOpenModal(true);
-  };
-
   const handleDelete = async (item) => {
     const response = await actionFlow(item, "D");
     if (response) {
@@ -124,6 +121,50 @@ export const FlowsDetailContent = () => {
     }));
     setDetails(newItems);
   };
+
+  const handleAddNewMessage = async (type, message) => {
+    const newMessage = {
+      chmessage: message,
+      nuorden: details.length + 1,
+      p_inidflowdetail: bot.p_inidflow,
+      p_inidtype: type,
+      churl: null,
+      status: true,
+      accion: "I",
+    };
+
+    const detail = await actionFlowDetail(newMessage);
+    if (detail.codigo == 1) {
+      enqueueSnackbar(detail.valor, {
+        variant: "success",
+        style: { fontSize: "1.3rem" },
+      });
+      setDetails((prev) => [...prev, {...newMessage, accion: "U"}]);
+      setItem({...newMessage, accion: "U"});
+    } else {
+      enqueueSnackbar(detail.valor, {
+        variant: "error",
+        style: { fontSize: "1.3rem" },
+      });
+    }
+  };
+
+  const handleUpdate = async () => {
+    const response = await actionFlowDetail(item);
+    if (response.codigo == 1) {
+      enqueueSnackbar(response.valor, {
+        variant: "success",
+        style: { fontSize: "1.3rem" },
+      });
+      setDetails((prev) => prev.map((detail) => detail.p_inidflowdetail === item.p_inidflowdetail ? item : detail));
+      setItem(null);
+    } else {
+      enqueueSnackbar(response.valor, {
+        variant: "error",
+        style: { fontSize: "1.3rem" },
+      });
+    }
+  }
 
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-24 w-full min-w-0 grid-rows-3 sm:grid-rows-2 md:grid-rows-1'>
@@ -208,20 +249,9 @@ export const FlowsDetailContent = () => {
             </Typography>
             <div className='grid grid-cols-2 gap-14 mt-5'>
               <Paper
-                className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'
+                className={classes}
                 onClick={() => {
-                  setDetails((prev) => [
-                    ...prev,
-                    {
-                      chmessage: "Mensaje",
-                      nuorden: prev.length + 1,
-                      p_inidflowdetail: bot.p_inidflow,
-                      p_inidtype: 1,
-                      churl: null,
-                      status: true,
-                      accion: "I",
-                    },
-                  ]);
+                  handleAddNewMessage(1, "Mensaje");
                 }}
               >
                 <IconButton className='w-fit'>
@@ -232,20 +262,9 @@ export const FlowsDetailContent = () => {
                 </Typography>
               </Paper>
               <Paper
-                className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'
+                className={classes}
                 onClick={() => {
-                  setDetails((prev) => [
-                    ...prev,
-                    {
-                      chmessage: "Mensaje IA",
-                      nuorden: prev.length + 1,
-                      p_inidflowdetail: bot.p_inidflow,
-                      p_inidtype: 2,
-                      churl: null,
-                      status: true,
-                      accion: "I",
-                    },
-                  ]);
+                  handleAddNewMessage(2, "Mensaje IA");
                 }}
               >
                 <IconButton className='w-fit'>
@@ -255,7 +274,7 @@ export const FlowsDetailContent = () => {
                   IA
                 </Typography>
               </Paper>
-              <Paper className='flex flex-col flex-auto shadow-none rounded-2xl overflow-hidden items-center py-10 border border-grey-300 border-solid cursor-pointer'>
+              <Paper className={classes}>
                 <IconButton disabled className='w-fit'>
                   <FuseSvgIcon size={30} color=''>
                     heroicons-outline:globe-alt
@@ -269,15 +288,15 @@ export const FlowsDetailContent = () => {
           </div>
         </div>
       </Paper>
-      <Paper className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-10'>
+      {item && <Paper className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-10'>
         <div className='flex items-center justify-between'>
           <Typography
             className='px-16 text-lg font-medium tracking-tight leading-6 truncate'
             color='text.secondary'
           >
-            Detalles
+            Detalles del mensaje
           </Typography>
-          <IconButton>
+          <IconButton onClick={handleUpdate}>
             <FuseSvgIcon size={20}>heroicons-outline:cloud-upload</FuseSvgIcon>
           </IconButton>
         </div>
@@ -288,6 +307,8 @@ export const FlowsDetailContent = () => {
             size='small'
             multiline
             rows={4}
+            value={item.chmessage}
+            onChange={(e) => setItem({...item, chmessage: e.target.value})}
           />
           <SendButton text='Probar' />
           <Button
@@ -297,15 +318,17 @@ export const FlowsDetailContent = () => {
             tabIndex={-1}
             startIcon={<CloudUpload />}
           >
-            <span className='truncate'>{file ? file.name : "Subir PDF"}</span>
+            <span className='truncate'>
+              {file ? file.name : "Subir imagen, video o archivo"}
+            </span>
             <VisuallyHiddenInput
               type='file'
               onChange={(event) => setFile(event.target.files[0])}
-              accept='application/pdf'
+              accept='application/pdf,image/*,video/*'
             />
           </Button>
         </div>
-      </Paper>
+      </Paper>}
       <Paper className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-20'>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId='droppable-list'>
@@ -331,6 +354,7 @@ export const FlowsDetailContent = () => {
                           backgroundColor: "#f0f0f0",
                           borderRadius: "4px",
                         }}
+                        onClick={() => setItem(item)}
                       >
                         <ListItemText primary={item.chmessage} />
 
