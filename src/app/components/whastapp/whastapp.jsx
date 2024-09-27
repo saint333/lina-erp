@@ -168,6 +168,7 @@ export const WhastappTable = () => {
           style: { fontSize: "1.3rem" },
         });
       }
+      formdata.delete("to");
     }
   };
 
