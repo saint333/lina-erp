@@ -52,7 +52,7 @@ export const BotsContent = () => {
               </Typography>
               <div className="flex">
                 <IconButton onClick={() => handleFlow(item.p_inidbot)}>
-                  <FuseSvgIcon size={20}>heroicons-outline:map</FuseSvgIcon>
+                  <FuseSvgIcon size={20}>heroicons-outline:external-link</FuseSvgIcon>
                 </IconButton>
                 <IconButton
                   onClick={() => handleRefresh(item.p_inidbot)}

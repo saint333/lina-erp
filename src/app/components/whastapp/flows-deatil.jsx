@@ -55,23 +55,56 @@ export const FlowsDetailContent = () => {
   const [file, setFile] = useState(null);
   const [item, setItem] = useState(null);
 
-  const handleAddChip = (event) => {
+  const handleAddChip = async (event, item) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
-      setChips([...chips, inputValue.trim()]);
-      setInputValue(""); // Limpiar el campo de texto
-      enqueueSnackbar("Se ha agregado correctamente", {
-        variant: "success",
-        style: { fontSize: "1.3rem" },
-      });
+      if (chips.includes(inputValue)) {
+        enqueueSnackbar("Texto ya existe", {
+          variant: "error",
+          style: { fontSize: "1.3rem" },
+        });
+        setInputValue("");
+        return;
+      }
+      const list = [...chips, inputValue.trim()];
+      setChips(list);
+      setInputValue("");
+      const response = await actionFlow({ ...item, chwords: list.join() }, "U");
+      if (response.codigo == 1) {
+        enqueueSnackbar(response.valor, {
+          variant: "success",
+          style: { fontSize: "1.3rem" },
+        });
+      } else {
+        enqueueSnackbar(response.valor, {
+          variant: "error",
+          style: { fontSize: "1.3rem" },
+        });
+      }
     }
   };
 
-  const handleDeleteChip = (chipToDelete) => {
+  const handleDeleteChip = (chipToDelete, item) => {
     setChips((chips) => chips.filter((chip) => chip !== chipToDelete));
     enqueueSnackbar("Se ha eliminado correctamente", {
       variant: "success",
       style: { fontSize: "1.3rem" },
     });
+  };
+
+  const handleActivate = async (event, item) => {
+    item = { ...item, p_inidtype: event.target.value };
+    const response = await actionFlow(item, "A");
+    if (response.codigo == 1) {
+      enqueueSnackbar(response.valor, {
+        variant: "success",
+        style: { fontSize: "1.3rem" },
+      });
+    } else {
+      enqueueSnackbar(response.valor, {
+        variant: "error",
+        style: { fontSize: "1.3rem" },
+      });
+    }
   };
 
   useEffect(() => {
@@ -139,8 +172,8 @@ export const FlowsDetailContent = () => {
         variant: "success",
         style: { fontSize: "1.3rem" },
       });
-      setDetails((prev) => [...prev, {...newMessage, accion: "U"}]);
-      setItem({...newMessage, accion: "U"});
+      setDetails((prev) => [...prev, { ...newMessage, accion: "U" }]);
+      setItem({ ...newMessage, accion: "U" });
     } else {
       enqueueSnackbar(detail.valor, {
         variant: "error",
@@ -156,7 +189,9 @@ export const FlowsDetailContent = () => {
         variant: "success",
         style: { fontSize: "1.3rem" },
       });
-      setDetails((prev) => prev.map((detail) => detail.p_inidflowdetail === item.p_inidflowdetail ? item : detail));
+      setDetails((prev) =>
+        prev.map((detail) => (detail.nuorden === item.nuorden ? item : detail))
+      );
       setItem(null);
     } else {
       enqueueSnackbar(response.valor, {
@@ -164,24 +199,31 @@ export const FlowsDetailContent = () => {
         style: { fontSize: "1.3rem" },
       });
     }
-  }
+  };
 
   const handleDeleteItem = async (item) => {
-    const response = await actionFlowDetail({...item, accion: "D"});
+    const response = await actionFlowDetail({ ...item, accion: "D" });
+    setItem(null);
     if (response.codigo == 1) {
       enqueueSnackbar(response.valor, {
         variant: "success",
         style: { fontSize: "1.3rem" },
       });
-      setDetails((prev) => prev.filter((detail) => detail.p_inidflowdetail !== item.p_inidflowdetail));
-      setItem(null);
+      setDetails((prev) =>
+        prev
+          .filter((detail) => detail.nuorden !== item.nuorden)
+          .map((item, index) => ({
+            ...item,
+            nuorden: index + 1,
+          }))
+      );
     } else {
       enqueueSnackbar(response.valor, {
         variant: "error",
         style: { fontSize: "1.3rem" },
       });
     }
-  }
+  };
 
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-24 w-full min-w-0 grid-rows-3 sm:grid-rows-2 md:grid-rows-1'>
@@ -208,15 +250,13 @@ export const FlowsDetailContent = () => {
                   labelId={`role-label`}
                   label='Tipos'
                   defaultValue={""}
-                  onChange={(e) => {
-                    console.log(e.target.value);
-                  }}
+                  onChange={(e) => handleActivate(e, bot)}
                 >
                   <MenuItem value='' disabled>
                     -
                   </MenuItem>
-                  <MenuItem value='palabra'>Palabras</MenuItem>
-                  <MenuItem value='general'>General</MenuItem>
+                  <MenuItem value='1'>General</MenuItem>
+                  <MenuItem value='2'>Palabras</MenuItem>
                 </Select>
               </FormControl>
               <TextField
@@ -226,7 +266,7 @@ export const FlowsDetailContent = () => {
                 size='small'
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleAddChip}
+                onKeyDown={(e) => handleAddChip(e, bot)}
                 sx={{
                   "& label + div": {
                     flexDirection: "column",
@@ -249,7 +289,7 @@ export const FlowsDetailContent = () => {
                         <Chip
                           key={index}
                           label={chip}
-                          onDelete={() => handleDeleteChip(chip)}
+                          onDelete={() => handleDeleteChip(chip, bot)}
                           size='small'
                           sx={{ marginBottom: 0.5 }}
                         />
@@ -268,7 +308,7 @@ export const FlowsDetailContent = () => {
               <Paper
                 className={classes}
                 onClick={() => {
-                  handleAddNewMessage(1, "Mensaje");
+                  handleAddNewMessage(3, "Mensaje");
                 }}
               >
                 <IconButton className='w-fit'>
@@ -281,7 +321,7 @@ export const FlowsDetailContent = () => {
               <Paper
                 className={classes}
                 onClick={() => {
-                  handleAddNewMessage(2, "Mensaje IA");
+                  handleAddNewMessage(4, "Mensaje IA");
                 }}
               >
                 <IconButton className='w-fit'>
@@ -305,47 +345,51 @@ export const FlowsDetailContent = () => {
           </div>
         </div>
       </Paper>
-      {item && <Paper className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-10'>
-        <div className='flex items-center justify-between'>
-          <Typography
-            className='px-16 text-lg font-medium tracking-tight leading-6 truncate'
-            color='text.secondary'
-          >
-            Detalles del mensaje
-          </Typography>
-          <IconButton onClick={handleUpdate}>
-            <FuseSvgIcon size={20}>heroicons-outline:cloud-upload</FuseSvgIcon>
-          </IconButton>
-        </div>
-        <div className='p-10 flex flex-col gap-10'>
-          <TextField
-            label='Mensaje'
-            fullWidth
-            size='small'
-            multiline
-            rows={4}
-            value={item.chmessage}
-            onChange={(e) => setItem({...item, chmessage: e.target.value})}
-          />
-          <SendButton text='Probar' />
-          <Button
-            component='label'
-            role={undefined}
-            variant='contained'
-            tabIndex={-1}
-            startIcon={<CloudUpload />}
-          >
-            <span className='truncate'>
-              {file ? file.name : "Subir imagen, video o archivo"}
-            </span>
-            <VisuallyHiddenInput
-              type='file'
-              onChange={(event) => setFile(event.target.files[0])}
-              accept='application/pdf,image/*,video/*'
+      {item && (
+        <Paper className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-10'>
+          <div className='flex items-center justify-between'>
+            <Typography
+              className='px-16 text-lg font-medium tracking-tight leading-6 truncate'
+              color='text.secondary'
+            >
+              Detalles del mensaje
+            </Typography>
+            <IconButton onClick={handleUpdate}>
+              <FuseSvgIcon size={20}>
+                heroicons-outline:cloud-upload
+              </FuseSvgIcon>
+            </IconButton>
+          </div>
+          <div className='p-10 flex flex-col gap-10'>
+            <TextField
+              label='Mensaje'
+              fullWidth
+              size='small'
+              multiline
+              rows={4}
+              value={item.chmessage}
+              onChange={(e) => setItem({ ...item, chmessage: e.target.value })}
             />
-          </Button>
-        </div>
-      </Paper>}
+            <SendButton text='Probar' />
+            <Button
+              component='label'
+              role={undefined}
+              variant='contained'
+              tabIndex={-1}
+              startIcon={<CloudUpload />}
+            >
+              <span className='truncate'>
+                {file ? file.name : "Subir imagen, video o archivo"}
+              </span>
+              <VisuallyHiddenInput
+                type='file'
+                onChange={(event) => setFile(event.target.files[0])}
+                accept='application/pdf,image/*,video/*'
+              />
+            </Button>
+          </div>
+        </Paper>
+      )}
       <Paper className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-20'>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId='droppable-list'>
@@ -371,9 +415,11 @@ export const FlowsDetailContent = () => {
                           backgroundColor: "#f0f0f0",
                           borderRadius: "4px",
                         }}
-                        onClick={() => setItem(item)}
                       >
-                        <ListItemText primary={item.chmessage} />
+                        <ListItemText
+                          primary={item.chmessage}
+                          onClick={() => setItem(item)}
+                        />
 
                         <IconButton onClick={() => handleDeleteItem(item)}>
                           <FuseSvgIcon size={20}>

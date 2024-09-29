@@ -30,11 +30,6 @@ export const ContactTable = () => {
         header: "NOMBRE",
         size: 200,
       },
-      {
-        accessorKey: "status",
-        header: "ESTADO",
-        size: 150,
-      },
     ],
     []
   );

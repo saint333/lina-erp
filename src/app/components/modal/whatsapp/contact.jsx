@@ -123,10 +123,6 @@ export const ContactModal = ({ open, setOpen, title, data, setData }) => {
         <CustomInput label='Codigo' textKey='chcountry' />
         <CustomInput label='Numero' textKey='chnumber' />
         <CustomInput label='Nombre' textKey='chname' />
-        <CustomSelect label='Estado' textKey='status'>
-          <MenuItem value={true}>Activo</MenuItem>
-          <MenuItem value={false}>Desactivado</MenuItem>
-        </CustomSelect>
       </div>
     </ModalBasic>
   );

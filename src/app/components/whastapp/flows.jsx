@@ -25,18 +25,35 @@ export const FlowsContent = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  const handleAddChip = (event) => {
+  const handleAddChip = async (event, item) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
-      setChips([...chips, inputValue.trim()]);
+      if (chips.includes(inputValue)) {
+        enqueueSnackbar("Texto ya existe", {
+          variant: "error",
+          style: { fontSize: "1.3rem" },
+        });
+        setInputValue("");
+        return;
+      }
+      const list = [...chips, inputValue.trim()];
+      setChips(list);
       setInputValue("");
-      enqueueSnackbar("Se ha agregado correctamente", {
-        variant: "success",
-        style: { fontSize: "1.3rem" },
-      });
+      const response = await actionFlow({ ...item, chwords: list.join() }, "U");
+      if (response.codigo == 1) {
+        enqueueSnackbar(response.valor, {
+          variant: "success",
+          style: { fontSize: "1.3rem" },
+        });
+      } else {
+        enqueueSnackbar(response.valor, {
+          variant: "error",
+          style: { fontSize: "1.3rem" },
+        });
+      }
     }
   };
 
-  const handleDeleteChip = (chipToDelete) => {
+  const handleDeleteChip = (chipToDelete, item) => {
     setChips((chips) => chips.filter((chip) => chip !== chipToDelete));
     enqueueSnackbar("Se ha eliminado correctamente", {
       variant: "success",
@@ -72,6 +89,22 @@ export const FlowsContent = () => {
     }
   };
 
+  const handleActivate = async (event, item) => {
+    item = { ...item, p_inidtype: event.target.value };
+    const response = await actionFlow(item, "A");
+    if (response.codigo == 1) {
+      enqueueSnackbar(response.valor, {
+        variant: "success",
+        style: { fontSize: "1.3rem" },
+      });
+    } else {
+      enqueueSnackbar(response.valor, {
+        variant: "error",
+        style: { fontSize: "1.3rem" },
+      });
+    }
+  };
+
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-24 w-full min-w-0'>
       {bot.map((item, index) => {
@@ -96,17 +129,6 @@ export const FlowsContent = () => {
                 <IconButton onClick={() => handleDelete(item)}>
                   <FuseSvgIcon size={20}>heroicons-outline:trash</FuseSvgIcon>
                 </IconButton>
-                <IconButton>
-                  <FuseSvgIcon
-                    color={item.actived ? "success" : "gray"}
-                    className={item.actived && "animate-pulse"}
-                    size={20}
-                  >
-                    {item.actived
-                      ? "heroicons-outline:status-online"
-                      : "heroicons-outline:status-offline"}
-                  </FuseSvgIcon>
-                </IconButton>
               </div>
             </div>
             <img src={item.qr} className='w-full m-auto' />
@@ -117,15 +139,13 @@ export const FlowsContent = () => {
                   labelId={`role-label`}
                   label='Tipos'
                   defaultValue={""}
-                  onChange={(e) => {
-                    console.log(e.target.value);
-                  }}
+                  onChange={(e) => handleActivate(e, item)}
                 >
                   <MenuItem value='' disabled>
                     -
                   </MenuItem>
-                  <MenuItem value='palabra'>Palabras</MenuItem>
-                  <MenuItem value='general'>General</MenuItem>
+                  <MenuItem value='1'>General</MenuItem>
+                  <MenuItem value='2'>Palabras</MenuItem>
                 </Select>
               </FormControl>
               <TextField
@@ -135,7 +155,7 @@ export const FlowsContent = () => {
                 size='small'
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleAddChip}
+                onKeyDown={(e) => handleAddChip(e, item)}
                 sx={{
                   "& label + div": {
                     flexDirection: "column",
@@ -158,7 +178,7 @@ export const FlowsContent = () => {
                         <Chip
                           key={index}
                           label={chip}
-                          onDelete={() => handleDeleteChip(chip)}
+                          onDelete={() => handleDeleteChip(chip, item)}
                           size='small'
                           sx={{ marginBottom: 0.5 }}
                         />
