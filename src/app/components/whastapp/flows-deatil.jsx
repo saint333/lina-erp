@@ -162,6 +162,7 @@ export const FlowsDetailContent = () => {
       nuorden: details.length + 1,
       p_inidflowdetail: bot.p_inidflow,
       p_inidtype: type,
+      p_inidflow: bot.p_inidflow,
       churl: null,
       status: true,
       accion: "I",
