@@ -1,6 +1,7 @@
 import {
   Box,
   Chip,
+  Divider,
   FormControl,
   IconButton,
   InputLabel,
@@ -16,13 +17,10 @@ import { actionFlow, getFlow } from "src/app/services/whatsapp/bots";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
-export const FlowsContent = () => {
-  const [bot, setBot] = useState([]);
-  const [searchParams] = useSearchParams();
-  const botId = searchParams.get("bot");
-  const [chips, setChips] = useState([]);
+const FlowsContentItem = ({item, botId}) => {
+  const [chips, setChips] = useState(item.chwords.split(",") || []);
   const [inputValue, setInputValue] = useState("");
-  const [select, setSelect] = useState(null);
+  const [select, setSelect] = useState(item.p_inidtype);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
@@ -62,16 +60,8 @@ export const FlowsContent = () => {
     });
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await getFlow(botId);
-      setBot(response);
-    };
-    fetchData();
-  }, []);
-
-  const handleFlow = async (id) => {
-    navigate(`/crm/flows-detail?bot=${id}`);
+  const handleFlow = async (item) => {
+    navigate(`/crm/flows-detail?bot=${botId}&flow=${item.p_inidflow}`);
   };
 
   const handleDelete = async (item) => {
@@ -92,7 +82,7 @@ export const FlowsContent = () => {
 
   const handleActivate = async (event, item) => {
     item = { ...item, p_inidtype: event.target.value };
-    const response = await actionFlow(item, "A");
+    const response = await actionFlow(item, "U");
     if (response.codigo == 1) {
       enqueueSnackbar(response.valor, {
         variant: "success",
@@ -107,95 +97,108 @@ export const FlowsContent = () => {
   };
 
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-24 w-full min-w-0'>
-      {bot.map((item, index) => {
-        return (
-          <Paper
-            className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-10'
-            key={index}
+    <Paper
+      className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-10 h-max'
+    >
+      <div className='flex items-center justify-between'>
+        <Typography
+          className='px-16 text-lg font-medium tracking-tight leading-6 truncate'
+          color='text.secondary'
+        >
+          {item.chname}
+        </Typography>
+        <div className='flex'>
+          <IconButton onClick={() => handleFlow(item)}>
+            <FuseSvgIcon size={20}>heroicons-outline:external-link</FuseSvgIcon>
+          </IconButton>
+          <IconButton onClick={() => handleDelete(item)}>
+            <FuseSvgIcon size={20}>heroicons-outline:trash</FuseSvgIcon>
+          </IconButton>
+        </div>
+      </div>
+      <Divider />
+      <div className='px-10 pb-10 pt-10'>
+        <FormControl fullWidth size='small' className='mb-10'>
+          <InputLabel id={`role-label`}>Tipos</InputLabel>
+          <Select
+            labelId={`role-label`}
+            label='Tipos'
+            defaultValue={item.p_inidtype}
+            onChange={(e) => {
+              setSelect(e.target.value);
+              handleActivate(e, item);
+            }}
           >
-            <div className='flex items-center justify-between'>
-              <Typography
-                className='px-16 text-lg font-medium tracking-tight leading-6 truncate'
-                color='text.secondary'
-              >
-                {item.chname}
-              </Typography>
-              <div className='flex'>
-                <IconButton onClick={() => handleFlow(item.p_inidflow)}>
-                  <FuseSvgIcon size={20}>
-                    heroicons-outline:external-link
-                  </FuseSvgIcon>
-                </IconButton>
-                <IconButton onClick={() => handleDelete(item)}>
-                  <FuseSvgIcon size={20}>heroicons-outline:trash</FuseSvgIcon>
-                </IconButton>
-              </div>
-            </div>
-            <img src={item.qr} className='w-full m-auto' />
-            <div className='px-10 pb-10'>
-              <FormControl fullWidth size='small' className='mb-10'>
-                <InputLabel id={`role-label`}>Tipos</InputLabel>
-                <Select
-                  labelId={`role-label`}
-                  label='Tipos'
-                  defaultValue={""}
-                  onChange={(e) => {
-                    setSelect(e.target.value);
-                    handleActivate(e, item);
+            <MenuItem value='' disabled>
+              -
+            </MenuItem>
+            <MenuItem value='1'>General</MenuItem>
+            <MenuItem value='2'>Palabras</MenuItem>
+          </Select>
+        </FormControl>
+        {select == 2 && (
+          <TextField
+            variant='outlined'
+            label='Palabras'
+            fullWidth
+            size='small'
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => handleAddChip(e, item)}
+            sx={{
+              "& label + div": {
+                flexDirection: "column",
+                alignItems: "flex-start",
+                paddingInline: "10px",
+              },
+            }}
+            InputProps={{
+              startAdornment: (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 0.5,
+                    maxWidth: "100%",
+                    marginTop: "10px", // Asegura que no se exceda del contenedor
                   }}
                 >
-                  <MenuItem value='' disabled>
-                    -
-                  </MenuItem>
-                  <MenuItem value='1'>General</MenuItem>
-                  <MenuItem value='2'>Palabras</MenuItem>
-                </Select>
-              </FormControl>
-              {select == 2 && (
-                <TextField
-                  variant='outlined'
-                  label='Palabras'
-                  fullWidth
-                  size='small'
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={(e) => handleAddChip(e, item)}
-                  sx={{
-                    "& label + div": {
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      paddingInline: "10px",
-                    },
-                  }}
-                  InputProps={{
-                    startAdornment: (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexWrap: "wrap",
-                          gap: 0.5,
-                          maxWidth: "100%",
-                          marginTop: "10px", // Asegura que no se exceda del contenedor
-                        }}
-                      >
-                        {chips.map((chip, index) => (
-                          <Chip
-                            key={index}
-                            label={chip}
-                            onDelete={() => handleDeleteChip(chip, item)}
-                            size='small'
-                            sx={{ marginBottom: 0.5 }}
-                          />
-                        ))}
-                      </Box>
-                    ),
-                  }}
-                />
-              )}
-            </div>
-          </Paper>
-        );
+                  {chips.map((chip, index) => (
+                    <Chip
+                      key={index}
+                      label={chip}
+                      onDelete={() => handleDeleteChip(chip, item)}
+                      size='small'
+                      sx={{ marginBottom: 0.5 }}
+                    />
+                  ))}
+                </Box>
+              ),
+            }}
+          />
+        )}
+      </div>
+    </Paper>
+  );
+};
+
+export const FlowsContent = () => {
+  const [bot, setBot] = useState([]);
+  const [searchParams] = useSearchParams();
+  const botId = searchParams.get("bot");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getFlow(botId);
+      setBot(response);
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-24 w-full min-w-0'>
+      {bot.map((item, index) => {
+        return <FlowsContentItem item={item} botId={botId} key={index} />;
       })}
     </div>
   );

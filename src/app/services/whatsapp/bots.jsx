@@ -35,3 +35,8 @@ export const actionFlowDetail = async (data) => {
   const response = axios.post(`${apiBaseCrm}/whatsapp/flowdetail`, data);
   return (await response).data;
 }
+
+export const botRestart = async (id) => {
+  const response = axios.get(`${apiBaseCrm}/whatsapp/bot/restart?bot=${id}`);
+  return (await response).data;
+}

@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Chip,
+  Divider,
   FormControl,
   IconButton,
   InputLabel,
@@ -49,12 +50,14 @@ export const FlowsDetailContent = () => {
   const [details, setDetails] = useState(null);
   const [searchParams] = useSearchParams();
   const botId = searchParams.get("bot");
+  const flow = searchParams.get("flow");
   const [chips, setChips] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const { enqueueSnackbar } = useSnackbar();
   const [file, setFile] = useState(null);
   const [item, setItem] = useState(null);
-  const [select, setSelect] = useState(null);
+  const [select, setSelect] = useState("");
+  const [buttonSave, setButtonSave] = useState(true);
 
   const handleAddChip = async (event, item) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
@@ -94,7 +97,7 @@ export const FlowsDetailContent = () => {
 
   const handleActivate = async (event, item) => {
     item = { ...item, p_inidtype: event.target.value };
-    const response = await actionFlow(item, "A");
+    const response = await actionFlow(item, "U");
     if (response.codigo == 1) {
       enqueueSnackbar(response.valor, {
         variant: "success",
@@ -111,9 +114,11 @@ export const FlowsDetailContent = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getFlow(botId);
-      const botFind = response?.find((bot) => bot.p_inidflow === Number(botId));
+      const botFind = response?.find((bot) => bot.p_inidflow === Number(flow));
       setBot(botFind);
-      const details = await getFlowDetail(botFind.p_inidflow);
+      setSelect(botFind?.p_inidtype);
+      setChips(botFind?.chwords.split(","));
+      const details = await getFlowDetail(flow);
       setDetails(
         details
           .sort((a, b) => a.nuorden - b.nuorden)
@@ -146,6 +151,7 @@ export const FlowsDetailContent = () => {
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
+    if (result.destination.index === result.source.index) return;
     let newItems = Array.from(details);
     const [reorderedItem] = newItems.splice(result.source.index, 1);
     newItems.splice(result.destination.index, 0, reorderedItem);
@@ -154,6 +160,7 @@ export const FlowsDetailContent = () => {
       nuorden: index + 1,
     }));
     setDetails(newItems);
+    setButtonSave(false);
   };
 
   const handleAddNewMessage = async (type, message) => {
@@ -227,6 +234,26 @@ export const FlowsDetailContent = () => {
     }
   };
 
+  const handleSaveItem = async () => {
+    for (let index = 0; index < details.length; index++) {
+      const element = details[index];
+      const response = await actionFlowDetail(element);
+      if (response.codigo == 1) {
+        enqueueSnackbar(response.valor, {
+          variant: "success",
+          style: { fontSize: "1.3rem" },
+        });
+        setButtonSave(true);
+        setItem(null);
+      } else {
+        enqueueSnackbar(response.valor, {
+          variant: "error",
+          style: { fontSize: "1.3rem" },
+        });
+      }
+    }
+  };
+
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-24 w-full min-w-0 grid-rows-3 sm:grid-rows-2 md:grid-rows-1'>
       <Paper className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-10'>
@@ -245,13 +272,14 @@ export const FlowsDetailContent = () => {
                 </IconButton>
               </div>
             </div>
-            <div className='px-10 pb-10'>
-              <FormControl fullWidth size='small' className='mb-10'>
+            <Divider />
+            <div className='px-10 pb-10 pt-10'>
+              {select && <FormControl fullWidth size='small' className='mb-10'>
                 <InputLabel id={`role-label`}>Tipos</InputLabel>
                 <Select
                   labelId={`role-label`}
                   label='Tipos'
-                  defaultValue={""}
+                  defaultValue={select}
                   onChange={(e) => {
                     setSelect(e.target.value);
                     handleActivate(e, bot);
@@ -263,7 +291,7 @@ export const FlowsDetailContent = () => {
                   <MenuItem value='1'>General</MenuItem>
                   <MenuItem value='2'>Palabras</MenuItem>
                 </Select>
-              </FormControl>
+              </FormControl>}
               {select == 2 && (
                 <TextField
                   variant='outlined'
@@ -377,8 +405,8 @@ export const FlowsDetailContent = () => {
               value={item.chmessage}
               onChange={(e) => setItem({ ...item, chmessage: e.target.value })}
             />
-            <SendButton text='Probar' />
-            <Button
+            {item.p_inidtype == 4 && <SendButton text='Probar' />}
+            {item.p_inidtype == 3 && <Button
               component='label'
               role={undefined}
               variant='contained'
@@ -393,11 +421,18 @@ export const FlowsDetailContent = () => {
                 onChange={(event) => setFile(event.target.files[0])}
                 accept='application/pdf,image/*,video/*'
               />
-            </Button>
+            </Button>}
           </div>
         </Paper>
       )}
       <Paper className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-20'>
+        <Button
+          variant='contained'
+          disabled={buttonSave}
+          onClick={handleSaveItem}
+        >
+          Guardar
+        </Button>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId='droppable-list'>
             {(provided) => (
