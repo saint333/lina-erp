@@ -6,6 +6,7 @@ import { resetUser, selectUser, selectUserRole, setUser, updateUser } from 'src/
 import BrowserRouter from '@lina/core/BrowserRouter';
 import _ from '@lodash';
 import useJwtAuth from './services/jwt/useJwtAuth';
+import { baseApi } from '../services';
 
 const AuthContext = createContext({
 	isAuthenticated: false
@@ -25,7 +26,7 @@ function AuthRouteProvider(props) {
 	const jwtService = useJwtAuth({
 		config: {
 			tokenStorageKey: 'jwt_access_token',
-			signInUrl: 'https://api-erp.linaerp.com/auth/',
+			signInUrl: `${baseApi}/auth/`,
 			signUpUrl: 'mock-api/auth/sign-up',
 			tokenRefreshUrl: 'mock-api/auth/refresh',
 			getUserUrl: 'mock-api/auth/user',

@@ -54,6 +54,7 @@ export const FlowsDetailContent = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [file, setFile] = useState(null);
   const [item, setItem] = useState(null);
+  const [select, setSelect] = useState(null);
 
   const handleAddChip = async (event, item) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
@@ -250,7 +251,10 @@ export const FlowsDetailContent = () => {
                   labelId={`role-label`}
                   label='Tipos'
                   defaultValue={""}
-                  onChange={(e) => handleActivate(e, bot)}
+                  onChange={(e) => {
+                    setSelect(e.target.value);
+                    handleActivate(e, bot);
+                  }}
                 >
                   <MenuItem value='' disabled>
                     -
@@ -259,45 +263,47 @@ export const FlowsDetailContent = () => {
                   <MenuItem value='2'>Palabras</MenuItem>
                 </Select>
               </FormControl>
-              <TextField
-                variant='outlined'
-                label='Add chips'
-                fullWidth
-                size='small'
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={(e) => handleAddChip(e, bot)}
-                sx={{
-                  "& label + div": {
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    paddingInline: "10px",
-                  },
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: 0.5,
-                        maxWidth: "100%",
-                        marginTop: "10px", // Asegura que no se exceda del contenedor
-                      }}
-                    >
-                      {chips.map((chip, index) => (
-                        <Chip
-                          key={index}
-                          label={chip}
-                          onDelete={() => handleDeleteChip(chip, bot)}
-                          size='small'
-                          sx={{ marginBottom: 0.5 }}
-                        />
-                      ))}
-                    </Box>
-                  ),
-                }}
-              />
+              {select == 2 && (
+                <TextField
+                  variant='outlined'
+                  label='Palbras'
+                  fullWidth
+                  size='small'
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={(e) => handleAddChip(e, bot)}
+                  sx={{
+                    "& label + div": {
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      paddingInline: "10px",
+                    },
+                  }}
+                  InputProps={{
+                    startAdornment: (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: 0.5,
+                          maxWidth: "100%",
+                          marginTop: "10px", // Asegura que no se exceda del contenedor
+                        }}
+                      >
+                        {chips.map((chip, index) => (
+                          <Chip
+                            key={index}
+                            label={chip}
+                            onDelete={() => handleDeleteChip(chip, bot)}
+                            size='small'
+                            sx={{ marginBottom: 0.5 }}
+                          />
+                        ))}
+                      </Box>
+                    ),
+                  }}
+                />
+              )}
             </div>
           </div>
           <div className='px-10 pb-10'>

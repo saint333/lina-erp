@@ -22,6 +22,7 @@ export const FlowsContent = () => {
   const botId = searchParams.get("bot");
   const [chips, setChips] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [select, setSelect] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
@@ -139,7 +140,10 @@ export const FlowsContent = () => {
                   labelId={`role-label`}
                   label='Tipos'
                   defaultValue={""}
-                  onChange={(e) => handleActivate(e, item)}
+                  onChange={(e) => {
+                    setSelect(e.target.value);
+                    handleActivate(e, item);
+                  }}
                 >
                   <MenuItem value='' disabled>
                     -
@@ -148,45 +152,47 @@ export const FlowsContent = () => {
                   <MenuItem value='2'>Palabras</MenuItem>
                 </Select>
               </FormControl>
-              <TextField
-                variant='outlined'
-                label='Add chips'
-                fullWidth
-                size='small'
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={(e) => handleAddChip(e, item)}
-                sx={{
-                  "& label + div": {
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    paddingInline: "10px",
-                  },
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: 0.5,
-                        maxWidth: "100%",
-                        marginTop: "10px", // Asegura que no se exceda del contenedor
-                      }}
-                    >
-                      {chips.map((chip, index) => (
-                        <Chip
-                          key={index}
-                          label={chip}
-                          onDelete={() => handleDeleteChip(chip, item)}
-                          size='small'
-                          sx={{ marginBottom: 0.5 }}
-                        />
-                      ))}
-                    </Box>
-                  ),
-                }}
-              />
+              {select == 2 && (
+                <TextField
+                  variant='outlined'
+                  label='Palabras'
+                  fullWidth
+                  size='small'
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={(e) => handleAddChip(e, item)}
+                  sx={{
+                    "& label + div": {
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      paddingInline: "10px",
+                    },
+                  }}
+                  InputProps={{
+                    startAdornment: (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: 0.5,
+                          maxWidth: "100%",
+                          marginTop: "10px", // Asegura que no se exceda del contenedor
+                        }}
+                      >
+                        {chips.map((chip, index) => (
+                          <Chip
+                            key={index}
+                            label={chip}
+                            onDelete={() => handleDeleteChip(chip, item)}
+                            size='small'
+                            sx={{ marginBottom: 0.5 }}
+                          />
+                        ))}
+                      </Box>
+                    ),
+                  }}
+                />
+              )}
             </div>
           </Paper>
         );

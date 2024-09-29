@@ -123,9 +123,9 @@ const useJwtAuth = (props) => {
           const userData = {
             data: {
               dominio: "default",
+              displayName: "prueb",
             },
             role: ["admin"],
-            displayName: "prueb",
           };
           handleSignInSuccess(userData, accessToken);
           return true;
@@ -165,9 +165,9 @@ const useJwtAuth = (props) => {
         const userData = {
           data: {
             dominio: res?.data?.p_iniddominio_default,
+            displayName: "prueb",
           },
           role: ["admin"],
-          displayName: "prueb",
         };
         const accessToken = res?.data?.token_acceso;
         handleSignInSuccess(userData, accessToken);
