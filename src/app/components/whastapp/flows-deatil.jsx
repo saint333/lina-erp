@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import {
   actionFlow,
   actionFlowDetail,
+  actionFlowDetail2,
   getFlow,
   getFlowDetail,
 } from "src/app/services/whatsapp/bots";
@@ -192,7 +193,19 @@ export const FlowsDetailContent = () => {
   };
 
   const handleUpdate = async () => {
-    const response = await actionFlowDetail(item);
+    const formData = new FormData();
+
+    for (const key in item) {
+      if (item.hasOwnProperty(key)) {
+        formData.append(key, item[key]);
+      }
+    }
+
+    if (file) {
+      formData.append("file", file);
+    }
+
+    const response = await actionFlowDetail2(formData);
     if (response.codigo == 1) {
       enqueueSnackbar(response.valor, {
         variant: "success",
@@ -274,24 +287,26 @@ export const FlowsDetailContent = () => {
             </div>
             <Divider />
             <div className='px-10 pb-10 pt-10'>
-              {select && <FormControl fullWidth size='small' className='mb-10'>
-                <InputLabel id={`role-label`}>Tipos</InputLabel>
-                <Select
-                  labelId={`role-label`}
-                  label='Tipos'
-                  defaultValue={select}
-                  onChange={(e) => {
-                    setSelect(e.target.value);
-                    handleActivate(e, bot);
-                  }}
-                >
-                  <MenuItem value='' disabled>
-                    -
-                  </MenuItem>
-                  <MenuItem value='1'>General</MenuItem>
-                  <MenuItem value='2'>Palabras</MenuItem>
-                </Select>
-              </FormControl>}
+              {select && (
+                <FormControl fullWidth size='small' className='mb-10'>
+                  <InputLabel id={`role-label`}>Tipos</InputLabel>
+                  <Select
+                    labelId={`role-label`}
+                    label='Tipos'
+                    defaultValue={select}
+                    onChange={(e) => {
+                      setSelect(e.target.value);
+                      handleActivate(e, bot);
+                    }}
+                  >
+                    <MenuItem value='' disabled>
+                      -
+                    </MenuItem>
+                    <MenuItem value='1'>General</MenuItem>
+                    <MenuItem value='2'>Palabras</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
               {select == 2 && (
                 <TextField
                   variant='outlined'
@@ -406,22 +421,24 @@ export const FlowsDetailContent = () => {
               onChange={(e) => setItem({ ...item, chmessage: e.target.value })}
             />
             {item.p_inidtype == 4 && <SendButton text='Probar' />}
-            {item.p_inidtype == 3 && <Button
-              component='label'
-              role={undefined}
-              variant='contained'
-              tabIndex={-1}
-              startIcon={<CloudUpload />}
-            >
-              <span className='truncate'>
-                {file ? file.name : "Subir imagen, video o archivo"}
-              </span>
-              <VisuallyHiddenInput
-                type='file'
-                onChange={(event) => setFile(event.target.files[0])}
-                accept='application/pdf,image/*,video/*'
-              />
-            </Button>}
+            {item.p_inidtype == 3 && (
+              <Button
+                component='label'
+                role={undefined}
+                variant='contained'
+                tabIndex={-1}
+                startIcon={<CloudUpload />}
+              >
+                <span className='truncate'>
+                  {file ? file.name : "Subir imagen, video o archivo"}
+                </span>
+                <VisuallyHiddenInput
+                  type='file'
+                  onChange={(event) => setFile(event.target.files[0])}
+                  accept='application/pdf,image/*,video/*'
+                />
+              </Button>
+            )}
           </div>
         </Paper>
       )}

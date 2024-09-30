@@ -1,10 +1,13 @@
 import { FormControl, InputLabel, MenuItem, Select, Skeleton } from "@mui/material";
+import { useAppSelector } from "app/store/hooks";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { selectUser } from "src/app/auth/user/store/userSlice";
 import { DataHeader } from "src/app/services";
 
 const DomainComponent = () => {
   const [domain, setDomain] = useState(null);
+  const user = useAppSelector(selectUser);
   const {
     formState: { errors },
     control,
@@ -49,7 +52,7 @@ const DomainComponent = () => {
     const fetchData = async () => {
       const data = await DataHeader();
       setDomain(data);
-      setValue("domain", data.p_iniddominio_default);
+      setValue("domain", user?.data?.dominio == "default" ? 1 : user?.data?.dominio);
     };
     fetchData();
   }, [setValue]);
