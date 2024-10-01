@@ -277,8 +277,8 @@ export const FlowsContent = () => {
           );
         })}
       </div>
-      <Fab aria-label='add' onClick={handleAdd} className="fixed bottom-52 right-52">
-        <FuseSvgIcon>heroicons-outline:plus</FuseSvgIcon>
+      <Fab aria-label='add' onClick={handleAdd} className="fixed bottom-52 right-52" color="secondary">
+        <FuseSvgIcon color="white">heroicons-outline:plus</FuseSvgIcon>
       </Fab>
     </div>
   );
