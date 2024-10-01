@@ -92,6 +92,7 @@ const FlowsContentItem = ({ item, botId, setChange }) => {
         variant: "success",
         style: { fontSize: "1.3rem" },
       });
+      setChange(new Date());
     } else {
       enqueueSnackbar(response.valor, {
         variant: "error",
@@ -237,7 +238,7 @@ export const FlowsContent = () => {
   }, [change]);
 
   const handleAdd = async () => {
-    const response = await actionFlow({ p_inidbot: botId }, "I");
+    const response = await actionFlow({ p_inidbot: Number(botId), chname: "Flujo de prueba" }, "I");
     if (response.codigo == 1) {
       enqueueSnackbar(response.valor, {
         variant: "success",
