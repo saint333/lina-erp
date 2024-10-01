@@ -206,9 +206,11 @@ export const FlowsDetailContent = () => {
 
     if (file) {
       formData.append("file", file);
+      const response = await actionFlowDetail2(formData);
+    }else{
+      const response = await actionFlowDetail(item);
     }
 
-    const response = await actionFlowDetail2(formData);
     if (response.codigo == 1) {
       enqueueSnackbar(response.valor, {
         variant: "success",
