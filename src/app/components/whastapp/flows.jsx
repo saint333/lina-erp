@@ -56,12 +56,22 @@ const FlowsContentItem = ({ item, botId, setChange }) => {
     }
   };
 
-  const handleDeleteChip = (chipToDelete, item) => {
+  const handleDeleteChip = async (chipToDelete, item) => {
     setChips((chips) => chips.filter((chip) => chip !== chipToDelete));
-    enqueueSnackbar("Se ha eliminado correctamente", {
-      variant: "success",
-      style: { fontSize: "1.3rem" },
-    });
+    const list = chips.filter((chip) => chip !== chipToDelete);
+    const response = await actionFlow({ ...item, chwords: list.join() }, "U");
+    if (response.codigo == 1) {
+      enqueueSnackbar(response.valor, {
+        variant: "success",
+        style: { fontSize: "1.3rem" },
+      });
+      setChange(new Date());
+    } else {
+      enqueueSnackbar(response.valor, {
+        variant: "error",
+        style: { fontSize: "1.3rem" },
+      });
+    }
   };
 
   const handleFlow = async (item) => {
@@ -255,7 +265,7 @@ export const FlowsContent = () => {
 
   return (
     <div className="relative">
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-24 w-full min-w-0'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-24 w-full min-w-0'>
         {bot.map((item, index) => {
           return (
             <FlowsContentItem
