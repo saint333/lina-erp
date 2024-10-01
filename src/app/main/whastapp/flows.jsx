@@ -14,6 +14,10 @@ export default function Flows() {
             title: "Crm",
           },
           {
+            title: "Bots",
+            link: "/crm/bots",
+          },
+          {
             title: "Flujos",
           },
         ],
