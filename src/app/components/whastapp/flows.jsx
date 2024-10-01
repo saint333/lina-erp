@@ -3,6 +3,7 @@ import {
   Button,
   Chip,
   Divider,
+  Fab,
   FormControl,
   IconButton,
   InputLabel,
@@ -18,7 +19,7 @@ import { actionFlow, getFlow } from "src/app/services/whatsapp/bots";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
-const FlowsContentItem = ({ item, botId }) => {
+const FlowsContentItem = ({ item, botId, setChange }) => {
   const [chips, setChips] = useState(item.chwords?.split(",") || []);
   const [inputValue, setInputValue] = useState("");
   const [select, setSelect] = useState(item?.p_inidtype || "");
@@ -74,7 +75,7 @@ const FlowsContentItem = ({ item, botId }) => {
         variant: "success",
         style: { fontSize: "1.3rem" },
       });
-      setBot(bot.filter((bot) => bot.p_inidflow !== item.p_inidflow));
+      setChange(new Date());
     } else {
       enqueueSnackbar("Ha ocurrido un error", {
         variant: "error",
@@ -113,7 +114,7 @@ const FlowsContentItem = ({ item, botId }) => {
         style: { fontSize: "1.3rem" },
       });
     }
-  }
+  };
 
   return (
     <Paper className='flex flex-col flex-auto shadow rounded-2xl overflow-hidden p-10 h-max'>
@@ -225,6 +226,7 @@ export const FlowsContent = () => {
   const [searchParams] = useSearchParams();
   const botId = searchParams.get("bot");
   const { enqueueSnackbar } = useSnackbar();
+  const [change, setChange] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -232,7 +234,7 @@ export const FlowsContent = () => {
       setBot(response.map((item) => ({ ...item, p_inidbot: botId })));
     };
     fetchData();
-  }, []);
+  }, [change]);
 
   const handleAdd = async () => {
     const response = await actionFlow({ p_inidbot: botId }, "I");
@@ -241,7 +243,7 @@ export const FlowsContent = () => {
         variant: "success",
         style: { fontSize: "1.3rem" },
       });
-      setBot([...bot, { ...response.data, p_inidbot: botId }]);
+      setChange(new Date());
     } else {
       enqueueSnackbar(response.valor, {
         variant: "error",
@@ -251,19 +253,22 @@ export const FlowsContent = () => {
   };
 
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-24 w-full min-w-0'>
-      {bot.map((item, index) => {
-        return <FlowsContentItem item={item} botId={botId} key={index} />;
-      })}
-      <Button
-        variant='contained'
-        className='w-full'
-        startIcon={<FuseSvgIcon>heroicons-outline:plus</FuseSvgIcon>}
-        onClick={handleAdd}
-      >
-        {" "}
-        Agregar{" "}
-      </Button>
+    <div className="relative">
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-24 w-full min-w-0'>
+        {bot.map((item, index) => {
+          return (
+            <FlowsContentItem
+              item={item}
+              botId={botId}
+              key={index}
+              setChange={setChange}
+            />
+          );
+        })}
+      </div>
+      <Fab aria-label='add' onClick={handleAdd} className="fixed bottom-52 right-52">
+        <FuseSvgIcon>heroicons-outline:plus</FuseSvgIcon>
+      </Fab>
     </div>
   );
 };
