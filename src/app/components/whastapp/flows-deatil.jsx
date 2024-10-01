@@ -120,7 +120,7 @@ export const FlowsDetailContent = () => {
       const botFind = response?.find((bot) => bot.p_inidflow === Number(flow));
       setBot({...botFind, p_inidbot: botId});
       setSelect(botFind?.p_inidtype);
-      setChips(botFind?.chwords.split(","));
+      setChips(botFind?.chwords?.split(",") || []);
       setTitle(botFind?.chname || "");
       const details = await getFlowDetail(flow);
       setDetails(
