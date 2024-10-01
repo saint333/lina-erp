@@ -180,13 +180,13 @@ export const FlowsDetailContent = () => {
     };
 
     const detail = await actionFlowDetail(newMessage);
-    if (detail.codigo == 1) {
+    if (detail.codigo != -1) {
       enqueueSnackbar(detail.valor, {
         variant: "success",
         style: { fontSize: "1.3rem" },
       });
       setDetails((prev) => [...prev, { ...newMessage, accion: "U" }]);
-      setItem({ ...newMessage, accion: "U" });
+      setItem({ ...newMessage, accion: "U", p_inidflowdetail: detail.codigo });
     } else {
       enqueueSnackbar(detail.valor, {
         variant: "error",
@@ -229,7 +229,7 @@ export const FlowsDetailContent = () => {
   const handleDeleteItem = async (item) => {
     const response = await actionFlowDetail({ ...item, accion: "D" });
     setItem(null);
-    if (response.codigo == 1) {
+    if (response.codigo != -1) {
       enqueueSnackbar(response.valor, {
         variant: "success",
         style: { fontSize: "1.3rem" },
