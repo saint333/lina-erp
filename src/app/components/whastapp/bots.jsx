@@ -96,7 +96,7 @@ export const BotsContent = () => {
               </div>
             </div>
             <Divider />
-            <img src={item.qr} className='w-full md:w-10/12 m-auto' />
+            {item.actived ? <img src="/assets/images/demo-content/active-bot.jfif"/> : <img src={item.qr} className='w-full md:w-10/12 m-auto' />}
           </Paper>
         );
       })}

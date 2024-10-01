@@ -19,7 +19,8 @@ import { actionFlow, getFlow } from "src/app/services/whatsapp/bots";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
-const FlowsContentItem = ({ item, botId, setChange }) => {
+const FlowsContentItem = ({ item, botId, setChange, setBot }) => {
+  console.log("🚀 ~ FlowsContentItem ~ item:", item)
   const [chips, setChips] = useState(item.chwords?.split(",") || []);
   const [inputValue, setInputValue] = useState("");
   const [select, setSelect] = useState(item?.p_inidtype || "");
@@ -79,12 +80,14 @@ const FlowsContentItem = ({ item, botId, setChange }) => {
   };
 
   const handleDelete = async (item) => {
+    console.log("🚀 ~ handleDelete ~ item:", item)
     const response = await actionFlow(item, "D");
     if (response) {
       enqueueSnackbar("Se ha eliminado correctamente", {
         variant: "success",
         style: { fontSize: "1.3rem" },
       });
+      setBot((prev) => prev.filter((bot) => bot.p_inidflow !== item.p_inidflow));
       setChange(new Date());
     } else {
       enqueueSnackbar("Ha ocurrido un error", {
@@ -266,6 +269,7 @@ export const FlowsContent = () => {
   return (
     <div className="relative">
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-24 w-full min-w-0'>
+        <pre>{JSON.stringify(bot, null, 2)}</pre>
         {bot.map((item, index) => {
           return (
             <FlowsContentItem
@@ -273,6 +277,7 @@ export const FlowsContent = () => {
               botId={botId}
               key={index}
               setChange={setChange}
+              setBot={setBot}
             />
           );
         })}

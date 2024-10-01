@@ -212,7 +212,7 @@ export const FlowsDetailContent = () => {
       response = await actionFlowDetail(item);
     }
 
-    if (response.codigo == 1) {
+    if (response.codigo != -1) {
       enqueueSnackbar(response.valor, {
         variant: "success",
         style: { fontSize: "1.3rem" },

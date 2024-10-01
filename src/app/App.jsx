@@ -35,7 +35,7 @@ function App() {
 				>
 					<AuthRouteProvider>
 						<SnackbarProvider
-							maxSnack={4}
+							maxSnack={3}
 							anchorOrigin={{
 								vertical: 'top',
 								horizontal: 'right'
@@ -43,6 +43,7 @@ function App() {
 							classes={{
 								containerRoot: 'top-0 right-0 mt-52 md:mt-68 mr-8 lg:mr-80 z-99'
 							}}
+							autoHideDuration={3000}
 						>
 							<LinaLayout layouts={themeLayouts} />
 						</SnackbarProvider>
