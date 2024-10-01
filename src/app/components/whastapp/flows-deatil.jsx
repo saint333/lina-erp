@@ -203,12 +203,13 @@ export const FlowsDetailContent = () => {
         formData.append(key, item[key]);
       }
     }
+    let response;
 
     if (file) {
       formData.append("file", file);
-      const response = await actionFlowDetail2(formData);
+      response = await actionFlowDetail2(formData);
     }else{
-      const response = await actionFlowDetail(item);
+      response = await actionFlowDetail(item);
     }
 
     if (response.codigo == 1) {
