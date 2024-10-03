@@ -269,7 +269,7 @@ export const FlowsContent = () => {
   return (
     <div className="relative">
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-24 w-full min-w-0'>
-        <pre>{JSON.stringify(bot, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(bot, null, 2)}</pre> */}
         {bot.map((item, index) => {
           return (
             <FlowsContentItem

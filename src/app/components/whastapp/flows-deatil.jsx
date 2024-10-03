@@ -185,7 +185,7 @@ export const FlowsDetailContent = () => {
         variant: "success",
         style: { fontSize: "1.3rem" },
       });
-      setDetails((prev) => [...prev, { ...newMessage, accion: "U" }]);
+      setDetails((prev) => [...prev, { ...newMessage, accion: "U", p_inidflowdetail: detail.codigo }]);
       setItem({ ...newMessage, accion: "U", p_inidflowdetail: detail.codigo });
     } else {
       enqueueSnackbar(detail.valor, {
